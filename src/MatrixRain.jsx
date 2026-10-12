@@ -8,6 +8,9 @@ const MatrixRain = () => {
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
 
+    // 🌟 NOW USING BINARY (0s and 1s)
+    const characters = '01'; 
+
     const fontSize = 14;
     let columns, drops;
 
@@ -29,7 +32,7 @@ const MatrixRain = () => {
       ctx.font = `${fontSize}px monospace`;
 
       for (let i = 0; i < drops.length; i++) {
-        const char = String.fromCharCode(0x30A0 + Math.random() * 96);
+        const char = characters[Math.floor(Math.random() * characters.length)];
         ctx.fillText(char, i * fontSize, drops[i] * fontSize);
 
         if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
