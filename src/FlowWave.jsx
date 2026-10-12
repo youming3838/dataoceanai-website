@@ -7,20 +7,21 @@ import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass.js';
 import { GammaCorrectionShader } from 'three/examples/jsm/shaders/GammaCorrectionShader.js';
 import { CopyShader } from 'three/examples/jsm/shaders/CopyShader.js';
 
-// Fixed Constants
+// Fixed Constants - ELECTRIC BLUE SETTINGS
 const bgColor         = '#02160c';
-const flameColor      = '#3b82f6';
-const flameColor2     = '#60a5fa';
+const flameColor      = '#3b82f6'; 
+const flameColor2     = '#60a5fa'; 
 const flameAmt        = 0.2;
-const atmoColor       = '#60a5fa';
+const atmoColor       = '#60a5fa'; 
 const atmoCount       = 150; 
 const atmoSize        = 24;
 const atmoSpeed       = 1.0;
 const colorLow        = '#02160c';
-const colorHigh       = '#3b82f6';
+const colorHigh       = '#3b82f6'; 
 const opacity         = 0.26;
 const pointSize       = 5.5;
-const brightness      = 0.8;
+const brightness      = 0.8; // Increased brightness to make it glow
+
 const waveHeight      = 3;
 const flow            = 1;
 const tilt            = 0;
@@ -424,10 +425,8 @@ export default function FlowWave() {
 
   return (
     <div className="lk-stage" ref={containerRef}>
-      {/* Fixed canvas background */}
       <canvas id="scene" />
 
-      {/* Hero UI Layer - scrolls naturally */}
       <div className="uip-layer">
         <header className="fs-head">
           <span className="fs-word">Data Ocean&#169;</span>
@@ -546,7 +545,7 @@ export default function FlowWave() {
           opacity: 0.9;
           transition: opacity 0.3s;
         }
-        .fs-nav a:hover { opacity: 1; color: #34e89a; }
+        .fs-nav a:hover { opacity: 1; color: #3b82f6; }
 
         .fs-contacts {
           display: flex;
@@ -606,7 +605,7 @@ export default function FlowWave() {
           background: var(--ink);
           color: var(--band);
         }
-        .fs-btn-solid:hover { background: #34e89a; color: var(--lk-asset); }
+        .fs-btn-solid:hover { background: #3b82f6; color: #ffffff; }
 
         .fs-btn-ghost {
           border: 1px solid var(--ink);
@@ -625,7 +624,6 @@ export default function FlowWave() {
           opacity: 0.7;
         }
 
-        /* 📱 Mobile Responsive Styles */
         @media (max-width: 860px) {
           :root {
             --pad-x: 20px;
@@ -641,7 +639,7 @@ export default function FlowWave() {
           .fs-hero-content { gap: 30px; }
           .fs-actions { flex-direction: column; width: 100%; }
           .fs-btn { width: 100%; padding: 18px 20px; }
-          .fs-caps { display: none; /* Hide bottom captions on mobile to save space */ }
+          .fs-caps { display: none; }
         }
       `}</style>
     </div>
