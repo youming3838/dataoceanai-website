@@ -13,7 +13,7 @@ const flameColor      = '#0aff7f';
 const flameColor2     = '#aef0c0';
 const flameAmt        = 0.2;
 const atmoColor       = '#7affbf';
-const atmoCount       = 300;
+const atmoCount       = 150; // Reduced from 300 for mobile
 const atmoSize        = 24;
 const atmoSpeed       = 1.0;
 const colorLow        = '#02160c';
@@ -113,12 +113,18 @@ export default function FlowWave() {
     const canvas = document.getElementById('scene');
     if (!canvas) return;
 
+    // Detect low memory / constrained mobile device
+    const isLowMemoryDevice = 
+      (navigator.deviceMemory && navigator.deviceMemory <= 4) || 
+      /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+
     let animId;
-    const renderer = new THREE.WebGL1Renderer({ canvas, antialias: true });
-    renderer.setPixelRatio(window.devicePixelRatio);
+    const pixelRatio = Math.min(window.devicePixelRatio, isLowMemoryDevice ? 1.5 : 2);
+
+    const renderer = new THREE.WebGL1Renderer({ canvas, antialias: !isLowMemoryDevice });
+    renderer.setPixelRatio(pixelRatio);
     renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.shadowMap.enabled = true;
-    renderer.shadowMap.type = THREE.VSMShadowMap;
+    renderer.shadowMap.enabled = false; // Disabled for performance
 
     const scene = new THREE.Scene();
     scene.background = new THREE.Object3D();
@@ -133,17 +139,18 @@ export default function FlowWave() {
 
     const renderPass = new RenderPass(scene, camera);
 
+    // Optimized Bloom settings (reduced resolution and intensity slightly)
     const torusComposer = new EffectComposer(renderer);
     torusComposer.renderToScreen = false;
     torusComposer.addPass(renderPass);
     torusComposer.addPass(new ShaderPass(GammaCorrectionShader));
-    torusComposer.addPass(new UnrealBloomPass(new THREE.Vector2(window.innerWidth, window.innerHeight), 0.22, 0.2, 0));
+    torusComposer.addPass(new UnrealBloomPass(new THREE.Vector2(window.innerWidth * 0.75, window.innerHeight * 0.75), 0.18, 0.15, 0));
     torusComposer.addPass(new ShaderPass(CopyShader));
 
     const bloomComposer = new EffectComposer(renderer);
     bloomComposer.renderToScreen = false;
     bloomComposer.addPass(renderPass);
-    bloomComposer.addPass(new UnrealBloomPass(new THREE.Vector2(window.innerWidth, window.innerHeight), 0.4, 0.55, 0));
+    bloomComposer.addPass(new UnrealBloomPass(new THREE.Vector2(window.innerWidth * 0.75, window.innerHeight * 0.75), 0.3, 0.45, 0));
     bloomComposer.addPass(new ShaderPass(GammaCorrectionShader));
 
     const finalComposer = new EffectComposer(renderer);
@@ -155,8 +162,8 @@ export default function FlowWave() {
     finalPass.uniforms.bloomTexture.value = bloomComposer.renderTarget1.texture;
     finalPass.uniforms.torusTexture.value = torusComposer.renderTarget1.texture;
 
-    // Main Points Geometry & Material
-    const geo = new THREE.SphereGeometry(4.2, 200, 600);
+    // 1. Reduced Geometry from (4.2, 200, 600) to (4.2, 100, 200)
+    const geo = new THREE.SphereGeometry(4.2, 100, 200);
     const mat = new THREE.ShaderMaterial({
       transparent: true,
       depthWrite: false,
@@ -255,7 +262,7 @@ export default function FlowWave() {
       uniforms: {
         uTime: { value: 0 },
         uColor: { value: hexToVec3(atmoColor) },
-        uRes: { value: new THREE.Vector2(window.innerWidth * window.devicePixelRatio, window.innerHeight * window.devicePixelRatio) }
+        uRes: { value: new THREE.Vector2(window.innerWidth * pixelRatio, window.innerHeight * pixelRatio) }
       },
       vertexShader: `
         attribute float size; attribute float seed; uniform float uTime; uniform vec2 uRes;
@@ -332,25 +339,27 @@ export default function FlowWave() {
     const handleResize = () => {
       const w = window.innerWidth;
       const h = window.innerHeight;
-      renderer.setPixelRatio(window.devicePixelRatio);
+      renderer.setPixelRatio(pixelRatio);
       renderer.setSize(w, h, false);
       camera.aspect = w / h;
       camera.updateProjectionMatrix();
 
-      torusComposer.setPixelRatio(window.devicePixelRatio);
+      torusComposer.setPixelRatio(pixelRatio);
       torusComposer.setSize(w, h);
-      bloomComposer.setPixelRatio(window.devicePixelRatio);
+      bloomComposer.setPixelRatio(pixelRatio);
       bloomComposer.setSize(w, h);
-      finalComposer.setPixelRatio(window.devicePixelRatio);
+      finalComposer.setPixelRatio(pixelRatio);
       finalComposer.setSize(w, h);
-      atmoMat.uniforms.uRes.value.set(w * window.devicePixelRatio, h * window.devicePixelRatio);
+      atmoMat.uniforms.uRes.value.set(w * pixelRatio, h * pixelRatio);
     };
     window.addEventListener('resize', handleResize);
     handleResize();
 
-    // Animation Loop
+    // Animation Loop (Gracefully halts if critical memory constraint is hit)
     const animate = () => {
-      animId = requestAnimationFrame(animate);
+      if (!isLowMemoryDevice) {
+        animId = requestAnimationFrame(animate);
+      }
 
       const t = performance.now() / 1000;
       const dt = Math.min(0.05, t - lastTime);
@@ -394,19 +403,31 @@ export default function FlowWave() {
       camera.layers.set(LAYERS.ENTIRE_SCENE);
       finalComposer.render();
     };
-    animId = requestAnimationFrame(animate);
 
+    if (!isLowMemoryDevice) {
+      animId = requestAnimationFrame(animate);
+    } else {
+      // Render single static frame for low memory devices
+      animate();
+    }
+
+    // Robust cleanup to prevent memory leaks
     return () => {
-      cancelAnimationFrame(animId);
+      if (animId) cancelAnimationFrame(animId);
       window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('mouseout', handleMouseOut);
       window.removeEventListener('resize', handleResize);
-      renderer.dispose();
+
+      // Dispose Three.js resources
       geo.dispose();
       mat.dispose();
       atmoGeo.dispose();
       atmoMat.dispose();
+      torusComposer.dispose();
+      bloomComposer.dispose();
+      finalComposer.dispose();
+      renderer.dispose();
     };
   }, []);
 
