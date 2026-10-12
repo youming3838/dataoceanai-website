@@ -642,6 +642,216 @@ export default function FlowWave() {
           left: var(--pad-x);
           right: var(--pad-x);
           top: var(--lead-top);
+  return (
+    <div className="lk-stage" ref={containerRef}>
+      <div id="scroll-host" style={{ height: '620vh' }} />
+      <canvas id="scene" />
+
+      <div className="uip-layer">
+        <div className="fs-band">
+          <header className="fs-head">
+            <span className="fs-word">Data Ocean&#174;</span>
+
+            <nav className="fs-nav">
+              <a href="#ai">AI<br />Governance</a>
+              <a href="#services">SAP<br />Services</a>
+              <a href="#nfc">Digital<br />Products</a>
+              <a href="#contact">Contact<br />Us</a>
+            </nav>
+
+            <div className="fs-contacts">
+              <i className="fs-mark" aria-hidden="true" />
+              <a href="#contact">Contacts</a>
+            </div>
+          </header>
+
+          <h1 className="fs-h1">Navigate the Depths of SAP & Innovation&#174;</h1>
+
+          <div className="fs-row">
+            <p className="fs-lead">
+              Elite SAP consulting, digital NFC solutions, and AI governance powered by 10+ years of enterprise expertise.
+            </p>
+
+            <div className="fs-actions">
+              <a className="fs-btn fs-btn-solid" href="#services">Explore SAP Services</a>
+              <a className="fs-btn fs-btn-ghost" href="#nfc">Shop NFC Cards</a>
+            </div>
+          </div>
+        </div>
+
+        <div className="fs-caps">
+          <span>Enterprise SAP Consulting</span>
+          <span>Smart NFC Business Cards</span>
+          <span>Future AI Governance</span>
+        </div>
+      </div>
+
+      <style>{`
+        *, *::before, *::after {
+          box-sizing: border-box;
+          border: 0 solid;
+        }
+        h1, h2, h3, h4, h5, h6 { font-size: inherit; font-weight: inherit; }
+        p, h1, h2, h3, h4, h5, h6, figure, blockquote, dl, dd, pre, hr { margin: 0; }
+        ul, ol, menu { margin: 0; padding: 0; list-style: none; }
+        a { color: inherit; text-decoration: none; }
+
+        :root {
+          --font-onest: "Onest", system-ui, sans-serif;
+          --band: #101010;
+          --ink: #f2f2f2;
+          --on-asset: #ffffff;
+          --lk-asset: #000000;
+          --pad-x: 30px;
+          --band-h: 500px;
+          --head-top: 30px;
+          --cap-bottom: 30px;
+          --word-top: 1px;
+          --nav-off: 470px;
+          --nav-col: 130px;
+          --nav-gap: 60px;
+          --contacts-w: 293px;
+          --contacts-h: 48px;
+          --mark: 18px;
+          --mark-bw: 2px;
+          --mark-top: 3px;
+          --h1-top: 262px;
+          --lead-top: 364px;
+          --lead-w: 850px;
+          --row-gap: 40px;
+          --btn-w: 293px;
+          --btn-h: 76px;
+          --btn-gap: 20px;
+          --fs-word: 24px;
+          --fs-nav: 24px;
+          --fs-h1: 72px;
+          --fs-lead: 32px;
+          --fs-btn: 24px;
+          --fs-cap: 24px;
+        }
+
+        html, body {
+          margin: 0;
+          padding: 0;
+          background: var(--lk-asset);
+          min-height: 100svh;
+          overflow-x: hidden;
+          font-family: var(--font-onest);
+          color: var(--ink);
+          -webkit-font-smoothing: antialiased;
+        }
+
+        .lk-stage {
+          position: relative;
+          min-height: max(100svh, calc(var(--band-h) + 120px));
+          overflow: hidden;
+          background: var(--lk-asset);
+        }
+
+        #scene {
+          position: fixed;
+          inset: 0;
+          width: 100vw;
+          height: 100vh;
+          display: block;
+          z-index: 0;
+        }
+
+        .uip-layer {
+          position: absolute;
+          inset: 0;
+          z-index: 1;
+          pointer-events: none;
+        }
+
+        .fs-band {
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          height: var(--band-h);
+          background: var(--band);
+          pointer-events: auto;
+        }
+
+        .fs-head {
+          position: absolute;
+          left: var(--pad-x);
+          right: var(--pad-x);
+          top: var(--head-top);
+          display: flex;
+          align-items: flex-start;
+        }
+
+        .fs-word {
+          flex: none;
+          width: var(--nav-off);
+          margin-top: var(--word-top);
+          font-size: var(--fs-word);
+          font-weight: 500;
+          line-height: 1;
+          text-transform: uppercase;
+          white-space: nowrap;
+        }
+
+        .fs-nav {
+          flex: none;
+          display: flex;
+          gap: var(--nav-gap);
+        }
+
+        .fs-nav a {
+          width: var(--nav-col);
+          font-size: var(--fs-nav);
+          font-weight: 500;
+          line-height: 1;
+          text-transform: uppercase;
+        }
+
+        .fs-contacts {
+          flex: none;
+          display: flex;
+          align-items: flex-start;
+          justify-content: space-between;
+          width: var(--contacts-w);
+          height: var(--contacts-h);
+          margin-left: auto;
+          border-bottom: 1px solid var(--ink);
+        }
+
+        .fs-mark {
+          flex: none;
+          width: var(--mark);
+          height: var(--mark);
+          margin-top: var(--mark-top);
+          border: var(--mark-bw) solid var(--ink);
+          border-radius: 50%;
+        }
+
+        .fs-contacts a {
+          font-size: var(--fs-nav);
+          font-weight: 500;
+          line-height: 1;
+          text-align: right;
+          text-transform: uppercase;
+          white-space: nowrap;
+        }
+
+        .fs-h1 {
+          position: absolute;
+          left: var(--pad-x);
+          top: var(--h1-top);
+          font-size: var(--fs-h1);
+          font-weight: 500;
+          line-height: 1;
+          white-space: nowrap;
+        }
+
+        .fs-row {
+          position: absolute;
+          left: var(--pad-x);
+          right: var(--pad-x);
+          top: var(--lead-top);
           display: flex;
           align-items: flex-start;
           gap: var(--row-gap);
@@ -703,4 +913,5 @@ export default function FlowWave() {
       `}</style>
     </div>
   );
+}
 }
