@@ -439,7 +439,7 @@ export default function FlowWave() {
       <div className="uip-layer">
         <div className="fs-band">
           <header className="fs-head">
-            <span className="fs-word">Data Ocean&#174;</span>
+            <span className="fs-word">Data Ocean&#169;</span>
 
             <nav className="fs-nav">
               <a href="#ai">AI<br />Governance</a>
@@ -454,17 +454,11 @@ export default function FlowWave() {
             </div>
           </header>
 
-          <h1 className="fs-h1">Navigate the Depths of SAP & Innovation&#174;</h1>
+          <h1 className="fs-h1">Navigating AI, SAP & Digital Tech</h1>
 
-          <div className="fs-row">
-            <p className="fs-lead">
-              Elite SAP consulting, digital NFC solutions, and AI governance powered by 10+ years of enterprise expertise.
-            </p>
-
-            <div className="fs-actions">
-              <a className="fs-btn fs-btn-solid" href="#services">Explore SAP Services</a>
-              <a className="fs-btn fs-btn-ghost" href="#nfc">Shop NFC Cards</a>
-            </div>
+          <div className="fs-actions">
+            <a className="fs-btn fs-btn-solid" href="#services">SAP</a>
+            <a className="fs-btn fs-btn-ghost" href="#nfc">Digital Tech Products</a>
           </div>
         </div>
 
@@ -505,8 +499,6 @@ export default function FlowWave() {
           --mark-bw: 2px;
           --mark-top: 3px;
           --h1-top: 262px;
-          --lead-top: 364px;
-          --lead-w: 850px;
           --row-gap: 40px;
           --btn-w: 293px;
           --btn-h: 76px;
@@ -514,7 +506,6 @@ export default function FlowWave() {
           --fs-word: 24px;
           --fs-nav: 24px;
           --fs-h1: 72px;
-          --fs-lead: 32px;
           --fs-btn: 24px;
           --fs-cap: 24px;
         }
@@ -549,7 +540,7 @@ export default function FlowWave() {
         .uip-layer {
           position: absolute;
           inset: 0;
-          z-index: 1;
+          z-index: 2;
           pointer-events: none;
         }
 
@@ -636,27 +627,11 @@ export default function FlowWave() {
           white-space: nowrap;
         }
 
-        .fs-row {
+        .fs-actions {
           position: absolute;
           left: var(--pad-x);
           right: var(--pad-x);
-          top: var(--lead-top);
-          display: flex;
-          align-items: flex-start;
-          gap: var(--row-gap);
-        }
-
-        .fs-lead {
-          flex: 0 1 var(--lead-w);
-          min-width: 0;
-          font-size: var(--fs-lead);
-          font-weight: 400;
-          line-height: 1.2;
-        }
-
-        .fs-actions {
-          flex: none;
-          margin-left: auto;
+          top: 364px;
           display: flex;
           gap: var(--btn-gap);
         }
@@ -672,6 +647,7 @@ export default function FlowWave() {
           line-height: 1;
           text-transform: uppercase;
           white-space: nowrap;
+          border-radius: 8px;
         }
 
         .fs-btn-solid {
