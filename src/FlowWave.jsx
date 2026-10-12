@@ -471,7 +471,7 @@ export default function FlowWave() {
           --on-asset: #ffffff;
           --lk-asset: #000000;
           --pad-x: 40px;
-          --fs-word: 24px;
+          --fs-word: 16px;
           --fs-nav: 18px;
           --fs-h1: 72px;
           --fs-btn: 20px;
@@ -627,7 +627,7 @@ export default function FlowWave() {
         @media (max-width: 860px) {
           :root {
             --pad-x: 20px;
-            --fs-word: 18px;
+            --fs-word: 14px;
             --fs-nav: 14px;
             --fs-h1: 36px;
             --fs-btn: 14px;
