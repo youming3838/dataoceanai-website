@@ -7,7 +7,7 @@ import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass.js';
 import { GammaCorrectionShader } from 'three/examples/jsm/shaders/GammaCorrectionShader.js';
 import { CopyShader } from 'three/examples/jsm/shaders/CopyShader.js';
 
-// Fixed Constants - ELECTRIC BLUE SETTINGS
+// Fixed Constants
 const bgColor         = '#02160c';
 const flameColor      = '#3b82f6'; 
 const flameColor2     = '#60a5fa'; 
@@ -20,7 +20,7 @@ const colorLow        = '#02160c';
 const colorHigh       = '#3b82f6'; 
 const opacity         = 0.26;
 const pointSize       = 5.5;
-const brightness      = 0.8; // Increased brightness to make it glow
+const brightness      = 0.8; 
 
 const waveHeight      = 3;
 const flow            = 1;
@@ -429,7 +429,7 @@ export default function FlowWave() {
 
       <div className="uip-layer">
         <header className="fs-head">
-          <span className="fs-word">Data Ocean<sup style={{ font size: '0.5em', verticalAlign: 'super' }}>&#169;</sup></span> 
+          <span className="fs-word">Data Ocean<sup style={{ fontSize: '0.5em', verticalAlign: 'super' }}>&#169;</sup></span>
           <nav className="fs-nav">
             <a href="#ai">AI<br />Governance</a>
             <a href="#services">SAP<br />Services</a>
