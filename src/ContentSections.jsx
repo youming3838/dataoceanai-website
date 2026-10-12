@@ -42,11 +42,20 @@ export default function ContentSections() {
       </section>
 
       {/* Contact Section */}
-      <section id="contact" style={{ padding: '100px 40px', borderTop: '1px solid #34e89a' }}>
-        <h2 style={{ fontSize: '3rem', color: '#34e89a', marginBottom: '40px' }}>Contact Data Ocean</h2>
-        <p style={{ color: '#aef0c0', marginBottom: '10px' }}>Email: hello@dataoceanai.io</p>
-        <p style={{ color: '#aef0c0', marginBottom: '30px' }}>Based in Malaysia, serving global enterprises.</p>
-        <a href="mailto:hello@dataoceanai.io" style={{ display: 'inline-block', padding: '15px 30px', border: '1px solid #34e89a', color: '#34e89a', textDecoration: 'none', fontWeight: 'bold' }}>Get in Touch</a>
+      <section id="contact" style={{ padding: '100px 40px', borderTop: '1px solid #3b82f6' }}>
+        <h2 style={{ fontSize: '3rem', color: '#3b82f6', marginBottom: '20px' }}>Contact Data Ocean</h2>
+        <p style={{ color: '#a3e4ff', marginBottom: '40px', fontSize: '1.1rem' }}>
+          Ready to elevate your SAP infrastructure or order your NFC cards? Reach out to us directly.
+        </p>
+        
+        <div style={{ display: 'flex', gap: '40px', flexWrap: 'wrap' }}>
+          <div style={{ flex: '1 1 300px' }}>
+            <p style={{ color: '#ffffff', fontWeight: 'bold', marginBottom: '10px' }}>Email Us</p>
+            <a href="mailto:connect@dataoceanai.io" style={{ color: '#a3e4ff', textDecoration: 'none' }}>connect@dataoceanai.io</a>
+          </div>
+        </div>
+        
+        <a href="mailto:connect@dataoceanai.io" style={{ display: 'inline-block', marginTop: '40px', padding: '15px 40px', border: '1px solid #3b82f6', color: '#3b82f6', textDecoration: 'none', fontWeight: 'bold', borderRadius: '8px' }}>Get in Touch</a>
       </section>
 
     </div>
