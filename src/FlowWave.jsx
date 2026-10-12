@@ -439,13 +439,13 @@ export default function FlowWave() {
       <div className="uip-layer">
         <div className="fs-band">
           <header className="fs-head">
-            <span className="fs-word">Onda&#174;</span>
+            <span className="fs-word">Data Ocean&#174;</span>
 
             <nav className="fs-nav">
-              <a href="#">About<br />event</a>
-              <a href="#">Line<br />up</a>
-              <a href="#">Event<br />schedule</a>
-              <a href="#">Our<br />speakers</a>
+              <a href="#">AI<br />Governance</a>
+              <a href="#">SAP<br />Services</a>
+              <a href="#">Digital<br />Products</a>
+              <a href="#">Contact<br />Us</a>
             </nav>
 
             <div className="fs-contacts">
@@ -454,25 +454,25 @@ export default function FlowWave() {
             </div>
           </header>
 
-          <h1 className="fs-h1">A World of Motion&#174;</h1>
+          <h1 className="fs-h1">Navigating A World of AI & Tech&#174;</h1>
 
           <div className="fs-row">
             <p className="fs-lead">
-              Take control of your surfaces with live scenes, real-time colour
+              Elite SAP consulting, Digital Tech Solutions, and AI Governance powered by 20+ years of enterprise expertise with live scenes, real-time colour
               and motion &#8212; one calm platform for all of it.
             </p>
 
             <div className="fs-actions">
-              <a className="fs-btn fs-btn-solid" href="#">Get tickets</a>
-              <a className="fs-btn fs-btn-ghost" href="#">Explore event</a>
+              <a className="fs-btn fs-btn-solid" href="#">Explore SAP Services</a>
+              <a className="fs-btn fs-btn-ghost" href="#">Shop NFC Cards</a>
             </div>
           </div>
         </div>
 
         <div className="fs-caps">
-          <span>Living gradients</span>
-          <span>Endless scenes</span>
-          <span>Connect with colour</span>
+          <span>AI Governance</span>
+          <span>Enterprise SAP Consulting</span>
+          <Smart Digital Tech Products</span>
         </div>
       </div>
 
