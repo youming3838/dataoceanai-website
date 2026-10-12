@@ -13,7 +13,7 @@ const flameColor      = '#0aff7f';
 const flameColor2     = '#aef0c0';
 const flameAmt        = 0.2;
 const atmoColor       = '#7affbf';
-const atmoCount       = 150; // Reduced from 300 for mobile
+const atmoCount       = 150; 
 const atmoSize        = 24;
 const atmoSpeed       = 1.0;
 const colorLow        = '#02160c';
@@ -113,7 +113,6 @@ export default function FlowWave() {
     const canvas = document.getElementById('scene');
     if (!canvas) return;
 
-    // Detect low memory / constrained mobile device
     const isLowMemoryDevice = 
       (navigator.deviceMemory && navigator.deviceMemory <= 4) || 
       /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
@@ -124,7 +123,7 @@ export default function FlowWave() {
     const renderer = new THREE.WebGL1Renderer({ canvas, antialias: !isLowMemoryDevice });
     renderer.setPixelRatio(pixelRatio);
     renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.shadowMap.enabled = false; // Disabled for performance
+    renderer.shadowMap.enabled = false;
 
     const scene = new THREE.Scene();
     scene.background = new THREE.Object3D();
@@ -139,7 +138,6 @@ export default function FlowWave() {
 
     const renderPass = new RenderPass(scene, camera);
 
-    // Optimized Bloom settings (reduced resolution and intensity slightly)
     const torusComposer = new EffectComposer(renderer);
     torusComposer.renderToScreen = false;
     torusComposer.addPass(renderPass);
@@ -162,7 +160,6 @@ export default function FlowWave() {
     finalPass.uniforms.bloomTexture.value = bloomComposer.renderTarget1.texture;
     finalPass.uniforms.torusTexture.value = torusComposer.renderTarget1.texture;
 
-    // 1. Reduced Geometry from (4.2, 200, 600) to (4.2, 100, 200)
     const geo = new THREE.SphereGeometry(4.2, 100, 200);
     const mat = new THREE.ShaderMaterial({
       transparent: true,
@@ -237,7 +234,6 @@ export default function FlowWave() {
     group.add(pointsObj);
     scene.add(group);
 
-    // Ambient Motes
     const N = Math.round(atmoCount);
     const positions = new Float32Array(N * 3);
     const sizes = new Float32Array(N);
@@ -292,7 +288,6 @@ export default function FlowWave() {
     atmoPts.layers.enable(LAYERS.ENTIRE_SCENE);
     scene.add(atmoPts);
 
-    // Interaction State
     let scrollTarget = 0;
     let scrollSmooth = 0;
     let scrollCurrent = 0;
@@ -355,7 +350,6 @@ export default function FlowWave() {
     window.addEventListener('resize', handleResize);
     handleResize();
 
-    // Animation Loop (Gracefully halts if critical memory constraint is hit)
     const animate = () => {
       if (!isLowMemoryDevice) {
         animId = requestAnimationFrame(animate);
@@ -407,11 +401,9 @@ export default function FlowWave() {
     if (!isLowMemoryDevice) {
       animId = requestAnimationFrame(animate);
     } else {
-      // Render single static frame for low memory devices
       animate();
     }
 
-    // Robust cleanup to prevent memory leaks
     return () => {
       if (animId) cancelAnimationFrame(animId);
       window.removeEventListener('scroll', handleScroll);
@@ -419,7 +411,6 @@ export default function FlowWave() {
       window.removeEventListener('mouseout', handleMouseOut);
       window.removeEventListener('resize', handleResize);
 
-      // Dispose Three.js resources
       geo.dispose();
       mat.dispose();
       atmoGeo.dispose();
@@ -433,29 +424,27 @@ export default function FlowWave() {
 
   return (
     <div className="lk-stage" ref={containerRef}>
-      <div id="scroll-host" style={{ height: '620vh' }} />
+      {/* Fixed canvas background */}
       <canvas id="scene" />
 
+      {/* Hero UI Layer - scrolls naturally */}
       <div className="uip-layer">
-        <div className="fs-band">
-          <header className="fs-head">
-            <span className="fs-word">Data Ocean&#169;</span>
+        <header className="fs-head">
+          <span className="fs-word">Data Ocean&#169;</span>
+          <nav className="fs-nav">
+            <a href="#ai">AI<br />Governance</a>
+            <a href="#services">SAP<br />Services</a>
+            <a href="#nfc">Digital<br />Products</a>
+            <a href="#contact">Contact<br />Us</a>
+          </nav>
+          <div className="fs-contacts">
+            <i className="fs-mark" aria-hidden="true" />
+            <a href="#contact">Contacts</a>
+          </div>
+        </header>
 
-            <nav className="fs-nav">
-              <a href="#ai">AI<br />Governance</a>
-              <a href="#services">SAP<br />Services</a>
-              <a href="#nfc">Digital<br />Products</a>
-              <a href="#contact">Contact<br />Us</a>
-            </nav>
-
-            <div className="fs-contacts">
-              <i className="fs-mark" aria-hidden="true" />
-              <a href="#contact">Contacts</a>
-            </div>
-          </header>
-
+        <div className="fs-hero-content">
           <h1 className="fs-h1">Navigating AI, SAP & Digital Tech</h1>
-
           <div className="fs-actions">
             <a className="fs-btn fs-btn-solid" href="#services">SAP</a>
             <a className="fs-btn fs-btn-ghost" href="#nfc">Digital Tech Products</a>
@@ -470,12 +459,9 @@ export default function FlowWave() {
       </div>
 
       <style>{`
-        *, *::before, *::after {
-          box-sizing: border-box;
-          border: 0 solid;
-        }
-        h1, h2, h3, h4, h5, h6 { font-size: inherit; font-weight: inherit; }
-        p, h1, h2, h3, h4, h5, h6, figure, blockquote, dl, dd, pre, hr { margin: 0; }
+        *, *::before, *::after { box-sizing: border-box; border: 0 solid; }
+        h1, h2, h3, h4, h5, h6 { font-size: inherit; font-weight: inherit; margin: 0; }
+        p { margin: 0; }
         ul, ol, menu { margin: 0; padding: 0; list-style: none; }
         a { color: inherit; text-decoration: none; }
 
@@ -485,36 +471,18 @@ export default function FlowWave() {
           --ink: #f2f2f2;
           --on-asset: #ffffff;
           --lk-asset: #000000;
-          --pad-x: 30px;
-          --band-h: 500px;
-          --head-top: 30px;
-          --cap-bottom: 30px;
-          --word-top: 1px;
-          --nav-off: 470px;
-          --nav-col: 130px;
-          --nav-gap: 60px;
-          --contacts-w: 293px;
-          --contacts-h: 48px;
-          --mark: 18px;
-          --mark-bw: 2px;
-          --mark-top: 3px;
-          --h1-top: 262px;
-          --row-gap: 40px;
-          --btn-w: 293px;
-          --btn-h: 76px;
-          --btn-gap: 20px;
+          --pad-x: 40px;
           --fs-word: 24px;
-          --fs-nav: 24px;
+          --fs-nav: 18px;
           --fs-h1: 72px;
-          --fs-btn: 24px;
-          --fs-cap: 24px;
+          --fs-btn: 20px;
+          --fs-cap: 18px;
         }
 
         html, body {
-          margin: 0;
-          padding: 0;
+          margin: 0; padding: 0;
           background: var(--lk-asset);
-          min-height: 100svh;
+          min-height: 100vh;
           overflow-x: hidden;
           font-family: var(--font-onest);
           color: var(--ink);
@@ -523,8 +491,8 @@ export default function FlowWave() {
 
         .lk-stage {
           position: relative;
-          min-height: max(100svh, calc(var(--band-h) + 120px));
-          overflow: hidden;
+          width: 100%;
+          min-height: 100vh;
           background: var(--lk-asset);
         }
 
@@ -538,142 +506,142 @@ export default function FlowWave() {
         }
 
         .uip-layer {
-          position: absolute;
-          inset: 0;
+          position: relative;
           z-index: 2;
+          min-height: 100vh;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          padding: var(--pad-x);
           pointer-events: none;
         }
-
-        .fs-band {
-          position: absolute;
-          top: 0;
-          left: 0;
-          right: 0;
-          height: var(--band-h);
-          background: var(--band);
-          pointer-events: auto;
-        }
+        
+        .uip-layer a, .uip-layer .fs-btn { pointer-events: auto; }
 
         .fs-head {
-          position: absolute;
-          left: var(--pad-x);
-          right: var(--pad-x);
-          top: var(--head-top);
           display: flex;
           align-items: flex-start;
+          justify-content: space-between;
+          width: 100%;
         }
 
         .fs-word {
-          flex: none;
-          width: var(--nav-off);
-          margin-top: var(--word-top);
           font-size: var(--fs-word);
-          font-weight: 500;
-          line-height: 1;
+          font-weight: 600;
           text-transform: uppercase;
           white-space: nowrap;
         }
 
         .fs-nav {
-          flex: none;
           display: flex;
-          gap: var(--nav-gap);
+          gap: 40px;
         }
 
         .fs-nav a {
-          width: var(--nav-col);
           font-size: var(--fs-nav);
           font-weight: 500;
-          line-height: 1;
+          line-height: 1.2;
           text-transform: uppercase;
+          text-align: center;
+          opacity: 0.9;
+          transition: opacity 0.3s;
         }
+        .fs-nav a:hover { opacity: 1; color: #34e89a; }
 
         .fs-contacts {
-          flex: none;
           display: flex;
-          align-items: flex-start;
-          justify-content: space-between;
-          width: var(--contacts-w);
-          height: var(--contacts-h);
-          margin-left: auto;
+          align-items: center;
+          gap: 15px;
           border-bottom: 1px solid var(--ink);
+          padding-bottom: 5px;
         }
 
         .fs-mark {
-          flex: none;
-          width: var(--mark);
-          height: var(--mark);
-          margin-top: var(--mark-top);
-          border: var(--mark-bw) solid var(--ink);
+          width: 18px;
+          height: 18px;
+          border: 2px solid var(--ink);
           border-radius: 50%;
         }
 
         .fs-contacts a {
           font-size: var(--fs-nav);
           font-weight: 500;
-          line-height: 1;
-          text-align: right;
           text-transform: uppercase;
-          white-space: nowrap;
+        }
+
+        .fs-hero-content {
+          display: flex;
+          flex-direction: column;
+          gap: 40px;
+          margin-top: auto;
+          margin-bottom: auto;
         }
 
         .fs-h1 {
-          position: absolute;
-          left: var(--pad-x);
-          top: var(--h1-top);
           font-size: var(--fs-h1);
           font-weight: 500;
-          line-height: 1;
-          white-space: nowrap;
+          line-height: 1.1;
+          max-width: 1200px;
         }
 
         .fs-actions {
-          position: absolute;
-          left: var(--pad-x);
-          right: var(--pad-x);
-          top: 364px;
           display: flex;
-          gap: var(--btn-gap);
+          gap: 20px;
+          flex-wrap: wrap;
         }
 
         .fs-btn {
-          display: flex;
+          display: inline-flex;
           align-items: center;
           justify-content: center;
-          width: var(--btn-w);
-          height: var(--btn-h);
+          padding: 20px 40px;
           font-size: var(--fs-btn);
-          font-weight: 500;
-          line-height: 1;
+          font-weight: 600;
           text-transform: uppercase;
-          white-space: nowrap;
           border-radius: 8px;
+          transition: all 0.3s ease;
         }
 
         .fs-btn-solid {
           background: var(--ink);
           color: var(--band);
         }
+        .fs-btn-solid:hover { background: #34e89a; color: var(--lk-asset); }
 
         .fs-btn-ghost {
           border: 1px solid var(--ink);
           color: var(--ink);
         }
+        .fs-btn-ghost:hover { background: rgba(255,255,255,0.1); }
 
         .fs-caps {
-          position: absolute;
-          left: var(--pad-x);
-          right: var(--pad-x);
-          bottom: var(--cap-bottom);
           display: flex;
           align-items: center;
           justify-content: space-between;
           color: var(--on-asset);
           font-size: var(--fs-cap);
           font-weight: 500;
-          line-height: 1;
           text-transform: uppercase;
-          pointer-events: auto;
+          opacity: 0.7;
+        }
+
+        /* 📱 Mobile Responsive Styles */
+        @media (max-width: 860px) {
+          :root {
+            --pad-x: 20px;
+            --fs-word: 18px;
+            --fs-nav: 14px;
+            --fs-h1: 36px;
+            --fs-btn: 14px;
+            --fs-cap: 12px;
+          }
+          .fs-head { flex-wrap: wrap; gap: 20px; }
+          .fs-nav { width: 100%; justify-content: space-between; gap: 10px; order: 3; margin-top: 20px; }
+          .fs-contacts { order: 2; }
+          .fs-hero-content { gap: 30px; }
+          .fs-actions { flex-direction: column; width: 100%; }
+          .fs-btn { width: 100%; padding: 18px 20px; }
+          .fs-caps { display: none; /* Hide bottom captions on mobile to save space */ }
         }
       `}</style>
     </div>
