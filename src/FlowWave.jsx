@@ -429,7 +429,7 @@ export default function FlowWave() {
 
       <div className="uip-layer">
         <header className="fs-head">
-          <span className="fs-word">Data Ocean&#169;</span>
+          <span className="fs-word">Data Ocean<sup style={{ font size: '0.5em', verticalAlign: 'super' }}>&#169;</sup></span> 
           <nav className="fs-nav">
             <a href="#ai">AI<br />Governance</a>
             <a href="#services">SAP<br />Services</a>
