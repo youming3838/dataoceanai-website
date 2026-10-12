@@ -9,15 +9,15 @@ import { CopyShader } from 'three/examples/jsm/shaders/CopyShader.js';
 
 // Fixed Constants
 const bgColor         = '#02160c';
-const flameColor      = '#0aff7f';
-const flameColor2     = '#aef0c0';
+const flameColor      = '#00e5ff';
+const flameColor2     = '#a3e4ff';
 const flameAmt        = 0.2;
-const atmoColor       = '#7affbf';
+const atmoColor       = '#a3e4ff';
 const atmoCount       = 150; 
 const atmoSize        = 24;
 const atmoSpeed       = 1.0;
 const colorLow        = '#02160c';
-const colorHigh       = '#34e89a';
+const colorHigh       = '#00e5ff';
 const opacity         = 0.26;
 const pointSize       = 5.5;
 const brightness      = 0.45;
