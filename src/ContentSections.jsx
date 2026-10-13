@@ -10,7 +10,6 @@ export default function ContentSections() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // This is a mock submission. We will connect it to a real email service later.
     setSubmitted(true);
   };
 
