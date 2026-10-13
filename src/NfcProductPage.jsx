@@ -18,7 +18,7 @@ export default function NfcProductPage() {
             Stop handing out paper cards that get thrown away. Our premium, programmable NFC business cards let you share your entire digital portfolio, social media, and contact details with a single tap.
           </p>
           <a href="#order" style={{ display: 'inline-block', padding: '20px 50px', backgroundColor: '#3b82f6', color: '#fff', fontSize: '1.2rem', fontWeight: 'bold', textDecoration: 'none', borderRadius: '8px' }}>Order Your Card Now</a>
-          <p style={{ color: '#a3e4ff', marginTop: '15px', fontSize: '0.9rem' }}>Free shipping across Malaysia. Global shipping available.</p>
+          <p style={{ color: '#a3e4ff', marginTop: '15px', fontSize: '0.9rem' }}>Free shipping worldwide. Global delivery available.</p>
         </div>
         
         <div style={{ flex: '1 1 400px', textAlign: 'center' }}>
@@ -61,7 +61,7 @@ export default function NfcProductPage() {
         
         <div style={{ display: 'inline-block', padding: '50px', background: 'rgba(59, 130, 246, 0.1)', borderRadius: '20px', border: '2px solid #3b82f6', maxWidth: '500px', width: '100%' }}>
           <h3 style={{ color: '#fff', fontSize: '2rem', marginBottom: '10px' }}>Standard Card</h3>
-          <p style={{ color: '#3b82f6', fontSize: '3rem', fontWeight: 'bold', marginBottom: '20px' }}>RM 99</p>
+          <p style={{ color: '#3b82f6', fontSize: '3rem', fontWeight: 'bold', marginBottom: '20px' }}>$99</p>
           <ul style={{ listStyle: 'none', padding: 0, color: '#a3e4ff', marginBottom: '30px', textAlign: 'left', display: 'inline-block' }}>
             <li style={{ marginBottom: '10px' }}>✔ Custom Digital Profile Setup</li>
             <li style={{ marginBottom: '10px' }}>✔ Premium Matte Finish</li>
