@@ -70,13 +70,13 @@ export default function ContentSections() {
         </p>
         
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '40px', alignItems: 'center', background: 'rgba(59, 130, 246, 0.05)', padding: '40px', borderRadius: '12px', border: '1px solid #3b82f6' }}>
+          
           <div style={{ flex: '1 1 400px' }}>
             <h3 style={{ fontSize: '2.5rem', marginBottom: '20px', color: '#ffffff' }}>Smart NFC Business Cards</h3>
             <p style={{ color: '#a3e4ff', marginBottom: '30px', lineHeight: '1.6', fontSize: '1.1rem' }}>
               Share your contact details, portfolio, and social media instantly with a single tap. Premium, eco-friendly, and fully programmable.
             </p>
             
-            {/* How it works */}
             <div style={{ marginBottom: '30px' }}>
               <h4 style={{ color: '#ffffff', marginBottom: '15px' }}>How it works:</h4>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
@@ -95,8 +95,24 @@ export default function ContentSections() {
               </div>
             </div>
 
-            <a href="#contact" style={{ display: 'inline-block', padding: '15px 40px', backgroundColor: '#3b82f6', color: '#ffffff', textDecoration: 'none', fontWeight: 'bold', borderRadius: '8px', transition: '0.3s' }}>Order Yours Now</a>
+            <a href="/nfc-product" style={{ display: 'inline-block', padding: '15px 40px', backgroundColor: '#3b82f6', color: '#ffffff', textDecoration: 'none', fontWeight: 'bold', borderRadius: '8px', transition: '0.3s' }}>Order Yours Now</a>
           </div>
+
+          {/* Image Display */}
+          <div style={{ flex: '1 1 300px', textAlign: 'center' }}>
+            <img 
+              src="/nfc-card.jpg" 
+              alt="Smart NFC Business Card" 
+              style={{ 
+                width: '100%', 
+                maxWidth: '400px', 
+                borderRadius: '16px', 
+                border: '1px solid #3b82f6', 
+                boxShadow: '0 0 30px rgba(59, 130, 246, 0.3)' 
+              }} 
+            />
+          </div>
+
         </div>
       </section>
 
