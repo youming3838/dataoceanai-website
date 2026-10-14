@@ -50,7 +50,7 @@ const FaqItem = ({ question, answer }) => {
   );
 };
 
-// Scrolling Marquee Banner Component
+// Scrolling Marquee Banner Component (Now NFC Focused)
 const MarqueeBanner = () => {
   return (
     <div style={{ overflow: 'hidden', width: '100%', background: 'rgba(59, 130, 246, 0.1)', borderTop: '1px solid rgba(59, 130, 246, 0.3)', borderBottom: '1px solid rgba(59, 130, 246, 0.3)', padding: '20px 0' }}>
@@ -61,7 +61,7 @@ const MarqueeBanner = () => {
       >
         {[...Array(6)].map((_, i) => (
           <span key={i} style={{ color: '#3b82f6', fontSize: '1.2rem', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '2px' }}>
-            SAP Consulting • AI Governance • Digital NFC Cards • Enterprise Migration • 
+            Smart NFC Business Cards • Eco-Friendly • Reusable • Premium Matte Finish • Global Shipping • 
           </span>
         ))}
       </motion.div>
