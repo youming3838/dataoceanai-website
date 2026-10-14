@@ -427,7 +427,8 @@ export default function FlowWave() {
   }, []);
 
   return (
-    <div className="lk-stage" ref={containerRef}>
+    // 🌟 THE FIX: minHeight is set to 0 on pages that are not the homepage
+    <div className="lk-stage" style={{ minHeight: isHomePage ? '100vh' : '0' }} ref={containerRef}>
       <canvas id="scene" />
 
       {/* 🌟 HERO UI OVERLAY - ONLY SHOWS ON HOMEPAGE */}
@@ -497,7 +498,6 @@ export default function FlowWave() {
         .lk-stage {
           position: relative;
           width: 100%;
-          min-height: 100vh;
           background: var(--lk-asset);
         }
 
