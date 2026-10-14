@@ -40,14 +40,32 @@ const FaqItem = ({ question, answer }) => {
 };
 
 export default function NfcProductPage() {
+  // State for the interactive pricing slider
+  const [quantity, setQuantity] = useState(1);
+  const basePrice = 99;
+  const totalPrice = quantity * basePrice;
+
   return (
-    // 🌟 THE FIX: Added position: 'relative' and zIndex: 10 to sit above the global background
-    <div style={{ position: 'relative', zIndex: 10, background: 'linear-gradient(to bottom, rgba(2, 22, 12, 0.6) 0%, rgba(2, 22, 12, 0.9) 100%)', color: '#f2f2f2', minHeight: '100vh', fontFamily: 'sans-serif', overflowX: 'hidden', backdropFilter: 'blur(10px)' }}>
+    <div style={{ position: 'relative', zIndex: 10, background: 'linear-gradient(to bottom, rgba(2, 22, 12, 0.4) 0%, rgba(2, 22, 12, 0.9) 100%)', color: '#f2f2f2', minHeight: '100vh', fontFamily: 'sans-serif', overflowX: 'hidden', backdropFilter: 'blur(10px)' }}>
       
-      {/* Navigation Back to Home */}
-      <div style={{ padding: '20px 40px', position: 'sticky', top: 0, background: 'rgba(2, 22, 12, 0.7)', backdropFilter: 'blur(10px)', zIndex: 100 }}>
-        <Link to="/" style={{ color: '#3b82f6', textDecoration: 'none', fontWeight: 'bold' }}>← Back to Data Ocean</Link>
+      {/* 🌟 STICKY FLOATING NAVIGATION BAR */}
+      <div style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 1000, background: 'rgba(2, 22, 12, 0.85)', backdropFilter: 'blur(12px)', borderBottom: '1px solid rgba(59, 130, 246, 0.3)' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '15px 40px', maxWidth: '1200px', margin: '0 auto' }}>
+          <Link to="/" style={{ color: '#3b82f6', textDecoration: 'none', fontWeight: 'bold', fontSize: '1.2rem', display: 'flex', alignItems: 'center', gap: '10px' }}>
+            <span>←</span> Data Ocean
+          </Link>
+          <motion.a 
+            whileTap={{ scale: 0.95 }}
+            href="#order" 
+            style={{ padding: '10px 25px', backgroundColor: '#3b82f6', color: '#fff', textDecoration: 'none', borderRadius: '6px', fontWeight: 'bold', fontSize: '0.9rem' }}
+          >
+            Buy Now
+          </motion.a>
+        </div>
       </div>
+
+      {/* Spacer to push content below the fixed nav bar */}
+      <div style={{ height: '70px' }} />
 
       {/* Hero Section */}
       <motion.div 
@@ -116,7 +134,7 @@ export default function NfcProductPage() {
         </div>
       </motion.div>
 
-      {/* Pricing / Order Section */}
+      {/* 🌟 PRICING / ORDER SECTION WITH INTERACTIVE SLIDER */}
       <motion.div 
         id="order" initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }} variants={staggerContainer}
         style={{ padding: '80px 40px', textAlign: 'center' }}
@@ -124,18 +142,50 @@ export default function NfcProductPage() {
         <motion.h2 variants={fadeInUp} style={{ fontSize: '3rem', color: '#3b82f6', marginBottom: '20px' }}>Ready to Upgrade Your Network?</motion.h2>
         <motion.p variants={fadeInUp} style={{ fontSize: '1.2rem', color: '#a3e4ff', marginBottom: '40px' }}>Get your smart NFC card today.</motion.p>
         
-        <motion.div variants={fadeInUp} whileTap={{ scale: 0.98 }} style={{ display: 'inline-block', padding: '50px', background: 'rgba(59, 130, 246, 0.2)', borderRadius: '20px', border: '2px solid #3b82f6', maxWidth: '500px', width: '100%', boxShadow: '0 0 40px rgba(59, 130, 246, 0.2)' }}>
-          <h3 style={{ color: '#fff', fontSize: '2rem', marginBottom: '10px' }}>Standard Card</h3>
-          <p style={{ color: '#3b82f6', fontSize: '3rem', fontWeight: 'bold', marginBottom: '20px' }}>$99</p>
-          <ul style={{ listStyle: 'none', padding: 0, color: '#a3e4ff', marginBottom: '30px', textAlign: 'left', display: 'inline-block' }}>
-            <li style={{ marginBottom: '10px' }}>✔ Custom Digital Profile Setup</li>
-            <li style={{ marginBottom: '10px' }}>✔ Premium Matte Finish</li>
-            <li style={{ marginBottom: '10px' }}>✔ Unlimited Taps</li>
-            <li style={{ marginBottom: '10px' }}>✔ 1-Year Warranty</li>
-          </ul>
-          <br />
-          <motion.a whileTap={{ scale: 0.95 }} href="mailto:connect@dataoceanai.io?subject=Order%20NFC%20Card" style={{ display: 'inline-block', padding: '15px 40px', backgroundColor: '#3b82f6', color: '#fff', fontWeight: 'bold', textDecoration: 'none', borderRadius: '8px', width: '100%' }}>Order via Email</motion.a>
-        </motion.div>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '30px', maxWidth: '600px', margin: '0 auto' }}>
+          
+          {/* Interactive Quantity Slider */}
+          <div style={{ width: '100%', background: 'rgba(59, 130, 246, 0.1)', padding: '25px', borderRadius: '12px', border: '1px solid #3b82f6' }}>
+            <label style={{ color: '#ffffff', marginBottom: '15px', display: 'flex', justifyContent: 'space-between', fontSize: '1.1rem', fontWeight: 'bold' }}>
+              <span>Number of Cards:</span>
+              <span style={{ color: '#3b82f6' }}>{quantity}</span>
+            </label>
+            <input
+              type="range"
+              min="1"
+              max="50"
+              value={quantity}
+              onChange={(e) => setQuantity(Number(e.target.value))}
+              style={{ width: '100%', accentColor: '#3b82f6', cursor: 'pointer' }}
+            />
+            <div style={{ display: 'flex', justifyContent: 'space-between', color: '#a3e4ff', fontSize: '0.8rem', marginTop: '10px' }}>
+              <span>1</span>
+              <span>25</span>
+              <span>50</span>
+            </div>
+          </div>
+
+          {/* Dynamic Pricing Card */}
+          <motion.div 
+            key={quantity} // Triggers the animation when quantity changes
+            initial={{ scale: 0.95, opacity: 0.8 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+            style={{ display: 'inline-block', padding: '50px', background: 'rgba(59, 130, 246, 0.2)', borderRadius: '20px', border: '2px solid #3b82f6', width: '100%', boxShadow: '0 0 40px rgba(59, 130, 246, 0.2)' }}
+          >
+            <h3 style={{ color: '#fff', fontSize: '2rem', marginBottom: '10px' }}>Standard Card</h3>
+            <p style={{ color: '#3b82f6', fontSize: '3rem', fontWeight: 'bold', marginBottom: '20px' }}>${totalPrice}</p>
+            <p style={{ color: '#a3e4ff', marginBottom: '20px', fontSize: '0.9rem' }}>(${basePrice} per card)</p>
+            <ul style={{ listStyle: 'none', padding: 0, color: '#a3e4ff', marginBottom: '30px', textAlign: 'left', display: 'inline-block' }}>
+              <li style={{ marginBottom: '10px' }}>✔ Custom Digital Profile Setup</li>
+              <li style={{ marginBottom: '10px' }}>✔ Premium Matte Finish</li>
+              <li style={{ marginBottom: '10px' }}>✔ Unlimited Taps</li>
+              <li style={{ marginBottom: '10px' }}>✔ 1-Year Warranty</li>
+            </ul>
+            <br />
+            <motion.a whileTap={{ scale: 0.95 }} href={`mailto:connect@dataoceanai.io?subject=Order%20NFC%20Card&body=I%20would%20like%20to%20order%20${quantity}%20NFC%20card(s)%20for%20$${totalPrice}.`} style={{ display: 'inline-block', padding: '15px 40px', backgroundColor: '#3b82f6', color: '#fff', fontWeight: 'bold', textDecoration: 'none', borderRadius: '8px', width: '100%' }}>Order via Email</motion.a>
+          </motion.div>
+        </div>
       </motion.div>
 
       {/* FAQ Section */}
