@@ -5,21 +5,16 @@ import MatrixRain from './MatrixRain'
 import ContentSections from './ContentSections'
 import NfcProductPage from './NfcProductPage'
 
-function HomePage() {
-  return (
-    <div>
-      <FlowWave />
-      <MatrixRain />
-      <ContentSections />
-    </div>
-  )
-}
-
 function App() {
   return (
     <Router>
+      {/* Global Background Animation - Sits behind ALL pages */}
+      <FlowWave />
+      <MatrixRain />
+      
+      {/* Page Content Routes */}
       <Routes>
-        <Route path="/" element={<HomePage />} />
+        <Route path="/" element={<ContentSections />} />
         <Route path="/nfc-product" element={<NfcProductPage />} />
       </Routes>
     </Router>
