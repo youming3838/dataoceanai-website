@@ -14,42 +14,42 @@ export default function ContentSections() {
   };
 
   return (
-    <div style={{ position: 'relative', zIndex: 10, backgroundColor: 'rgba(2, 22, 12, 0.85)', color: '#f2f2f2', backdropFilter: 'blur(10px)' }}>
+    // Changed background to be highly transparent so the ocean shows through
+    <div style={{ position: 'relative', zIndex: 10, background: 'linear-gradient(to bottom, rgba(2, 22, 12, 0.4) 0%, rgba(2, 22, 12, 0.85) 100%)', color: '#f2f2f2', backdropFilter: 'blur(5px)' }}>
       
       {/* SAP Services Section */}
-      <section id="services" style={{ padding: '100px 40px', borderTop: '1px solid #3b82f6' }}>
+      <section id="services" style={{ padding: '100px 40px' }}> {/* Removed borderTop */}
         <h2 style={{ fontSize: '3rem', color: '#3b82f6', marginBottom: '20px' }}>SAP Services</h2>
         <p style={{ fontSize: '1.2rem', color: '#a3e4ff', marginBottom: '60px', maxWidth: '800px', lineHeight: '1.6' }}>
           Powered by over 10 years of enterprise expertise. We deliver precision ABAP development, seamless system integrations, and mission-critical support for global SAP landscapes.
         </p>
         
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '30px' }}>
-          <div style={{ padding: '30px', border: '1px solid #3b82f6', borderRadius: '12px', background: 'rgba(59, 130, 246, 0.05)' }}>
+          <div style={{ padding: '30px', border: '1px solid #3b82f6', borderRadius: '12px', background: 'rgba(59, 130, 246, 0.15)' }}>
             <h3 style={{ fontSize: '1.5rem', marginBottom: '15px', color: '#ffffff' }}>ABAP Development</h3>
             <p style={{ color: '#a3e4ff', lineHeight: '1.6' }}>Custom report development (ALV, Classical), Dialog programming, User Exits, BADIs, Enhancement Spots, SMARTFORMS, and SAP Scripts.</p>
           </div>
-          <div style={{ padding: '30px', border: '1px solid #3b82f6', borderRadius: '12px', background: 'rgba(59, 130, 246, 0.05)' }}>
+          <div style={{ padding: '30px', border: '1px solid #3b82f6', borderRadius: '12px', background: 'rgba(59, 130, 246, 0.15)' }}>
             <h3 style={{ fontSize: '1.5rem', marginBottom: '15px', color: '#ffffff' }}>Integration & Migration</h3>
             <p style={{ color: '#a3e4ff', lineHeight: '1.6' }}>IDOC, PIPO, REST/SOAP, SFTP interface design. Expertise in system migrations and DB2 to Oracle database migrations.</p>
           </div>
-          <div style={{ padding: '30px', border: '1px solid #3b82f6', borderRadius: '12px', background: 'rgba(59, 130, 246, 0.05)' }}>
+          <div style={{ padding: '30px', border: '1px solid #3b82f6', borderRadius: '12px', background: 'rgba(59, 130, 246, 0.15)' }}>
             <h3 style={{ fontSize: '1.5rem', marginBottom: '15px', color: '#ffffff' }}>Module Expertise</h3>
             <p style={{ color: '#a3e4ff', lineHeight: '1.6' }}>Deep functional support across FICO, SD, HR, PP, QM, FAM, and SAP CONCUR. Technical leadership and BAU support.</p>
           </div>
         </div>
 
-        {/* Core Competencies */}
         <div style={{ marginTop: '60px', display: 'flex', flexWrap: 'wrap', gap: '20px' }}>
-          <span style={{ padding: '10px 20px', background: 'rgba(59, 130, 246, 0.2)', border: '1px solid #3b82f6', borderRadius: '20px', color: '#a3e4ff' }}>FICO</span>
-          <span style={{ padding: '10px 20px', background: 'rgba(59, 130, 246, 0.2)', border: '1px solid #3b82f6', borderRadius: '20px', color: '#a3e4ff' }}>SD</span>
-          <span style={{ padding: '10px 20px', background: 'rgba(59, 130, 246, 0.2)', border: '1px solid #3b82f6', borderRadius: '20px', color: '#a3e4ff' }}>HR</span>
-          <span style={{ padding: '10px 20px', background: 'rgba(59, 130, 246, 0.2)', border: '1px solid #3b82f6', borderRadius: '20px', color: '#a3e4ff' }}>PP</span>
-          <span style={{ padding: '10px 20px', background: 'rgba(59, 130, 246, 0.2)', border: '1px solid #3b82f6', borderRadius: '20px', color: '#a3e4ff' }}>QM</span>
-          <span style={{ padding: '10px 20px', background: 'rgba(59, 130, 246, 0.2)', border: '1px solid #3b82f6', borderRadius: '20px', color: '#a3e4ff' }}>FAM</span>
-          <span style={{ padding: '10px 20px', background: 'rgba(59, 130, 246, 0.2)', border: '1px solid #3b82f6', borderRadius: '20px', color: '#a3e4ff' }}>SAP CONCUR</span>
+          <span style={{ padding: '10px 20px', background: 'rgba(59, 130, 246, 0.3)', border: '1px solid #3b82f6', borderRadius: '20px', color: '#a3e4ff' }}>FICO</span>
+          <span style={{ padding: '10px 20px', background: 'rgba(59, 130, 246, 0.3)', border: '1px solid #3b82f6', borderRadius: '20px', color: '#a3e4ff' }}>SD</span>
+          <span style={{ padding: '10px 20px', background: 'rgba(59, 130, 246, 0.3)', border: '1px solid #3b82f6', borderRadius: '20px', color: '#a3e4ff' }}>HR</span>
+          <span style={{ padding: '10px 20px', background: 'rgba(59, 130, 246, 0.3)', border: '1px solid #3b82f6', borderRadius: '20px', color: '#a3e4ff' }}>PP</span>
+          <span style={{ padding: '10px 20px', background: 'rgba(59, 130, 246, 0.3)', border: '1px solid #3b82f6', borderRadius: '20px', color: '#a3e4ff' }}>QM</span>
+          <span style={{ padding: '10px 20px', background: 'rgba(59, 130, 246, 0.3)', border: '1px solid #3b82f6', borderRadius: '20px', color: '#a3e4ff' }}>FAM</span>
+          <span style={{ padding: '10px 20px', background: 'rgba(59, 130, 246, 0.3)', border: '1px solid #3b82f6', borderRadius: '20px', color: '#a3e4ff' }}>SAP CONCUR</span>
         </div>
 
-        <div style={{ marginTop: '60px', padding: '40px', borderRadius: '12px', background: 'rgba(59, 130, 246, 0.1)', border: '1px solid rgba(59, 130, 246, 0.3)' }}>
+        <div style={{ marginTop: '60px', padding: '40px', borderRadius: '12px', background: 'rgba(59, 130, 246, 0.2)', border: '1px solid rgba(59, 130, 246, 0.4)' }}>
           <h3 style={{ fontSize: '2rem', color: '#3b82f6', marginBottom: '20px' }}>Proven Enterprise Pedigree</h3>
           <ul style={{ listStyle: 'none', padding: 0, display: 'flex', flexWrap: 'wrap', gap: '30px', color: '#a3e4ff', fontSize: '1.1rem' }}>
             <li>✔ 10+ Years SAP Experience</li>
@@ -62,13 +62,13 @@ export default function ContentSections() {
       </section>
 
       {/* Digital Tech Products Section */}
-      <section id="nfc" style={{ padding: '100px 40px', borderTop: '1px solid #3b82f6' }}>
+      <section id="nfc" style={{ padding: '100px 40px' }}> {/* Removed borderTop */}
         <h2 style={{ fontSize: '3rem', color: '#3b82f6', marginBottom: '20px' }}>Digital Tech Products</h2>
         <p style={{ fontSize: '1.2rem', color: '#a3e4ff', marginBottom: '60px', maxWidth: '800px' }}>
           Innovative digital tools designed to elevate your professional network.
         </p>
         
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '40px', alignItems: 'center', background: 'rgba(59, 130, 246, 0.05)', padding: '40px', borderRadius: '12px', border: '1px solid #3b82f6' }}>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '40px', alignItems: 'center', background: 'rgba(59, 130, 246, 0.15)', padding: '40px', borderRadius: '12px', border: '1px solid #3b82f6' }}>
           
           <div style={{ flex: '1 1 400px' }}>
             <h3 style={{ fontSize: '2.5rem', marginBottom: '20px', color: '#ffffff' }}>Smart NFC Business Cards</h3>
@@ -97,7 +97,6 @@ export default function ContentSections() {
             <a href="/nfc-product" style={{ display: 'inline-block', padding: '15px 40px', backgroundColor: '#3b82f6', color: '#ffffff', textDecoration: 'none', fontWeight: 'bold', borderRadius: '8px', transition: '0.3s' }}>Order Yours Now</a>
           </div>
 
-          {/* Image Display */}
           <div style={{ flex: '1 1 300px', textAlign: 'center' }}>
             <img 
               src="/nfc-card.jpg" 
@@ -116,7 +115,7 @@ export default function ContentSections() {
       </section>
 
       {/* AI Governance Section */}
-      <section id="ai" style={{ padding: '100px 40px', borderTop: '1px solid #3b82f6' }}>
+      <section id="ai" style={{ padding: '100px 40px' }}> {/* Removed borderTop */}
         <h2 style={{ fontSize: '3rem', color: '#3b82f6', marginBottom: '20px' }}>AI Governance</h2>
         <p style={{ fontSize: '1.2rem', color: '#a3e4ff', maxWidth: '800px', lineHeight: '1.6' }}>
           We are preparing to launch specialized AI Governance consulting to help enterprises navigate the complex landscape of artificial intelligence responsibly and ethically.
@@ -127,30 +126,30 @@ export default function ContentSections() {
       </section>
 
       {/* Contact Section */}
-      <section id="contact" style={{ padding: '100px 40px', borderTop: '1px solid #3b82f6' }}>
+      <section id="contact" style={{ padding: '100px 40px' }}> {/* Removed borderTop */}
         <h2 style={{ fontSize: '3rem', color: '#3b82f6', marginBottom: '20px' }}>Contact Data Ocean</h2>
         <p style={{ color: '#a3e4ff', marginBottom: '40px', fontSize: '1.1rem' }}>
           Ready to elevate your SAP infrastructure or order your NFC cards? Reach out to us directly.
         </p>
         
         {submitted ? (
-          <div style={{ padding: '40px', borderRadius: '12px', background: 'rgba(59, 130, 246, 0.2)', border: '1px solid #3b82f6', maxWidth: '600px' }}>
+          <div style={{ padding: '40px', borderRadius: '12px', background: 'rgba(59, 130, 246, 0.3)', border: '1px solid #3b82f6', maxWidth: '600px' }}>
             <h3 style={{ color: '#ffffff', fontSize: '1.5rem', marginBottom: '10px' }}>Thank You!</h3>
             <p style={{ color: '#a3e4ff' }}>Your message has been received. We will get back to you within 24 hours.</p>
           </div>
         ) : (
-          <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '20px', maxWidth: '600px', background: 'rgba(59, 130, 246, 0.05)', padding: '40px', borderRadius: '12px', border: '1px solid #3b82f6' }}>
+          <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '20px', maxWidth: '600px', background: 'rgba(59, 130, 246, 0.15)', padding: '40px', borderRadius: '12px', border: '1px solid #3b82f6' }}>
             <div>
               <label style={{ display: 'block', marginBottom: '8px', color: '#ffffff' }}>Your Name</label>
-              <input type="text" name="name" value={formData.name} onChange={handleChange} required style={{ width: '100%', padding: '12px', borderRadius: '6px', border: '1px solid #3b82f6', background: '#02160c', color: '#ffffff' }} />
+              <input type="text" name="name" value={formData.name} onChange={handleChange} required style={{ width: '100%', padding: '12px', borderRadius: '6px', border: '1px solid #3b82f6', background: 'rgba(2, 22, 12, 0.8)', color: '#ffffff' }} />
             </div>
             <div>
               <label style={{ display: 'block', marginBottom: '8px', color: '#ffffff' }}>Your Email</label>
-              <input type="email" name="email" value={formData.email} onChange={handleChange} required style={{ width: '100%', padding: '12px', borderRadius: '6px', border: '1px solid #3b82f6', background: '#02160c', color: '#ffffff' }} />
+              <input type="email" name="email" value={formData.email} onChange={handleChange} required style={{ width: '100%', padding: '12px', borderRadius: '6px', border: '1px solid #3b82f6', background: 'rgba(2, 22, 12, 0.8)', color: '#ffffff' }} />
             </div>
             <div>
               <label style={{ display: 'block', marginBottom: '8px', color: '#ffffff' }}>Message</label>
-              <textarea name="message" value={formData.message} onChange={handleChange} required rows="5" style={{ width: '100%', padding: '12px', borderRadius: '6px', border: '1px solid #3b82f6', background: '#02160c', color: '#ffffff', resize: 'vertical' }}></textarea>
+              <textarea name="message" value={formData.message} onChange={handleChange} required rows="5" style={{ width: '100%', padding: '12px', borderRadius: '6px', border: '1px solid #3b82f6', background: 'rgba(2, 22, 12, 0.8)', color: '#ffffff', resize: 'vertical' }}></textarea>
             </div>
             <button type="submit" style={{ padding: '15px 40px', backgroundColor: '#3b82f6', color: '#ffffff', border: 'none', fontWeight: 'bold', borderRadius: '8px', cursor: 'pointer', fontSize: '1rem' }}>Send Message</button>
           </form>
@@ -158,7 +157,7 @@ export default function ContentSections() {
       </section>
 
       {/* Footer */}
-      <footer style={{ padding: '40px', borderTop: '1px solid #3b82f6', textAlign: 'center', background: 'rgba(0,0,0,0.5)' }}>
+      <footer style={{ padding: '40px', textAlign: 'center', background: 'rgba(0,0,0,0.5)' }}> {/* Removed borderTop */}
         <p style={{ color: '#a3e4ff', marginBottom: '10px' }}>Data Ocean © 2026. All rights reserved.</p>
         <p style={{ color: '#a3e4ff', fontSize: '0.9rem' }}>
           <a href="mailto:connect@dataoceanai.io" style={{ color: '#3b82f6', textDecoration: 'none' }}>connect@dataoceanai.io</a>
