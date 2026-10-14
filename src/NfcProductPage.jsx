@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion, useScroll, useSpring } from 'framer-motion';
 
 // Animation Variants
 const fadeInUp = {
@@ -11,6 +11,17 @@ const fadeInUp = {
 const staggerContainer = {
   hidden: { opacity: 0 },
   visible: { opacity: 1, transition: { staggerChildren: 0.2 } }
+};
+
+// Text Reveal Animation for Headlines
+const textRevealContainer = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1, transition: { staggerChildren: 0.1 } }
+};
+
+const textRevealItem = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } }
 };
 
 // Interactive FAQ Component
@@ -39,15 +50,41 @@ const FaqItem = ({ question, answer }) => {
   );
 };
 
+// Scrolling Marquee Banner Component
+const MarqueeBanner = () => {
+  return (
+    <div style={{ overflow: 'hidden', width: '100%', background: 'rgba(59, 130, 246, 0.1)', borderTop: '1px solid rgba(59, 130, 246, 0.3)', borderBottom: '1px solid rgba(59, 130, 246, 0.3)', padding: '20px 0' }}>
+      <motion.div 
+        animate={{ x: [0, -1200] }} 
+        transition={{ repeat: Infinity, duration: 20, ease: 'linear' }}
+        style={{ display: 'flex', whiteSpace: 'nowrap', gap: '40px', width: 'max-content' }}
+      >
+        {[...Array(6)].map((_, i) => (
+          <span key={i} style={{ color: '#3b82f6', fontSize: '1.2rem', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '2px' }}>
+            SAP Consulting • AI Governance • Digital NFC Cards • Enterprise Migration • 
+          </span>
+        ))}
+      </motion.div>
+    </div>
+  );
+};
+
 export default function NfcProductPage() {
   // State for the interactive pricing slider
   const [quantity, setQuantity] = useState(1);
   const basePrice = 99;
   const totalPrice = quantity * basePrice;
 
+  // Scroll Progress Bar Logic
+  const { scrollYProgress } = useScroll();
+  const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 });
+
   return (
     <div style={{ position: 'relative', zIndex: 10, background: 'linear-gradient(to bottom, rgba(2, 22, 12, 0.4) 0%, rgba(2, 22, 12, 0.9) 100%)', color: '#f2f2f2', minHeight: '100vh', fontFamily: 'sans-serif', overflowX: 'hidden', backdropFilter: 'blur(10px)' }}>
       
+      {/* 🌟 SCROLL PROGRESS BAR */}
+      <motion.div style={{ scaleX, transformOrigin: '0%', position: 'fixed', top: 0, left: 0, right: 0, height: '4px', background: '#3b82f6', zIndex: 2000, boxShadow: '0 0 10px #3b82f6' }} />
+
       {/* 🌟 STICKY FLOATING NAVIGATION BAR */}
       <div style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 1000, background: 'rgba(2, 22, 12, 0.85)', backdropFilter: 'blur(12px)', borderBottom: '1px solid rgba(59, 130, 246, 0.3)' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '15px 40px', maxWidth: '1200px', margin: '0 auto' }}>
@@ -67,13 +104,22 @@ export default function NfcProductPage() {
       {/* Spacer to push content below the fixed nav bar */}
       <div style={{ height: '70px' }} />
 
-      {/* Hero Section */}
+      {/* Hero Section with Staggered Text Reveal */}
       <motion.div 
         initial="hidden" animate="visible" variants={staggerContainer}
         style={{ display: 'flex', flexWrap: 'wrap', padding: '80px 40px', gap: '60px', alignItems: 'center', maxWidth: '1200px', margin: '0 auto' }}
       >
         <motion.div variants={fadeInUp} style={{ flex: '1 1 400px' }}>
-          <h1 style={{ fontSize: '3.5rem', color: '#3b82f6', marginBottom: '20px', lineHeight: '1.1' }}>Elevate Your First Impression with Smart NFC Cards</h1>
+          <motion.h1 variants={textRevealContainer} style={{ fontSize: '3.5rem', color: '#3b82f6', marginBottom: '20px', lineHeight: '1.1' }}>
+            <motion.span variants={textRevealItem} style={{ display: 'inline-block' }}>Elevate</motion.span>{' '}
+            <motion.span variants={textRevealItem} style={{ display: 'inline-block' }}>Your</motion.span>{' '}
+            <motion.span variants={textRevealItem} style={{ display: 'inline-block' }}>First</motion.span>{' '}
+            <motion.span variants={textRevealItem} style={{ display: 'inline-block' }}>Impression</motion.span>{' '}
+            <motion.span variants={textRevealItem} style={{ display: 'inline-block' }}>with</motion.span>{' '}
+            <motion.span variants={textRevealItem} style={{ display: 'inline-block' }}>Smart</motion.span>{' '}
+            <motion.span variants={textRevealItem} style={{ display: 'inline-block' }}>NFC</motion.span>{' '}
+            <motion.span variants={textRevealItem} style={{ display: 'inline-block' }}>Cards</motion.span>
+          </motion.h1>
           <p style={{ fontSize: '1.2rem', color: '#a3e4ff', marginBottom: '30px', lineHeight: '1.6' }}>
             Stop handing out paper cards that get thrown away. Our premium, programmable NFC business cards let you share your entire digital portfolio, social media, and contact details with a single tap.
           </p>
@@ -90,10 +136,13 @@ export default function NfcProductPage() {
         </motion.div>
       </motion.div>
 
+      {/* 🌟 SCROLLING MARQUEE BANNER */}
+      <MarqueeBanner />
+
       {/* Features Grid */}
       <motion.div 
         initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }} variants={staggerContainer}
-        style={{ padding: '80px 40px', background: 'rgba(59, 130, 246, 0.1)' }}
+        style={{ padding: '80px 40px' }}
       >
         <motion.h2 variants={fadeInUp} style={{ fontSize: '2.5rem', color: '#3b82f6', textAlign: 'center', marginBottom: '50px' }}>Why Choose Our NFC Cards?</motion.h2>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '30px', maxWidth: '1200px', margin: '0 auto' }}>
@@ -134,7 +183,7 @@ export default function NfcProductPage() {
         </div>
       </motion.div>
 
-      {/* 🌟 PRICING / ORDER SECTION WITH INTERACTIVE SLIDER */}
+      {/* PRICING / ORDER SECTION WITH INTERACTIVE SLIDER */}
       <motion.div 
         id="order" initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }} variants={staggerContainer}
         style={{ padding: '80px 40px', textAlign: 'center' }}
