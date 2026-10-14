@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import { useLocation } from 'react-router-dom';
 import * as THREE from 'three';
 import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js';
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
@@ -109,6 +110,8 @@ const FinalPassShader = {
 
 export default function FlowWave() {
   const containerRef = useRef(null);
+  const location = useLocation();
+  const isHomePage = location.pathname === '/';
 
   useEffect(() => {
     const canvas = document.getElementById('scene');
@@ -427,35 +430,38 @@ export default function FlowWave() {
     <div className="lk-stage" ref={containerRef}>
       <canvas id="scene" />
 
-      <div className="uip-layer">
-        <header className="fs-head">
-          <span className="fs-word">Data Ocean<sup style={{ fontSize: '0.5em', verticalAlign: 'super' }}>&#169;</sup></span>
-          <nav className="fs-nav">
-            <a href="#ai">AI<br />Governance</a>
-            <a href="#services">SAP<br />Services</a>
-            <a href="#nfc">Digital<br />Products</a>
-            <a href="#contact">Contact<br />Us</a>
-          </nav>
-          <div className="fs-contacts">
-            <i className="fs-mark" aria-hidden="true" />
-            <a href="#contact">Contacts</a>
-          </div>
-        </header>
+      {/* 🌟 HERO UI OVERLAY - ONLY SHOWS ON HOMEPAGE */}
+      {isHomePage && (
+        <div className="uip-layer">
+          <header className="fs-head">
+            <span className="fs-word">Data Ocean<sup style={{ fontSize: '0.5em', verticalAlign: 'super' }}>&#169;</sup></span>
+            <nav className="fs-nav">
+              <a href="#ai">AI<br />Governance</a>
+              <a href="#services">SAP<br />Services</a>
+              <a href="#nfc">Digital<br />Products</a>
+              <a href="#contact">Contact<br />Us</a>
+            </nav>
+            <div className="fs-contacts">
+              <i className="fs-mark" aria-hidden="true" />
+              <a href="#contact">Contacts</a>
+            </div>
+          </header>
 
-        <div className="fs-hero-content">
-          <h1 className="fs-h1">Navigating AI, SAP & Digital Tech</h1>
-          <div className="fs-actions">
-            <a className="fs-btn fs-btn-solid" href="#services">SAP</a>
-            <a className="fs-btn fs-btn-ghost" href="#nfc">Digital Tech Products</a>
+          <div className="fs-hero-content">
+            <h1 className="fs-h1">Navigating AI, SAP & Digital Tech</h1>
+            <div className="fs-actions">
+              <a className="fs-btn fs-btn-solid" href="#services">SAP</a>
+              <a className="fs-btn fs-btn-ghost" href="#nfc">Digital Tech Products</a>
+            </div>
+          </div>
+
+          <div className="fs-caps">
+            <span>Enterprise SAP Consulting</span>
+            <span>Smart NFC Business Cards</span>
+            <span>Future AI Governance</span>
           </div>
         </div>
-
-        <div className="fs-caps">
-          <span>Enterprise SAP Consulting</span>
-          <span>Smart NFC Business Cards</span>
-          <span>Future AI Governance</span>
-        </div>
-      </div>
+      )}
 
       <style>{`
         *, *::before, *::after { box-sizing: border-box; border: 0 solid; }
