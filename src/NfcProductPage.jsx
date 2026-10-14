@@ -18,13 +18,14 @@ const FaqItem = ({ question, answer }) => {
   const [isOpen, setIsOpen] = useState(false);
   return (
     <div style={{ borderBottom: '1px solid rgba(59, 130, 246, 0.3)', padding: '20px 0' }}>
-      <div 
+      <motion.div 
+        whileTap={{ scale: 0.98 }}
         onClick={() => setIsOpen(!isOpen)} 
         style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', cursor: 'pointer', color: '#ffffff', fontSize: '1.2rem', fontWeight: '600' }}
       >
         <span>{question}</span>
         <span style={{ color: '#3b82f6', fontSize: '1.5rem', transform: isOpen ? 'rotate(45deg)' : 'rotate(0deg)', transition: '0.3s' }}>+</span>
-      </div>
+      </motion.div>
       {isOpen && (
         <motion.div 
           initial={{ opacity: 0, height: 0 }} 
@@ -57,12 +58,13 @@ export default function NfcProductPage() {
           <p style={{ fontSize: '1.2rem', color: '#a3e4ff', marginBottom: '30px', lineHeight: '1.6' }}>
             Stop handing out paper cards that get thrown away. Our premium, programmable NFC business cards let you share your entire digital portfolio, social media, and contact details with a single tap.
           </p>
-          <a href="#order" style={{ display: 'inline-block', padding: '20px 50px', backgroundColor: '#3b82f6', color: '#fff', fontSize: '1.2rem', fontWeight: 'bold', textDecoration: 'none', borderRadius: '8px', boxShadow: '0 0 30px rgba(59, 130, 246, 0.5)' }}>Order Your Card Now</a>
+          <motion.a 
+            whileTap={{ scale: 0.95 }}
+            href="#order" style={{ display: 'inline-block', padding: '20px 50px', backgroundColor: '#3b82f6', color: '#fff', fontSize: '1.2rem', fontWeight: 'bold', textDecoration: 'none', borderRadius: '8px', boxShadow: '0 0 30px rgba(59, 130, 246, 0.5)' }}>Order Your Card Now</motion.a>
           <p style={{ color: '#a3e4ff', marginTop: '15px', fontSize: '0.9rem' }}>Free shipping worldwide. Global delivery available.</p>
         </motion.div>
         
         <motion.div variants={fadeInUp} style={{ flex: '1 1 400px', textAlign: 'center' }}>
-          {/* Product Image Placeholder */}
           <div style={{ width: '100%', maxWidth: '500px', height: '300px', margin: '0 auto', borderRadius: '20px', background: 'linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(2, 22, 12, 0.8))', border: '1px solid #3b82f6', display: 'flex', justifyContent: 'center', alignItems: 'center', boxShadow: '0 0 50px rgba(59, 130, 246, 0.4)' }}>
             <span style={{ color: '#a3e4ff', fontSize: '1.2rem' }}>[ Insert NFC Card Image Here ]</span>
           </div>
@@ -71,23 +73,23 @@ export default function NfcProductPage() {
 
       {/* Features Grid */}
       <motion.div 
-        initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }} variants={staggerContainer}
+        initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }} variants={staggerContainer}
         style={{ padding: '80px 40px', backgroundColor: 'rgba(59, 130, 246, 0.05)', borderTop: '1px solid #3b82f6' }}
       >
         <motion.h2 variants={fadeInUp} style={{ fontSize: '2.5rem', color: '#3b82f6', textAlign: 'center', marginBottom: '50px' }}>Why Choose Our NFC Cards?</motion.h2>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '30px', maxWidth: '1200px', margin: '0 auto' }}>
           
-          <motion.div variants={fadeInUp} whileHover={{ scale: 1.05 }} style={{ padding: '30px', background: '#02160c', borderRadius: '12px', border: '1px solid #3b82f6', cursor: 'pointer' }}>
+          <motion.div variants={fadeInUp} whileTap={{ scale: 0.95 }} style={{ padding: '30px', background: '#02160c', borderRadius: '12px', border: '1px solid #3b82f6', cursor: 'pointer' }}>
             <h3 style={{ color: '#fff', marginBottom: '15px' }}>♻️ Eco-Friendly & Reusable</h3>
             <p style={{ color: '#a3e4ff' }}>Never print paper cards again. Update your digital profile anytime without changing the physical card.</p>
           </motion.div>
 
-          <motion.div variants={fadeInUp} whileHover={{ scale: 1.05 }} style={{ padding: '30px', background: '#02160c', borderRadius: '12px', border: '1px solid #3b82f6', cursor: 'pointer' }}>
+          <motion.div variants={fadeInUp} whileTap={{ scale: 0.95 }} style={{ padding: '30px', background: '#02160c', borderRadius: '12px', border: '1px solid #3b82f6', cursor: 'pointer' }}>
             <h3 style={{ color: '#fff', marginBottom: '15px' }}>📱 Universal Compatibility</h3>
             <p style={{ color: '#a3e4ff' }}>Works seamlessly with all modern iPhones and Android devices. No app required for your clients.</p>
           </motion.div>
 
-          <motion.div variants={fadeInUp} whileHover={{ scale: 1.05 }} style={{ padding: '30px', background: '#02160c', borderRadius: '12px', border: '1px solid #3b82f6', cursor: 'pointer' }}>
+          <motion.div variants={fadeInUp} whileTap={{ scale: 0.95 }} style={{ padding: '30px', background: '#02160c', borderRadius: '12px', border: '1px solid #3b82f6', cursor: 'pointer' }}>
             <h3 style={{ color: '#fff', marginBottom: '15px' }}>💼 Professional Design</h3>
             <p style={{ color: '#a3e4ff' }}>Premium matte finish with custom branding options available for enterprise orders.</p>
           </motion.div>
@@ -97,7 +99,7 @@ export default function NfcProductPage() {
 
       {/* Testimonials Section */}
       <motion.div 
-        initial="hidden" whileInView="visible" viewport={{ once: true }} variants={staggerContainer}
+        initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }} variants={staggerContainer}
         style={{ padding: '80px 40px', borderTop: '1px solid #3b82f6' }}
       >
         <motion.h2 variants={fadeInUp} style={{ fontSize: '2.5rem', color: '#3b82f6', textAlign: 'center', marginBottom: '50px' }}>Trusted by Professionals</motion.h2>
@@ -115,13 +117,13 @@ export default function NfcProductPage() {
 
       {/* Pricing / Order Section */}
       <motion.div 
-        id="order" initial="hidden" whileInView="visible" viewport={{ once: true }} variants={staggerContainer}
+        id="order" initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }} variants={staggerContainer}
         style={{ padding: '80px 40px', textAlign: 'center', borderTop: '1px solid #3b82f6' }}
       >
         <motion.h2 variants={fadeInUp} style={{ fontSize: '3rem', color: '#3b82f6', marginBottom: '20px' }}>Ready to Upgrade Your Network?</motion.h2>
         <motion.p variants={fadeInUp} style={{ fontSize: '1.2rem', color: '#a3e4ff', marginBottom: '40px' }}>Get your smart NFC card today.</motion.p>
         
-        <motion.div variants={fadeInUp} whileHover={{ scale: 1.02 }} style={{ display: 'inline-block', padding: '50px', background: 'rgba(59, 130, 246, 0.1)', borderRadius: '20px', border: '2px solid #3b82f6', maxWidth: '500px', width: '100%', boxShadow: '0 0 40px rgba(59, 130, 246, 0.2)' }}>
+        <motion.div variants={fadeInUp} whileTap={{ scale: 0.98 }} style={{ display: 'inline-block', padding: '50px', background: 'rgba(59, 130, 246, 0.1)', borderRadius: '20px', border: '2px solid #3b82f6', maxWidth: '500px', width: '100%', boxShadow: '0 0 40px rgba(59, 130, 246, 0.2)' }}>
           <h3 style={{ color: '#fff', fontSize: '2rem', marginBottom: '10px' }}>Standard Card</h3>
           <p style={{ color: '#3b82f6', fontSize: '3rem', fontWeight: 'bold', marginBottom: '20px' }}>$99</p>
           <ul style={{ listStyle: 'none', padding: 0, color: '#a3e4ff', marginBottom: '30px', textAlign: 'left', display: 'inline-block' }}>
@@ -131,13 +133,13 @@ export default function NfcProductPage() {
             <li style={{ marginBottom: '10px' }}>✔ 1-Year Warranty</li>
           </ul>
           <br />
-          <a href="mailto:connect@dataoceanai.io?subject=Order%20NFC%20Card" style={{ display: 'inline-block', padding: '15px 40px', backgroundColor: '#3b82f6', color: '#fff', fontWeight: 'bold', textDecoration: 'none', borderRadius: '8px', width: '100%' }}>Order via Email</a>
+          <motion.a whileTap={{ scale: 0.95 }} href="mailto:connect@dataoceanai.io?subject=Order%20NFC%20Card" style={{ display: 'inline-block', padding: '15px 40px', backgroundColor: '#3b82f6', color: '#fff', fontWeight: 'bold', textDecoration: 'none', borderRadius: '8px', width: '100%' }}>Order via Email</motion.a>
         </motion.div>
       </motion.div>
 
       {/* FAQ Section */}
       <motion.div 
-        initial="hidden" whileInView="visible" viewport={{ once: true }} variants={staggerContainer}
+        initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }} variants={staggerContainer}
         style={{ padding: '80px 40px', maxWidth: '800px', margin: '0 auto', borderTop: '1px solid #3b82f6' }}
       >
         <motion.h2 variants={fadeInUp} style={{ fontSize: '2.5rem', color: '#3b82f6', textAlign: 'center', marginBottom: '40px' }}>Frequently Asked Questions</motion.h2>
