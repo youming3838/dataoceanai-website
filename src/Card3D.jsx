@@ -15,43 +15,55 @@ export default function Card3D({ imageUrl }) {
     const camera = new THREE.PerspectiveCamera(45, currentMount.clientWidth / currentMount.clientHeight, 0.1, 1000);
     camera.position.set(0, 0, 4.2); 
 
-    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    const renderer = new THREE.WebGLRenderer({ 
+      antialias: true, 
+      alpha: true,
+      powerPreference: "high-performance" 
+    });
+    // 🌟 SHARPNESS FIX 1: Use full device pixel ratio (up to 3 for high-res screens)
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 3)); 
     renderer.setSize(currentMount.clientWidth, currentMount.clientHeight);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     currentMount.appendChild(renderer.domElement);
 
-    // 2. Lighting (Bright, even lighting so colors are accurate)
-    const ambientLight = new THREE.AmbientLight(0xffffff, 1.2); // Boosted for brighter colors
+    // 2. Lighting (Soft and even)
+    const ambientLight = new THREE.AmbientLight(0xffffff, 1.0);
     scene.add(ambientLight);
 
-    const directionalLight = new THREE.DirectionalLight(0xffffff, 1.0);
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
     directionalLight.position.set(5, 5, 5);
     scene.add(directionalLight);
 
-    const blueLight = new THREE.DirectionalLight(0x3b82f6, 0.5); // Reduced to prevent color wash-out
-    blueLight.position.set(-5, -5, 5);
-    scene.add(blueLight);
-
-    // 3. Load Texture and Create Card Mesh
-    const geometry = new THREE.BoxGeometry(3.2, 2, 0.05);
+    // 3. Geometry: Flat Plane (No gray frame)
+    const geometry = new THREE.PlaneGeometry(3.2, 2); 
+    
+    // 4. Material: Perfectly matte
     const material = new THREE.MeshStandardMaterial({ 
       color: 0xffffff, 
-      metalness: 0.1,  // Lowered from 0.5 for a matte, printed look
-      roughness: 0.4   // Slightly rougher to diffuse light evenly
+      metalness: 0, 
+      roughness: 0.9, 
+      side: THREE.DoubleSide 
     });
+    
     const card = new THREE.Mesh(geometry, material);
     scene.add(card);
 
+    // 5. Load Texture with Maximum Sharpness
     const textureLoader = new THREE.TextureLoader();
     textureLoader.load(imageUrl, (texture) => {
-      // Increase texture sharpness
-      texture.anisotropy = renderer.capabilities.getMaxAnisotropy();
+      // 🌟 SHARPNESS FIX 2: Correct color space (prevents washed out colors)
+      texture.colorSpace = THREE.SRGBColorSpace; 
+      // 🌟 SHARPNESS FIX 3: Anisotropy makes angled textures look sharp
+      texture.anisotropy = renderer.capabilities.getMaxAnisotropy(); 
+      // 🌟 SHARPNESS FIX 4: Prevent blurry mipmaps
+      texture.generateMipmaps = false;
+      texture.minFilter = THREE.LinearFilter;
+      
       material.map = texture;
       material.needsUpdate = true;
       setLoading(false);
     });
 
-    // 4. Controls
+    // 6. Controls
     const controls = new OrbitControls(camera, renderer.domElement);
     controls.enableZoom = false;
     controls.enablePan = false;
@@ -60,7 +72,7 @@ export default function Card3D({ imageUrl }) {
     controls.enableDamping = true;
     controls.dampingFactor = 0.05;
 
-    // 5. Animation Loop
+    // 7. Animation Loop
     let animationFrameId;
     const animate = () => {
       animationFrameId = requestAnimationFrame(animate);
@@ -70,7 +82,7 @@ export default function Card3D({ imageUrl }) {
     };
     animate();
 
-    // 6. Handle Resize
+    // 8. Handle Resize
     const handleResize = () => {
       if (!currentMount) return;
       camera.aspect = currentMount.clientWidth / currentMount.clientHeight;
@@ -79,7 +91,7 @@ export default function Card3D({ imageUrl }) {
     };
     window.addEventListener('resize', handleResize);
 
-    // 7. Cleanup
+    // 9. Cleanup
     return () => {
       cancelAnimationFrame(animationFrameId);
       window.removeEventListener('resize', handleResize);
