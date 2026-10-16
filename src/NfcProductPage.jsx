@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence, useScroll, useSpring } from 'framer-motion';
 import Card3D from './Card3D';
@@ -70,8 +70,20 @@ export default function NfcProductPage() {
   const [quantity, setQuantity] = useState(1);
   const [activeFeature, setActiveFeature] = useState(0);
   const [selectedCard, setSelectedCard] = useState(0); 
+  // 🌟 NEW: Tracks scroll progress through the first screen for cinematic effect
+  const [scrollProgress, setScrollProgress] = useState(0);
 
-  // 🌟 "Black White Grey" is COMPLETELY REMOVED here
+  // 🌟 NEW: Scroll listener
+  useEffect(() => {
+    const handleScroll = () => {
+      // progress goes from 0 (top) to 1 (scrolled one full screen height)
+      const progress = Math.min(1, window.scrollY / window.innerHeight);
+      setScrollProgress(progress);
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   const cardOptions = [
     { name: "Ocean Blue", color: "#3b82f6", img: "https://res.cloudinary.com/qcyxxyec/image/upload/c_fill,w_1200,h_760/v1792122909/Ocean_Blue.png" },
     { name: "Super Black", color: "#1a1a1a", img: "https://res.cloudinary.com/qcyxxyec/image/upload/c_fill,w_1200,h_760/v1792122914/Super_black.png" },
@@ -135,7 +147,8 @@ export default function NfcProductPage() {
         </motion.div>
         
         <motion.div variants={fadeInUp} style={{ flex: '1 1 400px', textAlign: 'center' }}>
-          <Card3D imageUrl={cardOptions[selectedCard].img} cardColor={cardOptions[selectedCard].color} />
+          {/* 🌟 NEW: scrollProgress prop added */}
+          <Card3D imageUrl={cardOptions[selectedCard].img} cardColor={cardOptions[selectedCard].color} scrollProgress={scrollProgress} />
 
           <div style={{ marginTop: '20px', display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '12px', maxWidth: '500px', margin: '20px auto 0 auto' }}>
             {cardOptions.map((card, index) => (
