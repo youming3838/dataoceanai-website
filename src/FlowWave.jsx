@@ -22,7 +22,6 @@ const colorHigh       = '#3b82f6';
 const opacity         = 0.26;
 const pointSize       = 5.5;
 const brightness      = 0.8; 
-
 const waveHeight      = 3;
 const flow            = 1;
 const tilt            = 0;
@@ -36,7 +35,6 @@ const pointerRadius   = 7.0;
 const pointerStrength = 0.9;
 
 const LAYERS = { NONE: 0, TORUS_SCENE: 1, BLOOM_SCENE: 2, ENTIRE_SCENE: 3 };
-
 const Lerp = (a, b, t) => a + (b - a) * t;
 const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
 
@@ -73,19 +71,12 @@ float snoise(vec3 v){
 
 const FinalPassShader = {
   uniforms: {
-    iTime: { value: 0 },
-    tDiffuse: { value: null },
-    torusTexture: { value: null },
-    bloomTexture: { value: null },
-    haloTexture: { value: null },
-    uBg: { value: hexToVec3(bgColor) },
-    uFlameA: { value: hexToVec3(flameColor) },
-    uFlameB: { value: hexToVec3(flameColor2) },
-    uFlameAmt: { value: flameAmt }
+    iTime: { value: 0 }, tDiffuse: { value: null }, torusTexture: { value: null },
+    bloomTexture: { value: null }, haloTexture: { value: null },
+    uBg: { value: hexToVec3(bgColor) }, uFlameA: { value: hexToVec3(flameColor) },
+    uFlameB: { value: hexToVec3(flameColor2) }, uFlameAmt: { value: flameAmt }
   },
-  vertexShader: `
-    varying vec2 vUv; void main(){ vUv = uv; gl_Position = vec4(position, 1.0); }
-  `,
+  vertexShader: `varying vec2 vUv; void main(){ vUv = uv; gl_Position = vec4(position, 1.0); }`,
   fragmentShader: `
     uniform float iTime; uniform sampler2D tDiffuse; uniform sampler2D bloomTexture; uniform sampler2D torusTexture; uniform sampler2D haloTexture;
     uniform vec3 uBg; uniform vec3 uFlameA; uniform vec3 uFlameB; uniform float uFlameAmt;
@@ -160,31 +151,19 @@ export default function FlowWave() {
     finalComposer.addPass(renderPass);
     const finalPass = new ShaderPass(FinalPassShader);
     finalComposer.addPass(finalPass);
-
     finalPass.uniforms.bloomTexture.value = bloomComposer.renderTarget1.texture;
     finalPass.uniforms.torusTexture.value = torusComposer.renderTarget1.texture;
 
     const geo = new THREE.SphereGeometry(4.2, 100, 200);
     const mat = new THREE.ShaderMaterial({
-      transparent: true,
-      depthWrite: false,
-      blending: THREE.AdditiveBlending,
+      transparent: true, depthWrite: false, blending: THREE.AdditiveBlending,
       uniforms: {
-        uTime: { value: 0 },
-        uStream: { value: 0 },
-        uAppear: { value: 0 },
-        uColLow: { value: hexToVec3(colorLow) },
-        uColHigh: { value: hexToVec3(colorHigh) },
-        uOpacity: { value: opacity },
-        uSize: { value: pointSize },
-        uBrightness: { value: brightness },
-        uWaveHeight: { value: waveHeight },
-        uFlow: { value: flow },
-        uScale: { value: scale },
-        uCursor: { value: new THREE.Vector3() },
-        uRepelRadius: { value: pointerRadius },
-        uRepelStrength: { value: pointerStrength },
-        uActivity: { value: 0 }
+        uTime: { value: 0 }, uStream: { value: 0 }, uAppear: { value: 0 },
+        uColLow: { value: hexToVec3(colorLow) }, uColHigh: { value: hexToVec3(colorHigh) },
+        uOpacity: { value: opacity }, uSize: { value: pointSize }, uBrightness: { value: brightness },
+        uWaveHeight: { value: waveHeight }, uFlow: { value: flow }, uScale: { value: scale },
+        uCursor: { value: new THREE.Vector3() }, uRepelRadius: { value: pointerRadius },
+        uRepelStrength: { value: pointerStrength }, uActivity: { value: 0 }
       },
       vertexShader: `
         uniform float uTime; uniform float uStream; uniform float uSize; uniform float uWaveHeight; uniform float uFlow; uniform float uScale;
@@ -199,7 +178,6 @@ export default function FlowWave() {
           float wn = snoise(vec3(wp.x * 0.08, zc * 0.08, uTime * 0.15 * uFlow)) * 2.0;
           wn += snoise(vec3(wp.x * 0.16, zc * 0.16, uTime * 0.3 * uFlow)) * 0.8;
           wp.y += wn * uWaveHeight;
-
           vec3 finalPos = wp * uScale;
           vec4 modelPosition = modelMatrix * vec4(finalPos, 1.0);
           vec3 toP = modelPosition.xyz - uCursor;
@@ -207,11 +185,9 @@ export default function FlowWave() {
           float fall = smoothstep(uRepelRadius, 0.0, cd);
           modelPosition.xyz += normalize(toP + vec3(0.0001)) * fall * uRepelStrength * uActivity;
           vec4 mvPosition = viewMatrix * modelPosition;
-
           float colMix = smoothstep(-3.0, 3.0, position.y + position.x * 0.5);
           vColor = mix(uColLow, uColHigh, clamp(colMix, 0.0, 1.0));
           vFade = 1.0;
-
           gl_PointSize = uSize * (10.0 / -mvPosition.z);
           gl_PointSize = max(gl_PointSize, 1.5);
           gl_Position = projectionMatrix * mvPosition;
@@ -233,7 +209,6 @@ export default function FlowWave() {
     const pointsObj = new THREE.Points(geo, mat);
     pointsObj.frustumCulled = false;
     pointsObj.layers.enable(LAYERS.ENTIRE_SCENE);
-
     const group = new THREE.Group();
     group.add(pointsObj);
     scene.add(group);
@@ -243,7 +218,7 @@ export default function FlowWave() {
     const sizes = new Float32Array(N);
     const seeds = new Float32Array(N);
     for (let i = 0; i < N; i++) {
-      positions[i * 3]     = 2 * Math.random() - 1;
+      positions[i * 3] = 2 * Math.random() - 1;
       positions[i * 3 + 1] = 2 * Math.random() - 1;
       positions[i * 3 + 2] = 2 * Math.random() - 1;
       sizes[i] = atmoSize * (0.4 + Math.random());
@@ -255,13 +230,9 @@ export default function FlowWave() {
     atmoGeo.setAttribute('seed', new THREE.BufferAttribute(seeds, 1));
 
     const atmoMat = new THREE.ShaderMaterial({
-      transparent: true,
-      blending: THREE.AdditiveBlending,
-      depthWrite: false,
-      depthTest: false,
+      transparent: true, blending: THREE.AdditiveBlending, depthWrite: false, depthTest: false,
       uniforms: {
-        uTime: { value: 0 },
-        uColor: { value: hexToVec3(atmoColor) },
+        uTime: { value: 0 }, uColor: { value: hexToVec3(atmoColor) },
         uRes: { value: new THREE.Vector2(window.innerWidth * pixelRatio, window.innerHeight * pixelRatio) }
       },
       vertexShader: `
@@ -292,15 +263,11 @@ export default function FlowWave() {
     atmoPts.layers.enable(LAYERS.ENTIRE_SCENE);
     scene.add(atmoPts);
 
-    let scrollTarget = 0;
-    let scrollSmooth = 0;
-    let scrollCurrent = 0;
-    const mouseTarget = { x: 0, y: 0 };
-    const mouse = { x: 0, y: 0 };
+    let scrollTarget = 0, scrollSmooth = 0, scrollCurrent = 0;
+    const mouseTarget = { x: 0, y: 0 }, mouse = { x: 0, y: 0 };
     const POINTER = { world: new THREE.Vector3(), activity: 0, active: false, lastMove: performance.now() };
     const appearStart = performance.now();
-    let streamAcc = 0;
-    let lastTime = performance.now() / 1000;
+    let streamAcc = 0, lastTime = performance.now() / 1000;
 
     const handleScroll = () => {
       const max = document.documentElement.scrollHeight - window.innerHeight;
@@ -336,29 +303,21 @@ export default function FlowWave() {
     }
 
     const handleResize = () => {
-      const w = window.innerWidth;
-      const h = window.innerHeight;
+      const w = window.innerWidth, h = window.innerHeight;
       renderer.setPixelRatio(pixelRatio);
       renderer.setSize(w, h, false);
       camera.aspect = w / h;
       camera.updateProjectionMatrix();
-
-      torusComposer.setPixelRatio(pixelRatio);
-      torusComposer.setSize(w, h);
-      bloomComposer.setPixelRatio(pixelRatio);
-      bloomComposer.setSize(w, h);
-      finalComposer.setPixelRatio(pixelRatio);
-      finalComposer.setSize(w, h);
+      torusComposer.setPixelRatio(pixelRatio); torusComposer.setSize(w, h);
+      bloomComposer.setPixelRatio(pixelRatio); bloomComposer.setSize(w, h);
+      finalComposer.setPixelRatio(pixelRatio); finalComposer.setSize(w, h);
       atmoMat.uniforms.uRes.value.set(w * pixelRatio, h * pixelRatio);
     };
     window.addEventListener('resize', handleResize);
     handleResize();
 
     const animate = () => {
-      if (!isLowMemoryDevice) {
-        animId = requestAnimationFrame(animate);
-      }
-
+      if (!isLowMemoryDevice) animId = requestAnimationFrame(animate);
       const t = performance.now() / 1000;
       const dt = Math.min(0.05, t - lastTime);
       lastTime = t;
@@ -394,19 +353,13 @@ export default function FlowWave() {
       atmoPts.position.copy(camera.position);
       finalPass.uniforms.iTime.value = t;
 
-      camera.layers.set(LAYERS.TORUS_SCENE);
-      torusComposer.render();
-      camera.layers.set(LAYERS.BLOOM_SCENE);
-      bloomComposer.render();
-      camera.layers.set(LAYERS.ENTIRE_SCENE);
-      finalComposer.render();
+      camera.layers.set(LAYERS.TORUS_SCENE); torusComposer.render();
+      camera.layers.set(LAYERS.BLOOM_SCENE); bloomComposer.render();
+      camera.layers.set(LAYERS.ENTIRE_SCENE); finalComposer.render();
     };
 
-    if (!isLowMemoryDevice) {
-      animId = requestAnimationFrame(animate);
-    } else {
-      animate();
-    }
+    if (!isLowMemoryDevice) animId = requestAnimationFrame(animate);
+    else animate();
 
     return () => {
       if (animId) cancelAnimationFrame(animId);
@@ -414,24 +367,16 @@ export default function FlowWave() {
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('mouseout', handleMouseOut);
       window.removeEventListener('resize', handleResize);
-
-      geo.dispose();
-      mat.dispose();
-      atmoGeo.dispose();
-      atmoMat.dispose();
-      torusComposer.dispose();
-      bloomComposer.dispose();
-      finalComposer.dispose();
+      geo.dispose(); mat.dispose(); atmoGeo.dispose(); atmoMat.dispose();
+      torusComposer.dispose(); bloomComposer.dispose(); finalComposer.dispose();
       renderer.dispose();
     };
   }, []);
 
   return (
-    // 🌟 THE FIX: minHeight is set to 0 on pages that are not the homepage
     <div className="lk-stage" style={{ minHeight: isHomePage ? '100vh' : '0' }} ref={containerRef}>
       <canvas id="scene" />
 
-      {/* 🌟 HERO UI OVERLAY - ONLY SHOWS ON HOMEPAGE */}
       {isHomePage && (
         <div className="uip-layer">
           <header className="fs-head">
@@ -449,7 +394,7 @@ export default function FlowWave() {
           </header>
 
           <div className="fs-hero-content">
-            <h1 className="fs-h1">Navigating AI, SAP & Digital Tech</h1>
+            <h1 className="fs-h1">Navigating AI, SAP &amp; Digital Tech</h1>
             <div className="fs-actions">
               <a className="fs-btn fs-btn-solid" href="#services">SAP</a>
               <a className="fs-btn fs-btn-ghost" href="#nfc">Digital Tech Products</a>
@@ -630,22 +575,53 @@ export default function FlowWave() {
           opacity: 0.7;
         }
 
+        /* 📱 TABLET — 860px and below */
         @media (max-width: 860px) {
           :root {
-            --pad-x: 20px;
+            --pad-x: 24px;
             --fs-word: 14px;
-            --fs-nav: 14px;
-            --fs-h1: 36px;
+            --fs-nav: 13px;
+            --fs-h1: 40px;
             --fs-btn: 14px;
             --fs-cap: 12px;
           }
           .fs-head { flex-wrap: wrap; gap: 20px; }
-          .fs-nav { width: 100%; justify-content: space-between; gap: 10px; order: 3; margin-top: 20px; }
+          .fs-nav { width: 100%; justify-content: space-between; gap: 8px; order: 3; margin-top: 20px; }
+          .fs-nav a { font-size: 12px; }
           .fs-contacts { order: 2; }
+          .fs-contacts a { font-size: 12px; }
           .fs-hero-content { gap: 30px; }
           .fs-actions { flex-direction: column; width: 100%; }
-          .fs-btn { width: 100%; padding: 18px 20px; }
+          .fs-btn { width: 100%; padding: 16px 20px; }
           .fs-caps { display: none; }
+        }
+
+        /* 📱 PHONE — 480px and below */
+        @media (max-width: 480px) {
+          :root {
+            --pad-x: 18px;
+            --fs-word: 13px;
+            --fs-nav: 11px;
+            --fs-h1: 32px;
+            --fs-btn: 13px;
+          }
+          .fs-head { gap: 15px; }
+          .fs-nav { gap: 6px; margin-top: 15px; }
+          .fs-nav a { font-size: 10px; line-height: 1.15; }
+          .fs-contacts a { font-size: 10px; }
+          .fs-mark { width: 14px; height: 14px; border-width: 1.5px; }
+          .fs-hero-content { gap: 24px; }
+          .fs-h1 { line-height: 1.15; letter-spacing: -0.01em; }
+          .fs-btn { padding: 14px 18px; font-size: 12px; }
+        }
+
+        /* 📱 EXTRA SMALL — 360px and below (older phones) */
+        @media (max-width: 360px) {
+          :root {
+            --fs-h1: 26px;
+            --fs-nav: 10px;
+          }
+          .fs-h1 { line-height: 1.2; }
         }
       `}</style>
     </div>
