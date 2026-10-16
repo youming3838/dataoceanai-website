@@ -13,22 +13,22 @@ export default function Card3D({ imageUrl }) {
     // 1. Setup Scene, Camera, Renderer
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(45, currentMount.clientWidth / currentMount.clientHeight, 0.1, 1000);
-    camera.position.set(0, 0, 4.2); // 📸 Camera moved closer to fill the frame
+    camera.position.set(0, 0, 4.2); 
 
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     renderer.setSize(currentMount.clientWidth, currentMount.clientHeight);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     currentMount.appendChild(renderer.domElement);
 
-    // 2. Lighting
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
+    // 2. Lighting (Bright, even lighting so colors are accurate)
+    const ambientLight = new THREE.AmbientLight(0xffffff, 1.2); // Boosted for brighter colors
     scene.add(ambientLight);
 
-    const directionalLight = new THREE.DirectionalLight(0xffffff, 1.5);
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 1.0);
     directionalLight.position.set(5, 5, 5);
     scene.add(directionalLight);
 
-    const blueLight = new THREE.DirectionalLight(0x3b82f6, 1);
+    const blueLight = new THREE.DirectionalLight(0x3b82f6, 0.5); // Reduced to prevent color wash-out
     blueLight.position.set(-5, -5, 5);
     scene.add(blueLight);
 
@@ -36,20 +36,22 @@ export default function Card3D({ imageUrl }) {
     const geometry = new THREE.BoxGeometry(3.2, 2, 0.05);
     const material = new THREE.MeshStandardMaterial({ 
       color: 0xffffff, 
-      metalness: 0.5, 
-      roughness: 0.3 
+      metalness: 0.1,  // Lowered from 0.5 for a matte, printed look
+      roughness: 0.4   // Slightly rougher to diffuse light evenly
     });
     const card = new THREE.Mesh(geometry, material);
     scene.add(card);
 
     const textureLoader = new THREE.TextureLoader();
     textureLoader.load(imageUrl, (texture) => {
+      // Increase texture sharpness
+      texture.anisotropy = renderer.capabilities.getMaxAnisotropy();
       material.map = texture;
       material.needsUpdate = true;
       setLoading(false);
     });
 
-    // 4. Controls (Allows user to rotate/swipe)
+    // 4. Controls
     const controls = new OrbitControls(camera, renderer.domElement);
     controls.enableZoom = false;
     controls.enablePan = false;
@@ -62,7 +64,6 @@ export default function Card3D({ imageUrl }) {
     let animationFrameId;
     const animate = () => {
       animationFrameId = requestAnimationFrame(animate);
-      // Gentle floating animation
       card.rotation.x = Math.sin(Date.now() * 0.001) * 0.05;
       controls.update();
       renderer.render(scene, camera);
@@ -90,7 +91,7 @@ export default function Card3D({ imageUrl }) {
         currentMount.removeChild(renderer.domElement);
       }
     };
-  }, [imageUrl]); // Re-run when imageUrl changes
+  }, [imageUrl]);
 
   return (
     <div style={{ width: '100%', height: '400px', position: 'relative' }}>
