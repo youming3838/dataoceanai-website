@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence, useScroll, useSpring } from 'framer-motion';
+import Card3D from './Card3D';
 
 // Animation Variants
 const fadeInUp = {
@@ -71,11 +72,9 @@ const MarqueeBanner = () => {
 export default function NfcProductPage() {
   const [quantity, setQuantity] = useState(1);
   const [activeFeature, setActiveFeature] = useState(0);
-  
-  // 🌟 STATE FOR THE INTERACTIVE COLOR SWITCHER
   const [selectedCard, setSelectedCard] = useState(0); 
 
-    // 🌟 ALL 14 COLORS - WITH CLOUDINARY CROPPING APPLIED
+  // 🌟 ALL 14 COLORS - WITH CLOUDINARY CROPPING APPLIED
   const cardOptions = [
     { name: "Ocean Blue", color: "#3b82f6", img: "https://res.cloudinary.com/qcyxxyec/image/upload/c_fill,w_600,h_380/v1792122909/Ocean_Blue.png" },
     { name: "Super Black", color: "#1a1a1a", img: "https://res.cloudinary.com/qcyxxyec/image/upload/c_fill,w_600,h_380/v1792122914/Super_black.png" },
@@ -91,7 +90,7 @@ export default function NfcProductPage() {
     { name: "Solid Gray", color: "#9ca3af", img: "https://res.cloudinary.com/qcyxxyec/image/upload/c_fill,w_600,h_380/v1792122908/Solid_Gray.png" },
     { name: "Black White Grey", color: "#6b7280", img: "https://res.cloudinary.com/qcyxxyec/image/upload/c_fill,w_600,h_380/v1792122908/Black_White_Grey.png" },
     { name: "Aquatic Blue Yellow", color: "#38bdf8", img: "https://res.cloudinary.com/qcyxxyec/image/upload/c_fill,w_600,h_380/v1792122913/Aquatic_blue_yellow_gradient.png" }
-    ];
+  ];
 
   const basePrice = 99;
   const totalPrice = quantity * basePrice;
@@ -143,34 +142,13 @@ export default function NfcProductPage() {
           <p style={{ color: '#a3e4ff', marginTop: '15px', fontSize: '0.9rem' }}>Free shipping worldwide. Global delivery available.</p>
         </motion.div>
         
-        {/* 🌟 INTERACTIVE IMAGE SWITCHER */}
+        {/* 🌟 INTERACTIVE 3D CARD */}
         <motion.div variants={fadeInUp} style={{ flex: '1 1 400px', textAlign: 'center' }}>
           
-          <div style={{ position: 'relative', width: '100%', maxWidth: '500px', margin: '0 auto', minHeight: '300px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-            <AnimatePresence mode="wait">
-              <motion.img 
-                key={selectedCard}
-                src={cardOptions[selectedCard].img} 
-                alt={cardOptions[selectedCard].name} 
-                initial={{ opacity: 0, scale: 0.9, rotate: -2 }}
-                animate={{ opacity: 1, scale: 1, rotate: 0 }}
-                exit={{ opacity: 0, scale: 1.1, rotate: 2 }}
-                transition={{ duration: 0.4, type: 'spring', stiffness: 200, damping: 20 }}
-                style={{ 
-                  width: '100%', 
-                  borderRadius: '20px', 
-                  border: '1px solid #3b82f6', 
-                  boxShadow: '0 0 50px rgba(59, 130, 246, 0.4)',
-                  position: 'absolute',
-                  top: 0,
-                  left: 0
-                }} 
-              />
-            </AnimatePresence>
-          </div>
+          <Card3D imageUrl={cardOptions[selectedCard].img} />
 
           {/* Color Swatches Grid */}
-          <div style={{ marginTop: '40px', display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '12px', maxWidth: '500px', margin: '40px auto 0 auto' }}>
+          <div style={{ marginTop: '20px', display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '12px', maxWidth: '500px', margin: '20px auto 0 auto' }}>
             {cardOptions.map((card, index) => (
               <motion.button
                 key={index}
@@ -191,7 +169,7 @@ export default function NfcProductPage() {
             ))}
           </div>
           <p style={{ color: '#a3e4ff', marginTop: '15px', fontSize: '0.9rem', fontWeight: 'bold' }}>
-            Selected: {cardOptions[selectedCard].name}
+            Selected: {cardOptions[selectedCard].name} (Swipe to rotate)
           </p>
         </motion.div>
       </motion.div>
