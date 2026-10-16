@@ -2,9 +2,12 @@ import React, { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
-export default function Card3D({ imageUrl, cardColor }) {
+export default function Card3D({ imageUrl, cardColor, scrollProgress = 0 }) {
   const mountRef = useRef(null);
   const [loading, setLoading] = useState(true);
+  // Ref to store scroll value without rebuilding the Three.js scene
+  const scrollRef = useRef(scrollProgress);
+  scrollRef.current = scrollProgress;
 
   useEffect(() => {
     const currentMount = mountRef.current;
@@ -32,13 +35,12 @@ export default function Card3D({ imageUrl, cardColor }) {
     directionalLight.position.set(5, 5, 5);
     scene.add(directionalLight);
 
-    // 3. Geometry: Realistic card thickness (0.12) - between paper (0.08) and wall (0.25)
+    // 3. Geometry: Realistic card thickness (0.12)
     const geometry = new THREE.BoxGeometry(3.2, 2, 0.12); 
     
     // 4. Materials
     const safeColor = cardColor || '#ffffff'; 
 
-    // MeshBasicMaterial ignores lighting and shows the pure, exact hex color
     const edgeMaterial = new THREE.MeshBasicMaterial({ 
       color: new THREE.Color(safeColor)
     });
@@ -47,21 +49,15 @@ export default function Card3D({ imageUrl, cardColor }) {
       color: new THREE.Color(safeColor)
     });
     
-    // Front face uses standard lit material for the image texture
     const faceMaterial = new THREE.MeshStandardMaterial({ 
       color: 0xffffff, 
       metalness: 0, 
       roughness: 0.9 
     });
     
-    // BoxGeometry material order: [+X right, -X left, +Y top, -Y bottom, +Z front, -Z back]
     const materials = [
-      edgeMaterial, // right edge
-      edgeMaterial, // left edge
-      edgeMaterial, // top edge
-      edgeMaterial, // bottom edge
-      faceMaterial, // front (this gets the image)
-      backMaterial  // back (this gets the solid color, no logo)
+      edgeMaterial, edgeMaterial, edgeMaterial, edgeMaterial,
+      faceMaterial, backMaterial
     ];
     
     const card = new THREE.Mesh(geometry, materials);
@@ -89,11 +85,28 @@ export default function Card3D({ imageUrl, cardColor }) {
     controls.enableDamping = true;
     controls.dampingFactor = 0.05;
 
-    // 7. Animation Loop
+    // 7. Animation Loop (with Cinematic Scroll Effects)
     let animationFrameId;
     const animate = () => {
       animationFrameId = requestAnimationFrame(animate);
-      card.rotation.x = Math.sin(Date.now() * 0.001) * 0.05;
+      
+      // Get the current scroll progress (0 = top, 1 = scrolled past first screen)
+      const sp = scrollRef.current;
+
+      // 🌟 CINEMATIC SCROLL EFFECT
+      // Idle bobbing (always active)
+      const idleBob = Math.sin(Date.now() * 0.001) * 0.05;
+      
+      // Smooth lerp toward target values (prevents jittery movement)
+      card.rotation.x = THREE.MathUtils.lerp(card.rotation.x, idleBob + (sp * 0.35), 0.08);
+      card.rotation.y = THREE.MathUtils.lerp(card.rotation.y, sp * Math.PI * 2, 0.08); // Full 360° spin
+      card.position.y = THREE.MathUtils.lerp(card.position.y, sp * 0.6, 0.08); // Lift up
+      
+      const scale = 1 - (sp * 0.25);
+      const currentScale = card.scale.x;
+      const newScale = THREE.MathUtils.lerp(currentScale, scale, 0.08);
+      card.scale.set(newScale, newScale, newScale);
+
       controls.update();
       renderer.render(scene, camera);
     };
