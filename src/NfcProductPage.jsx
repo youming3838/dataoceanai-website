@@ -72,26 +72,22 @@ export default function NfcProductPage() {
   const [selectedCard, setSelectedCard] = useState(0); 
   const [scrollProgress, setScrollProgress] = useState(0);
   const [burstTrigger, setBurstTrigger] = useState(0);
-
-  // 🌟 NEW: Swipe hint state
   const [showSwipeHint, setShowSwipeHint] = useState(false);
 
-  // 🌟 NEW: On mount, check if user has seen the hint before
   useEffect(() => {
     const hasSeenHint = localStorage.getItem('do_card_swipe_hint_seen');
     if (!hasSeenHint) {
-      // Small delay so it doesn't pop up instantly
+      // Appears after 1.5 seconds
       const timer = setTimeout(() => setShowSwipeHint(true), 1500);
-      // Auto-hide after 8 seconds even if not interacted
+      // 🌟 Auto-hides after 15 seconds (was 9.5s)
       const autoHide = setTimeout(() => {
         setShowSwipeHint(false);
         localStorage.setItem('do_card_swipe_hint_seen', 'true');
-      }, 9500);
+      }, 15000);
       return () => { clearTimeout(timer); clearTimeout(autoHide); };
     }
   }, []);
 
-  // 🌟 NEW: Called when user first interacts with the 3D card
   const handleCardInteraction = () => {
     setShowSwipeHint(false);
     localStorage.setItem('do_card_swipe_hint_seen', 'true');
@@ -174,7 +170,6 @@ export default function NfcProductPage() {
         </motion.div>
         
         <motion.div variants={fadeInUp} style={{ flex: '1 1 400px', textAlign: 'center' }}>
-          {/* 🌟 Wrapper with swipe hint overlay */}
           <div style={{ position: 'relative' }}>
             <Card3D 
               imageUrl={cardOptions[selectedCard].img} 
@@ -184,7 +179,6 @@ export default function NfcProductPage() {
               onFirstInteraction={handleCardInteraction}
             />
 
-            {/* 🌟 SWIPE HINT OVERLAY */}
             <AnimatePresence>
               {showSwipeHint && (
                 <motion.div
