@@ -66,15 +66,34 @@ export default function Card3D({ imageUrl, cardColor, scrollProgress = 0, burstT
     renderer.setSize(currentMount.clientWidth, currentMount.clientHeight);
     currentMount.appendChild(renderer.domElement);
 
-    // 🌟 First interaction detection (for swipe hint)
-    const handleFirstInteraction = () => {
-      if (interactionFiredRef.current) return;
-      interactionFiredRef.current = true;
-      if (onFirstInteractionRef.current) onFirstInteractionRef.current();
+    // 🌟 SMART INTERACTION DETECTION — only fires on real DRAG
+    let isPointerDown = false;
+    let downX = 0;
+    let downY = 0;
+    const DRAG_THRESHOLD = 15;
+
+    const handlePointerDown = (e) => {
+      isPointerDown = true;
+      const p = e.touches && e.touches[0] ? e.touches[0] : e;
+      downX = p.clientX || 0;
+      downY = p.clientY || 0;
     };
-    renderer.domElement.addEventListener('pointerdown', handleFirstInteraction, { once: true });
-    renderer.domElement.addEventListener('touchstart', handleFirstInteraction, { once: true });
-    renderer.domElement.addEventListener('wheel', handleFirstInteraction, { once: true });
+    const handlePointerUp = (e) => {
+      if (!isPointerDown) return;
+      isPointerDown = false;
+      const p = e.changedTouches && e.changedTouches[0] ? e.changedTouches[0] : e;
+      const upX = p.clientX || 0;
+      const upY = p.clientY || 0;
+      const dx = Math.abs(upX - downX);
+      const dy = Math.abs(upY - downY);
+      if ((dx > DRAG_THRESHOLD || dy > DRAG_THRESHOLD) && !interactionFiredRef.current) {
+        interactionFiredRef.current = true;
+        if (onFirstInteractionRef.current) onFirstInteractionRef.current();
+      }
+    };
+
+    renderer.domElement.addEventListener('pointerdown', handlePointerDown);
+    renderer.domElement.addEventListener('pointerup', handlePointerUp);
 
     scene.add(new THREE.AmbientLight(0xffffff, 2.0));
     const dirLight = new THREE.DirectionalLight(0xffffff, 1.5);
@@ -212,9 +231,8 @@ export default function Card3D({ imageUrl, cardColor, scrollProgress = 0, burstT
     return () => {
       cancelAnimationFrame(animationFrameId);
       window.removeEventListener('resize', handleResize);
-      renderer.domElement.removeEventListener('pointerdown', handleFirstInteraction);
-      renderer.domElement.removeEventListener('touchstart', handleFirstInteraction);
-      renderer.domElement.removeEventListener('wheel', handleFirstInteraction);
+      renderer.domElement.removeEventListener('pointerdown', handlePointerDown);
+      renderer.domElement.removeEventListener('pointerup', handlePointerUp);
       controls.dispose();
       geometry.dispose();
       materials.forEach(m => m.dispose());
