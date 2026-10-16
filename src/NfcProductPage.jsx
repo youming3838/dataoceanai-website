@@ -72,20 +72,20 @@ export default function NfcProductPage() {
   const [selectedCard, setSelectedCard] = useState(0); 
 
   const cardOptions = [
-    { name: "Ocean Blue", color: "#3b82f6", img: "https://res.cloudinary.com/qcyxxyec/image/upload/c_fill,w_600,h_380/v1792122909/Ocean_Blue.png" },
-    { name: "Super Black", color: "#1a1a1a", img: "https://res.cloudinary.com/qcyxxyec/image/upload/c_fill,w_600,h_380/v1792122914/Super_black.png" },
-    { name: "Pure White", color: "#ffffff", img: "https://res.cloudinary.com/qcyxxyec/image/upload/c_fill,w_600,h_380/v1792122906/Pure_white.png" },
-    { name: "Cyan Cobalt", color: "#00e5ff", img: "https://res.cloudinary.com/qcyxxyec/image/upload/c_fill,w_600,h_380/v1792122911/Cyan_Cobalt_blue_gradient.png" },
-    { name: "Gradient Red Orange", color: "#f97316", img: "https://res.cloudinary.com/qcyxxyec/image/upload/c_fill,w_600,h_380/v1792122906/Gradient_red_orange.png" },
-    { name: "Classic Red", color: "#dc2626", img: "https://res.cloudinary.com/qcyxxyec/image/upload/c_fill,w_600,h_380/v1792122905/Classic_Red.png" },
-    { name: "Turquoise", color: "#06b6d4", img: "https://res.cloudinary.com/qcyxxyec/image/upload/c_fill,w_600,h_380/v1792122905/Turquoise.png" },
-    { name: "Lime Green", color: "#84cc16", img: "https://res.cloudinary.com/qcyxxyec/image/upload/c_fill,w_600,h_380/v1792122912/Lime_Green.png" },
-    { name: "Grassy Green", color: "#22c55e", img: "https://res.cloudinary.com/qcyxxyec/image/upload/c_fill,w_600,h_380/v1792122907/Grassy_Green_Turquoise.png" },
-    { name: "Bright Light Yellow", color: "#fde047", img: "https://res.cloudinary.com/qcyxxyec/image/upload/c_fill,w_600,h_380/v1792122897/Bright_Light_Yellow.png" },
-    { name: "Yellow Orange", color: "#f59e0b", img: "https://res.cloudinary.com/qcyxxyec/image/upload/c_fill,w_600,h_380/v1792122910/Yellow_Orange_Gradient.png" },
-    { name: "Solid Gray", color: "#9ca3af", img: "https://res.cloudinary.com/qcyxxyec/image/upload/c_fill,w_600,h_380/v1792122908/Solid_Gray.png" },
-    { name: "Black White Grey", color: "#6b7280", img: "https://res.cloudinary.com/qcyxxyec/image/upload/c_fill,w_600,h_380/v1792122908/Black_White_Grey.png" },
-    { name: "Aquatic Blue Yellow", color: "#38bdf8", img: "https://res.cloudinary.com/qcyxxyec/image/upload/c_fill,w_600,h_380/v1792122913/Aquatic_blue_yellow_gradient.png" }
+    { name: "Ocean Blue", color: "#3b82f6", img: "https://res.cloudinary.com/qcyxxyec/image/upload/c_fill,w_1200,h_760/v1792122909/Ocean_Blue.png" },
+    { name: "Super Black", color: "#1a1a1a", img: "https://res.cloudinary.com/qcyxxyec/image/upload/c_fill,w_1200,h_760/v1792122914/Super_black.png" },
+    { name: "Pure White", color: "#ffffff", img: "https://res.cloudinary.com/qcyxxyec/image/upload/c_fill,w_1200,h_760/v1792122906/Pure_white.png" },
+    { name: "Cyan Cobalt", color: "#00e5ff", img: "https://res.cloudinary.com/qcyxxyec/image/upload/c_fill,w_1200,h_760/v1792122911/Cyan_Cobalt_blue_gradient.png" },
+    { name: "Gradient Red Orange", color: "#f97316", img: "https://res.cloudinary.com/qcyxxyec/image/upload/c_fill,w_1200,h_760/v1792122906/Gradient_red_orange.png" },
+    { name: "Classic Red", color: "#dc2626", img: "https://res.cloudinary.com/qcyxxyec/image/upload/c_fill,w_1200,h_760/v1792122905/Classic_Red.png" },
+    { name: "Turquoise", color: "#06b6d4", img: "https://res.cloudinary.com/qcyxxyec/image/upload/c_fill,w_1200,h_760/v1792122905/Turquoise.png" },
+    { name: "Lime Green", color: "#84cc16", img: "https://res.cloudinary.com/qcyxxyec/image/upload/c_fill,w_1200,h_760/v1792122912/Lime_Green.png" },
+    { name: "Grassy Green", color: "#22c55e", img: "https://res.cloudinary.com/qcyxxyec/image/upload/c_fill,w_1200,h_760/v1792122907/Grassy_Green_Turquoise.png" },
+    { name: "Bright Light Yellow", color: "#fde047", img: "https://res.cloudinary.com/qcyxxyec/image/upload/c_fill,w_1200,h_760/v1792122897/Bright_Light_Yellow.png" },
+    { name: "Yellow Orange", color: "#f59e0b", img: "https://res.cloudinary.com/qcyxxyec/image/upload/c_fill,w_1200,h_760/v1792122910/Yellow_Orange_Gradient.png" },
+    { name: "Solid Gray", color: "#9ca3af", img: "https://res.cloudinary.com/qcyxxyec/image/upload/c_fill,w_1200,h_760/v1792122908/Solid_Gray.png" },
+    { name: "Black White Grey", color: "#6b7280", img: "https://res.cloudinary.com/qcyxxyec/image/upload/c_fill,w_1200,h_760/v1792122908/Black_White_Grey.png" },
+    { name: "Aquatic Blue Yellow", color: "#38bdf8", img: "https://res.cloudinary.com/qcyxxyec/image/upload/c_fill,w_1200,h_760/v1792122913/Aquatic_blue_yellow_gradient.png" }
   ];
 
   const basePrice = 99;
