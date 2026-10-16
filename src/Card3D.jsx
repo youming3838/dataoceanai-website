@@ -20,23 +20,24 @@ export default function Card3D({ imageUrl }) {
       alpha: true,
       powerPreference: "high-performance" 
     });
-    // 🌟 SHARPNESS FIX 1: Use full device pixel ratio (up to 3 for high-res screens)
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 3)); 
     renderer.setSize(currentMount.clientWidth, currentMount.clientHeight);
     currentMount.appendChild(renderer.domElement);
 
-    // 2. Lighting (Soft and even)
-    const ambientLight = new THREE.AmbientLight(0xffffff, 1.0);
+    // 2. Lighting (🌟 BOOSTED TO MAKE THE CARD POP 🌟)
+    // Increased ambient light to eliminate the gray shadows
+    const ambientLight = new THREE.AmbientLight(0xffffff, 2.0); 
     scene.add(ambientLight);
 
-    const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+    // Increased directional light for a bright, even shine
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 1.5);
     directionalLight.position.set(5, 5, 5);
     scene.add(directionalLight);
 
     // 3. Geometry: Flat Plane (No gray frame)
     const geometry = new THREE.PlaneGeometry(3.2, 2); 
     
-    // 4. Material: Perfectly matte
+    // 4. Material: Perfectly matte, but bright
     const material = new THREE.MeshStandardMaterial({ 
       color: 0xffffff, 
       metalness: 0, 
@@ -50,11 +51,8 @@ export default function Card3D({ imageUrl }) {
     // 5. Load Texture with Maximum Sharpness
     const textureLoader = new THREE.TextureLoader();
     textureLoader.load(imageUrl, (texture) => {
-      // 🌟 SHARPNESS FIX 2: Correct color space (prevents washed out colors)
       texture.colorSpace = THREE.SRGBColorSpace; 
-      // 🌟 SHARPNESS FIX 3: Anisotropy makes angled textures look sharp
       texture.anisotropy = renderer.capabilities.getMaxAnisotropy(); 
-      // 🌟 SHARPNESS FIX 4: Prevent blurry mipmaps
       texture.generateMipmaps = false;
       texture.minFilter = THREE.LinearFilter;
       
