@@ -2,7 +2,6 @@ import React, { Suspense } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { useTexture, OrbitControls, Float, Environment, ContactShadows } from '@react-three/drei';
 
-// The 3D Card Mesh Component
 function CardMesh({ imageUrl }) {
   const texture = useTexture(imageUrl);
 
@@ -18,11 +17,7 @@ export default function Card3D({ imageUrl }) {
   return (
     <div style={{ width: '100%', height: '400px', position: 'relative' }}>
       <Suspense fallback={<div style={{ color: '#a3e4ff', textAlign: 'center', paddingTop: '200px' }}>Loading 3D Card...</div>}>
-        <Canvas 
-          camera={{ position: [0, 0, 6], fov: 45 }} 
-          shadows 
-          dpr={[1, 1.5]} 
-        >
+        <Canvas camera={{ position: [0, 0, 6], fov: 45 }} shadows dpr={[1, 1.5]}>
           <ambientLight intensity={0.5} />
           <directionalLight position={[5, 5, 5]} intensity={1.5} castShadow />
           <directionalLight position={[-5, -5, 5]} intensity={0.5} color="#3b82f6" />
@@ -31,12 +26,7 @@ export default function Card3D({ imageUrl }) {
             <CardMesh imageUrl={imageUrl} />
           </Float>
 
-          <OrbitControls 
-            enableZoom={false} 
-            enablePan={false} 
-            minPolarAngle={Math.PI / 2.5} 
-            maxPolarAngle={Math.PI / 1.5} 
-          />
+          <OrbitControls enableZoom={false} enablePan={false} minPolarAngle={Math.PI / 2.5} maxPolarAngle={Math.PI / 1.5} />
           
           <ContactShadows position={[0, -1.5, 0]} opacity={0.5} scale={10} blur={2.5} far={4} color="#3b82f6" />
           <Environment preset="city" />
