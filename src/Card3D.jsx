@@ -13,7 +13,7 @@ export default function Card3D({ imageUrl }) {
     // 1. Setup Scene, Camera, Renderer
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(45, currentMount.clientWidth / currentMount.clientHeight, 0.1, 1000);
-    camera.position.set(0, 0, 6);
+    camera.position.set(0, 0, 4.2); // 📸 Camera moved closer to fill the frame
 
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     renderer.setSize(currentMount.clientWidth, currentMount.clientHeight);
@@ -103,4 +103,3 @@ export default function Card3D({ imageUrl }) {
     </div>
   );
 }
-
