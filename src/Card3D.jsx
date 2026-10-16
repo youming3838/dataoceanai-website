@@ -2,10 +2,13 @@ import React, { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
-export default function Card3D({ imageUrl, cardColor, scrollProgress = 0, burstTrigger = 0 }) {
+export default function Card3D({ imageUrl, cardColor, scrollProgress = 0, burstTrigger = 0, onFirstInteraction }) {
   const mountRef = useRef(null);
   const [loading, setLoading] = useState(true);
   const [showSkeleton, setShowSkeleton] = useState(true);
+  const interactionFiredRef = useRef(false);
+  const onFirstInteractionRef = useRef(onFirstInteraction);
+  onFirstInteractionRef.current = onFirstInteraction;
   
   const edgeMaterialRef = useRef(null);
   const backMaterialRef = useRef(null);
@@ -16,7 +19,6 @@ export default function Card3D({ imageUrl, cardColor, scrollProgress = 0, burstT
   scrollRef.current = scrollProgress;
   const burstFnRef = useRef(null);
 
-  // Fade out the skeleton after loading completes
   useEffect(() => {
     if (!loading) {
       const timer = setTimeout(() => setShowSkeleton(false), 400);
@@ -64,6 +66,16 @@ export default function Card3D({ imageUrl, cardColor, scrollProgress = 0, burstT
     renderer.setSize(currentMount.clientWidth, currentMount.clientHeight);
     currentMount.appendChild(renderer.domElement);
 
+    // 🌟 First interaction detection (for swipe hint)
+    const handleFirstInteraction = () => {
+      if (interactionFiredRef.current) return;
+      interactionFiredRef.current = true;
+      if (onFirstInteractionRef.current) onFirstInteractionRef.current();
+    };
+    renderer.domElement.addEventListener('pointerdown', handleFirstInteraction, { once: true });
+    renderer.domElement.addEventListener('touchstart', handleFirstInteraction, { once: true });
+    renderer.domElement.addEventListener('wheel', handleFirstInteraction, { once: true });
+
     scene.add(new THREE.AmbientLight(0xffffff, 2.0));
     const dirLight = new THREE.DirectionalLight(0xffffff, 1.5);
     dirLight.position.set(5, 5, 5);
@@ -103,9 +115,6 @@ export default function Card3D({ imageUrl, cardColor, scrollProgress = 0, burstT
       positions[i * 3] = 0;
       positions[i * 3 + 1] = 1000;
       positions[i * 3 + 2] = 0;
-      velocities[i * 3] = 0;
-      velocities[i * 3 + 1] = 0;
-      velocities[i * 3 + 2] = 0;
     }
     particleGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
 
@@ -122,14 +131,8 @@ export default function Card3D({ imageUrl, cardColor, scrollProgress = 0, burstT
     const particleTexture = new THREE.CanvasTexture(canvas);
 
     const particleMaterial = new THREE.PointsMaterial({
-      size: 0.18,
-      map: particleTexture,
-      transparent: true,
-      opacity: 0,
-      blending: THREE.AdditiveBlending,
-      depthWrite: false,
-      sizeAttenuation: true,
-      color: 0x60c8ff,
+      size: 0.18, map: particleTexture, transparent: true, opacity: 0,
+      blending: THREE.AdditiveBlending, depthWrite: false, sizeAttenuation: true, color: 0x60c8ff,
     });
 
     const particleSystem = new THREE.Points(particleGeometry, particleMaterial);
@@ -166,7 +169,6 @@ export default function Card3D({ imageUrl, cardColor, scrollProgress = 0, burstT
     let animationFrameId;
     const animate = () => {
       animationFrameId = requestAnimationFrame(animate);
-      
       const sp = scrollRef.current;
       const idleBob = Math.sin(Date.now() * 0.001) * 0.05;
       card.rotation.x = THREE.MathUtils.lerp(card.rotation.x, idleBob + (sp * 0.35), 0.08);
@@ -210,6 +212,9 @@ export default function Card3D({ imageUrl, cardColor, scrollProgress = 0, burstT
     return () => {
       cancelAnimationFrame(animationFrameId);
       window.removeEventListener('resize', handleResize);
+      renderer.domElement.removeEventListener('pointerdown', handleFirstInteraction);
+      renderer.domElement.removeEventListener('touchstart', handleFirstInteraction);
+      renderer.domElement.removeEventListener('wheel', handleFirstInteraction);
       controls.dispose();
       geometry.dispose();
       materials.forEach(m => m.dispose());
@@ -225,67 +230,38 @@ export default function Card3D({ imageUrl, cardColor, scrollProgress = 0, burstT
 
   return (
     <div style={{ width: '100%', height: 'clamp(280px, 45vw, 400px)', position: 'relative' }}>
-      {/* 🌟 SKELETON LOADER - Shimmer card with pulsing glow */}
       {showSkeleton && (
         <div
           style={{
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            opacity: loading ? 1 : 0,
-            transition: 'opacity 0.4s ease-out',
-            pointerEvents: 'none',
-            zIndex: 5,
+            position: 'absolute', top: 0, left: 0, right: 0, bottom: 0,
+            display: 'flex', justifyContent: 'center', alignItems: 'center',
+            opacity: loading ? 1 : 0, transition: 'opacity 0.4s ease-out',
+            pointerEvents: 'none', zIndex: 5,
           }}
         >
-          {/* Skeleton Card */}
           <div
             style={{
-              width: '78%',
-              maxWidth: '420px',
-              aspectRatio: '1.58',
-              borderRadius: '16px',
+              width: '78%', maxWidth: '420px', aspectRatio: '1.58', borderRadius: '16px',
               background: 'linear-gradient(135deg, rgba(59, 130, 246, 0.15) 0%, rgba(2, 22, 12, 0.6) 50%, rgba(59, 130, 246, 0.15) 100%)',
               border: '1px solid rgba(59, 130, 246, 0.4)',
-              position: 'relative',
-              overflow: 'hidden',
+              position: 'relative', overflow: 'hidden',
               animation: 'skeletonPulse 2s ease-in-out infinite',
               boxShadow: '0 0 40px rgba(59, 130, 246, 0.15)',
             }}
           >
-            {/* Shimmer overlay */}
             <div
               style={{
-                position: 'absolute',
-                top: 0,
-                left: '-100%',
-                width: '100%',
-                height: '100%',
+                position: 'absolute', top: 0, left: '-100%', width: '100%', height: '100%',
                 background: 'linear-gradient(90deg, transparent 0%, rgba(140, 220, 255, 0.15) 50%, transparent 100%)',
                 animation: 'skeletonShimmer 1.8s ease-in-out infinite',
               }}
             />
           </div>
-          {/* Data Ocean label */}
-          <p
-            style={{
-              position: 'absolute',
-              bottom: '-30px',
-              left: '50%',
-              transform: 'translateX(-50%)',
-              color: '#3b82f6',
-              fontSize: '0.75rem',
-              fontWeight: 'bold',
-              letterSpacing: '2px',
-              textTransform: 'uppercase',
-              opacity: 0.7,
-            }}
-          >
+          <p style={{
+            position: 'absolute', bottom: '-30px', left: '50%', transform: 'translateX(-50%)',
+            color: '#3b82f6', fontSize: '0.75rem', fontWeight: 'bold',
+            letterSpacing: '2px', textTransform: 'uppercase', opacity: 0.7,
+          }}>
             Loading Data Ocean...
           </p>
         </div>
@@ -293,7 +269,6 @@ export default function Card3D({ imageUrl, cardColor, scrollProgress = 0, burstT
 
       <div ref={mountRef} style={{ width: '100%', height: '100%', opacity: loading ? 0 : 1, transition: 'opacity 0.5s ease-in' }} />
 
-      {/* 🌟 KEYFRAME ANIMATIONS */}
       <style>{`
         @keyframes skeletonPulse {
           0%, 100% { opacity: 0.6; transform: scale(0.98); }
