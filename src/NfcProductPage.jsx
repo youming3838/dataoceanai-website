@@ -77,9 +77,7 @@ export default function NfcProductPage() {
   useEffect(() => {
     const hasSeenHint = localStorage.getItem('do_card_swipe_hint_seen');
     if (!hasSeenHint) {
-      // Appears after 1.5 seconds
       const timer = setTimeout(() => setShowSwipeHint(true), 1500);
-      // 🌟 Auto-hides after 15 seconds (was 9.5s)
       const autoHide = setTimeout(() => {
         setShowSwipeHint(false);
         localStorage.setItem('do_card_swipe_hint_seen', 'true');
@@ -139,12 +137,26 @@ export default function NfcProductPage() {
       
       <motion.div style={{ scaleX, transformOrigin: '0%', position: 'fixed', top: 0, left: 0, right: 0, height: '4px', background: '#3b82f6', zIndex: 2000, boxShadow: '0 0 10px #3b82f6' }} />
 
+      {/* 🌟 CONSISTENT NAV BAR — matches the homepage structure */}
       <div style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 1000, background: 'rgba(2, 22, 12, 0.85)', backdropFilter: 'blur(12px)', borderBottom: '1px solid rgba(59, 130, 246, 0.3)' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '15px 20px', maxWidth: '1200px', margin: '0 auto' }}>
-          <Link to="/" style={{ color: '#3b82f6', textDecoration: 'none', fontWeight: 'bold', fontSize: '1.1rem', display: 'flex', alignItems: 'center', gap: '10px' }}>
-            <span>←</span> Data Ocean
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '15px 40px', maxWidth: '1200px', margin: '0 auto', flexWrap: 'wrap', gap: '12px' }}>
+          
+          {/* Brand */}
+          <Link to="/" style={{ color: '#ffffff', textDecoration: 'none', fontWeight: 'bold', fontSize: '1.05rem', display: 'flex', alignItems: 'center', gap: '8px', whiteSpace: 'nowrap' }}>
+            <span style={{ color: '#3b82f6', fontSize: '1.1rem' }}>←</span>
+            <span>Data Ocean</span>
           </Link>
-          <motion.a whileTap={{ scale: 0.95 }} href="#order" style={{ padding: '10px 20px', backgroundColor: '#3b82f6', color: '#fff', textDecoration: 'none', borderRadius: '6px', fontWeight: 'bold', fontSize: '0.85rem' }}>Buy Now</motion.a>
+
+          {/* Nav links — same as homepage */}
+          <nav style={{ display: 'flex', gap: '22px', flexWrap: 'wrap', justifyContent: 'center' }}>
+            <Link to="/#ai" style={{ color: '#a3e4ff', textDecoration: 'none', fontSize: '0.82rem', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '0.5px' }}>AI Governance</Link>
+            <Link to="/#services" style={{ color: '#a3e4ff', textDecoration: 'none', fontSize: '0.82rem', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '0.5px' }}>SAP Services</Link>
+            <Link to="/#nfc" style={{ color: '#a3e4ff', textDecoration: 'none', fontSize: '0.82rem', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Digital Products</Link>
+            <Link to="/#contact" style={{ color: '#a3e4ff', textDecoration: 'none', fontSize: '0.82rem', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Contact Us</Link>
+          </nav>
+
+          {/* Buy Now CTA */}
+          <motion.a whileTap={{ scale: 0.95 }} href="#order" style={{ padding: '10px 22px', backgroundColor: '#3b82f6', color: '#fff', textDecoration: 'none', borderRadius: '6px', fontWeight: 'bold', fontSize: '0.82rem', whiteSpace: 'nowrap' }}>Buy Now</motion.a>
         </div>
       </div>
 
@@ -187,41 +199,16 @@ export default function NfcProductPage() {
                   exit={{ opacity: 0, y: 10 }}
                   transition={{ duration: 0.5 }}
                   style={{
-                    position: 'absolute',
-                    bottom: 'calc(50% - 15px)',
-                    left: '50%',
-                    transform: 'translateX(-50%)',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '10px',
-                    padding: '8px 18px',
-                    borderRadius: '30px',
-                    background: 'rgba(2, 22, 12, 0.85)',
-                    border: '1px solid rgba(59, 130, 246, 0.5)',
-                    backdropFilter: 'blur(8px)',
-                    boxShadow: '0 0 20px rgba(59, 130, 246, 0.3)',
-                    pointerEvents: 'none',
-                    zIndex: 20,
-                    whiteSpace: 'nowrap',
+                    position: 'absolute', bottom: 'calc(50% - 15px)', left: '50%', transform: 'translateX(-50%)',
+                    display: 'flex', alignItems: 'center', gap: '10px', padding: '8px 18px',
+                    borderRadius: '30px', background: 'rgba(2, 22, 12, 0.85)',
+                    border: '1px solid rgba(59, 130, 246, 0.5)', backdropFilter: 'blur(8px)',
+                    boxShadow: '0 0 20px rgba(59, 130, 246, 0.3)', pointerEvents: 'none', zIndex: 20, whiteSpace: 'nowrap',
                   }}
                 >
-                  <motion.span
-                    animate={{ x: [0, -4, 0] }}
-                    transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
-                    style={{ color: '#3b82f6', fontSize: '1rem', fontWeight: 'bold' }}
-                  >
-                    ←
-                  </motion.span>
-                  <span style={{ color: '#ffffff', fontSize: '0.8rem', fontWeight: '600', letterSpacing: '1px', textTransform: 'uppercase' }}>
-                    Swipe to rotate
-                  </span>
-                  <motion.span
-                    animate={{ x: [0, 4, 0] }}
-                    transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
-                    style={{ color: '#3b82f6', fontSize: '1rem', fontWeight: 'bold' }}
-                  >
-                    →
-                  </motion.span>
+                  <motion.span animate={{ x: [0, -4, 0] }} transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }} style={{ color: '#3b82f6', fontSize: '1rem', fontWeight: 'bold' }}>←</motion.span>
+                  <span style={{ color: '#ffffff', fontSize: '0.8rem', fontWeight: '600', letterSpacing: '1px', textTransform: 'uppercase' }}>Swipe to rotate</span>
+                  <motion.span animate={{ x: [0, 4, 0] }} transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }} style={{ color: '#3b82f6', fontSize: '1rem', fontWeight: 'bold' }}>→</motion.span>
                 </motion.div>
               )}
             </AnimatePresence>
@@ -235,8 +222,7 @@ export default function NfcProductPage() {
                 onClick={() => handleSelectCard(index)}
                 title={card.name}
                 style={{
-                  width: 'clamp(28px, 5vw, 35px)',
-                  height: 'clamp(28px, 5vw, 35px)',
+                  width: 'clamp(28px, 5vw, 35px)', height: 'clamp(28px, 5vw, 35px)',
                   borderRadius: '50%', backgroundColor: card.color,
                   border: selectedCard === index ? '3px solid #3b82f6' : '2px solid rgba(255,255,255,0.3)',
                   cursor: 'pointer', boxShadow: selectedCard === index ? '0 0 15px #3b82f6' : 'none', transition: 'all 0.3s ease'
