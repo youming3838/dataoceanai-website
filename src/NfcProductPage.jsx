@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { motion, AnimatePresence, useScroll, useSpring } from 'framer-motion';
 import Card3D from './Card3D';
 
-// Animation Variants
 const fadeInUp = {
   hidden: { opacity: 0, y: 40 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } }
@@ -24,7 +23,6 @@ const textRevealItem = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } }
 };
 
-// Interactive FAQ Component
 const FaqItem = ({ question, answer }) => {
   const [isOpen, setIsOpen] = useState(false);
   return (
@@ -50,7 +48,6 @@ const FaqItem = ({ question, answer }) => {
   );
 };
 
-// Scrolling Marquee Banner Component
 const MarqueeBanner = () => {
   return (
     <div style={{ overflow: 'hidden', width: '100%', background: 'rgba(59, 130, 246, 0.1)', borderTop: '1px solid rgba(59, 130, 246, 0.3)', borderBottom: '1px solid rgba(59, 130, 246, 0.3)', padding: '20px 0' }}>
@@ -74,7 +71,6 @@ export default function NfcProductPage() {
   const [activeFeature, setActiveFeature] = useState(0);
   const [selectedCard, setSelectedCard] = useState(0); 
 
-  // 🌟 ALL 14 COLORS - WITH CLOUDINARY CROPPING APPLIED
   const cardOptions = [
     { name: "Ocean Blue", color: "#3b82f6", img: "https://res.cloudinary.com/qcyxxyec/image/upload/c_fill,w_600,h_380/v1792122909/Ocean_Blue.png" },
     { name: "Super Black", color: "#1a1a1a", img: "https://res.cloudinary.com/qcyxxyec/image/upload/c_fill,w_600,h_380/v1792122914/Super_black.png" },
@@ -107,10 +103,8 @@ export default function NfcProductPage() {
   return (
     <div style={{ position: 'relative', zIndex: 10, background: 'linear-gradient(to bottom, rgba(2, 22, 12, 0.4) 0%, rgba(2, 22, 12, 0.9) 100%)', color: '#f2f2f2', minHeight: '100vh', fontFamily: 'sans-serif', overflowX: 'hidden', backdropFilter: 'blur(10px)' }}>
       
-      {/* SCROLL PROGRESS BAR */}
       <motion.div style={{ scaleX, transformOrigin: '0%', position: 'fixed', top: 0, left: 0, right: 0, height: '4px', background: '#3b82f6', zIndex: 2000, boxShadow: '0 0 10px #3b82f6' }} />
 
-      {/* STICKY FLOATING NAVIGATION BAR */}
       <div style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 1000, background: 'rgba(2, 22, 12, 0.85)', backdropFilter: 'blur(12px)', borderBottom: '1px solid rgba(59, 130, 246, 0.3)' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '15px 40px', maxWidth: '1200px', margin: '0 auto' }}>
           <Link to="/" style={{ color: '#3b82f6', textDecoration: 'none', fontWeight: 'bold', fontSize: '1.2rem', display: 'flex', alignItems: 'center', gap: '10px' }}>
@@ -122,7 +116,6 @@ export default function NfcProductPage() {
 
       <div style={{ height: '70px' }} />
 
-      {/* Hero Section */}
       <motion.div initial="hidden" animate="visible" variants={staggerContainer} style={{ display: 'flex', flexWrap: 'wrap', padding: '80px 40px', gap: '60px', alignItems: 'center', maxWidth: '1200px', margin: '0 auto' }}>
         <motion.div variants={fadeInUp} style={{ flex: '1 1 400px' }}>
           <motion.h1 variants={textRevealContainer} style={{ fontSize: '3.5rem', color: '#3b82f6', marginBottom: '20px', lineHeight: '1.1' }}>
@@ -142,12 +135,9 @@ export default function NfcProductPage() {
           <p style={{ color: '#a3e4ff', marginTop: '15px', fontSize: '0.9rem' }}>Free shipping worldwide. Global delivery available.</p>
         </motion.div>
         
-        {/* 🌟 INTERACTIVE 3D CARD */}
         <motion.div variants={fadeInUp} style={{ flex: '1 1 400px', textAlign: 'center' }}>
-          
           <Card3D imageUrl={cardOptions[selectedCard].img} />
 
-          {/* Color Swatches Grid */}
           <div style={{ marginTop: '20px', display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '12px', maxWidth: '500px', margin: '20px auto 0 auto' }}>
             {cardOptions.map((card, index) => (
               <motion.button
@@ -156,14 +146,9 @@ export default function NfcProductPage() {
                 onClick={() => setSelectedCard(index)}
                 title={card.name}
                 style={{
-                  width: '35px',
-                  height: '35px',
-                  borderRadius: '50%',
-                  backgroundColor: card.color,
+                  width: '35px', height: '35px', borderRadius: '50%', backgroundColor: card.color,
                   border: selectedCard === index ? '3px solid #3b82f6' : '2px solid rgba(255,255,255,0.3)',
-                  cursor: 'pointer',
-                  boxShadow: selectedCard === index ? '0 0 15px #3b82f6' : 'none',
-                  transition: 'all 0.3s ease'
+                  cursor: 'pointer', boxShadow: selectedCard === index ? '0 0 15px #3b82f6' : 'none', transition: 'all 0.3s ease'
                 }}
               />
             ))}
@@ -176,7 +161,6 @@ export default function NfcProductPage() {
 
       <MarqueeBanner />
 
-      {/* INTERACTIVE FEATURES SWITCHER */}
       <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }} variants={staggerContainer} style={{ padding: '80px 40px' }}>
         <motion.h2 variants={fadeInUp} style={{ fontSize: '2.5rem', color: '#3b82f6', textAlign: 'center', marginBottom: '50px' }}>Why Choose Our NFC Cards?</motion.h2>
         <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '15px', marginBottom: '40px', maxWidth: '900px', margin: '0 auto 40px auto' }}>
@@ -188,8 +172,7 @@ export default function NfcProductPage() {
               style={{
                 padding: '15px 30px', borderRadius: '30px', border: '1px solid #3b82f6',
                 background: activeFeature === index ? '#3b82f6' : 'rgba(59, 130, 246, 0.1)',
-                color: activeFeature === index ? '#fff' : '#a3e4ff',
-                fontWeight: 'bold', cursor: 'pointer', transition: 'all 0.3s ease'
+                color: activeFeature === index ? '#fff' : '#a3e4ff', fontWeight: 'bold', cursor: 'pointer', transition: 'all 0.3s ease'
               }}
             >
               {feature.title}
@@ -211,7 +194,6 @@ export default function NfcProductPage() {
         </div>
       </motion.div>
 
-      {/* Testimonials Section */}
       <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }} variants={staggerContainer} style={{ padding: '80px 40px' }}>
         <motion.h2 variants={fadeInUp} style={{ fontSize: '2.5rem', color: '#3b82f6', textAlign: 'center', marginBottom: '50px' }}>Trusted by Professionals</motion.h2>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '30px', justifyContent: 'center', maxWidth: '1000px', margin: '0 auto' }}>
@@ -226,7 +208,6 @@ export default function NfcProductPage() {
         </div>
       </motion.div>
 
-      {/* PRICING / ORDER SECTION */}
       <motion.div id="order" initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }} variants={staggerContainer} style={{ padding: '80px 40px', textAlign: 'center' }}>
         <motion.h2 variants={fadeInUp} style={{ fontSize: '3rem', color: '#3b82f6', marginBottom: '20px' }}>Ready to Upgrade Your Network?</motion.h2>
         <motion.p variants={fadeInUp} style={{ fontSize: '1.2rem', color: '#a3e4ff', marginBottom: '40px' }}>Get your smart NFC card today.</motion.p>
@@ -255,7 +236,6 @@ export default function NfcProductPage() {
         </div>
       </motion.div>
 
-      {/* FAQ Section */}
       <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }} variants={staggerContainer} style={{ padding: '80px 40px', maxWidth: '800px', margin: '0 auto' }}>
         <motion.h2 variants={fadeInUp} style={{ fontSize: '2.5rem', color: '#3b82f6', textAlign: 'center', marginBottom: '40px' }}>Frequently Asked Questions</motion.h2>
         <FaqItem question="Does it work with both iPhone and Android?" answer="Yes! Our NFC cards are universally compatible with all modern smartphones, including iPhones (iOS 14+) and Android devices. No app is required for the person receiving your card." />
@@ -264,7 +244,6 @@ export default function NfcProductPage() {
         <FaqItem question="Do you offer custom branding for businesses?" answer="Yes, we offer enterprise packages with custom logo printing and bulk pricing. Please contact us directly at connect@dataoceanai.io for a quote." />
       </motion.div>
 
-      {/* Footer */}
       <footer style={{ padding: '40px', textAlign: 'center', background: 'rgba(0,0,0,0.5)' }}>
         <p style={{ color: '#a3e4ff', marginBottom: '10px' }}>Data Ocean © 2026. All rights reserved.</p>
         <p style={{ color: '#a3e4ff', fontSize: '0.9rem' }}><a href="mailto:connect@dataoceanai.io" style={{ color: '#3b82f6', textDecoration: 'none' }}>connect@dataoceanai.io</a></p>
