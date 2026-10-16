@@ -14,11 +14,10 @@ export default function ContentSections() {
   };
 
   return (
-    // Changed background to be highly transparent so the ocean shows through
     <div style={{ position: 'relative', zIndex: 10, background: 'linear-gradient(to bottom, rgba(2, 22, 12, 0.4) 0%, rgba(2, 22, 12, 0.85) 100%)', color: '#f2f2f2', backdropFilter: 'blur(5px)' }}>
       
       {/* SAP Services Section */}
-      <section id="services" style={{ padding: '100px 40px' }}> {/* Removed borderTop */}
+      <section id="services" style={{ padding: '100px 40px' }}>
         <h2 style={{ fontSize: '3rem', color: '#3b82f6', marginBottom: '20px' }}>SAP Services</h2>
         <p style={{ fontSize: '1.2rem', color: '#a3e4ff', marginBottom: '60px', maxWidth: '800px', lineHeight: '1.6' }}>
           Powered by over 10 years of enterprise expertise. We deliver precision ABAP development, seamless system integrations, and mission-critical support for global SAP landscapes.
@@ -62,7 +61,7 @@ export default function ContentSections() {
       </section>
 
       {/* Digital Tech Products Section */}
-      <section id="nfc" style={{ padding: '100px 40px' }}> {/* Removed borderTop */}
+      <section id="nfc" style={{ padding: '100px 40px' }}>
         <h2 style={{ fontSize: '3rem', color: '#3b82f6', marginBottom: '20px' }}>Digital Tech Products</h2>
         <p style={{ fontSize: '1.2rem', color: '#a3e4ff', marginBottom: '60px', maxWidth: '800px' }}>
           Innovative digital tools designed to elevate your professional network.
@@ -97,9 +96,10 @@ export default function ContentSections() {
             <a href="/nfc-product" style={{ display: 'inline-block', padding: '15px 40px', backgroundColor: '#3b82f6', color: '#ffffff', textDecoration: 'none', fontWeight: 'bold', borderRadius: '8px', transition: '0.3s' }}>Order Yours Now</a>
           </div>
 
+          {/* 🌟 FIXED: Classic Red Cloudinary URL replaces the broken image */}
           <div style={{ flex: '1 1 300px', textAlign: 'center' }}>
             <img 
-              src="/nfc-card.jpg" 
+              src="https://res.cloudinary.com/qcyxxyec/image/upload/c_fill,w_1200,h_760/v1792122905/Classic_Red.png" 
               alt="Smart NFC Business Card" 
               style={{ 
                 width: '100%', 
@@ -115,7 +115,7 @@ export default function ContentSections() {
       </section>
 
       {/* AI Governance Section */}
-      <section id="ai" style={{ padding: '100px 40px' }}> {/* Removed borderTop */}
+      <section id="ai" style={{ padding: '100px 40px' }}>
         <h2 style={{ fontSize: '3rem', color: '#3b82f6', marginBottom: '20px' }}>AI Governance</h2>
         <p style={{ fontSize: '1.2rem', color: '#a3e4ff', maxWidth: '800px', lineHeight: '1.6' }}>
           We are preparing to launch specialized AI Governance consulting to help enterprises navigate the complex landscape of artificial intelligence responsibly and ethically.
@@ -126,7 +126,7 @@ export default function ContentSections() {
       </section>
 
       {/* Contact Section */}
-      <section id="contact" style={{ padding: '100px 40px' }}> {/* Removed borderTop */}
+      <section id="contact" style={{ padding: '100px 40px' }}>
         <h2 style={{ fontSize: '3rem', color: '#3b82f6', marginBottom: '20px' }}>Contact Data Ocean</h2>
         <p style={{ color: '#a3e4ff', marginBottom: '40px', fontSize: '1.1rem' }}>
           Ready to elevate your SAP infrastructure or order your NFC cards? Reach out to us directly.
@@ -157,7 +157,7 @@ export default function ContentSections() {
       </section>
 
       {/* Footer */}
-      <footer style={{ padding: '40px', textAlign: 'center', background: 'rgba(0,0,0,0.5)' }}> {/* Removed borderTop */}
+      <footer style={{ padding: '40px', textAlign: 'center', background: 'rgba(0,0,0,0.5)' }}>
         <p style={{ color: '#a3e4ff', marginBottom: '10px' }}>Data Ocean © 2026. All rights reserved.</p>
         <p style={{ color: '#a3e4ff', fontSize: '0.9rem' }}>
           <a href="mailto:connect@dataoceanai.io" style={{ color: '#3b82f6', textDecoration: 'none' }}>connect@dataoceanai.io</a>
