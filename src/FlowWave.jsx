@@ -8,7 +8,6 @@ import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass.js';
 import { GammaCorrectionShader } from 'three/examples/jsm/shaders/GammaCorrectionShader.js';
 import { CopyShader } from 'three/examples/jsm/shaders/CopyShader.js';
 
-// Fixed Constants
 const bgColor         = '#02160c';
 const flameColor      = '#3b82f6'; 
 const flameColor2     = '#60a5fa'; 
@@ -132,7 +131,6 @@ export default function FlowWave() {
     scene.add(camera);
 
     const renderPass = new RenderPass(scene, camera);
-
     const torusComposer = new EffectComposer(renderer);
     torusComposer.renderToScreen = false;
     torusComposer.addPass(renderPass);
@@ -387,10 +385,6 @@ export default function FlowWave() {
               <a href="#nfc">Digital<br />Products</a>
               <a href="#contact">Contact<br />Us</a>
             </nav>
-            <div className="fs-contacts">
-              <i className="fs-mark" aria-hidden="true" />
-              <a href="#contact">Contacts</a>
-            </div>
           </header>
 
           <div className="fs-hero-content">
@@ -498,27 +492,6 @@ export default function FlowWave() {
         }
         .fs-nav a:hover { opacity: 1; color: #3b82f6; }
 
-        .fs-contacts {
-          display: flex;
-          align-items: center;
-          gap: 15px;
-          border-bottom: 1px solid var(--ink);
-          padding-bottom: 5px;
-        }
-
-        .fs-mark {
-          width: 18px;
-          height: 18px;
-          border: 2px solid var(--ink);
-          border-radius: 50%;
-        }
-
-        .fs-contacts a {
-          font-size: var(--fs-nav);
-          font-weight: 500;
-          text-transform: uppercase;
-        }
-
         .fs-hero-content {
           display: flex;
           flex-direction: column;
@@ -588,8 +561,6 @@ export default function FlowWave() {
           .fs-head { flex-wrap: wrap; gap: 20px; }
           .fs-nav { width: 100%; justify-content: space-between; gap: 8px; order: 3; margin-top: 20px; }
           .fs-nav a { font-size: 12px; }
-          .fs-contacts { order: 2; }
-          .fs-contacts a { font-size: 12px; }
           .fs-hero-content { gap: 30px; }
           .fs-actions { flex-direction: column; width: 100%; }
           .fs-btn { width: 100%; padding: 16px 20px; }
@@ -608,14 +579,12 @@ export default function FlowWave() {
           .fs-head { gap: 15px; }
           .fs-nav { gap: 6px; margin-top: 15px; }
           .fs-nav a { font-size: 10px; line-height: 1.15; }
-          .fs-contacts a { font-size: 10px; }
-          .fs-mark { width: 14px; height: 14px; border-width: 1.5px; }
           .fs-hero-content { gap: 24px; }
           .fs-h1 { line-height: 1.15; letter-spacing: -0.01em; }
           .fs-btn { padding: 14px 18px; font-size: 12px; }
         }
 
-        /* 📱 EXTRA SMALL — 360px and below (older phones) */
+        /* 📱 EXTRA SMALL — 360px and below */
         @media (max-width: 360px) {
           :root {
             --fs-h1: 26px;
