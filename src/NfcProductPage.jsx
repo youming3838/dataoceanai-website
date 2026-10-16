@@ -71,10 +71,8 @@ export default function NfcProductPage() {
   const [activeFeature, setActiveFeature] = useState(0);
   const [selectedCard, setSelectedCard] = useState(0); 
   const [scrollProgress, setScrollProgress] = useState(0);
-  // 🌟 NEW: Triggers the particle burst on color change
   const [burstTrigger, setBurstTrigger] = useState(0);
 
-  // Scroll listener for cinematic card effect
   useEffect(() => {
     const handleScroll = () => {
       const progress = Math.min(1, window.scrollY / window.innerHeight);
@@ -84,7 +82,6 @@ export default function NfcProductPage() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // 🌟 NEW: Fires the particle burst when a card is selected
   const handleSelectCard = (index) => {
     setSelectedCard(index);
     setBurstTrigger(prev => prev + 1);
@@ -123,19 +120,19 @@ export default function NfcProductPage() {
       <motion.div style={{ scaleX, transformOrigin: '0%', position: 'fixed', top: 0, left: 0, right: 0, height: '4px', background: '#3b82f6', zIndex: 2000, boxShadow: '0 0 10px #3b82f6' }} />
 
       <div style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 1000, background: 'rgba(2, 22, 12, 0.85)', backdropFilter: 'blur(12px)', borderBottom: '1px solid rgba(59, 130, 246, 0.3)' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '15px 40px', maxWidth: '1200px', margin: '0 auto' }}>
-          <Link to="/" style={{ color: '#3b82f6', textDecoration: 'none', fontWeight: 'bold', fontSize: '1.2rem', display: 'flex', alignItems: 'center', gap: '10px' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '15px 20px', maxWidth: '1200px', margin: '0 auto' }}>
+          <Link to="/" style={{ color: '#3b82f6', textDecoration: 'none', fontWeight: 'bold', fontSize: '1.1rem', display: 'flex', alignItems: 'center', gap: '10px' }}>
             <span>←</span> Data Ocean
           </Link>
-          <motion.a whileTap={{ scale: 0.95 }} href="#order" style={{ padding: '10px 25px', backgroundColor: '#3b82f6', color: '#fff', textDecoration: 'none', borderRadius: '6px', fontWeight: 'bold', fontSize: '0.9rem' }}>Buy Now</motion.a>
+          <motion.a whileTap={{ scale: 0.95 }} href="#order" style={{ padding: '10px 20px', backgroundColor: '#3b82f6', color: '#fff', textDecoration: 'none', borderRadius: '6px', fontWeight: 'bold', fontSize: '0.85rem' }}>Buy Now</motion.a>
         </div>
       </div>
 
       <div style={{ height: '70px' }} />
 
-      <motion.div initial="hidden" animate="visible" variants={staggerContainer} style={{ display: 'flex', flexWrap: 'wrap', padding: '80px 40px', gap: '60px', alignItems: 'center', maxWidth: '1200px', margin: '0 auto' }}>
+      <motion.div initial="hidden" animate="visible" variants={staggerContainer} style={{ display: 'flex', flexWrap: 'wrap', padding: '40px 20px 80px 20px', gap: '40px', alignItems: 'center', maxWidth: '1200px', margin: '0 auto' }}>
         <motion.div variants={fadeInUp} style={{ flex: '1 1 400px' }}>
-          <motion.h1 variants={textRevealContainer} style={{ fontSize: '3.5rem', color: '#3b82f6', marginBottom: '20px', lineHeight: '1.1' }}>
+          <motion.h1 variants={textRevealContainer} style={{ fontSize: 'clamp(2rem, 5vw, 3.5rem)', color: '#3b82f6', marginBottom: '20px', lineHeight: '1.1' }}>
             <motion.span variants={textRevealItem} style={{ display: 'inline-block' }}>Elevate</motion.span>{' '}
             <motion.span variants={textRevealItem} style={{ display: 'inline-block' }}>Your</motion.span>{' '}
             <motion.span variants={textRevealItem} style={{ display: 'inline-block' }}>First</motion.span>{' '}
@@ -145,15 +142,14 @@ export default function NfcProductPage() {
             <motion.span variants={textRevealItem} style={{ display: 'inline-block' }}>NFC</motion.span>{' '}
             <motion.span variants={textRevealItem} style={{ display: 'inline-block' }}>Cards</motion.span>
           </motion.h1>
-          <p style={{ fontSize: '1.2rem', color: '#a3e4ff', marginBottom: '30px', lineHeight: '1.6' }}>
+          <p style={{ fontSize: 'clamp(1rem, 2vw, 1.2rem)', color: '#a3e4ff', marginBottom: '30px', lineHeight: '1.6' }}>
             Stop handing out paper cards that get thrown away. Our premium, programmable NFC business cards let you share your entire digital portfolio, social media, and contact details with a single tap.
           </p>
-          <motion.a whileTap={{ scale: 0.95 }} href="#order" style={{ display: 'inline-block', padding: '20px 50px', backgroundColor: '#3b82f6', color: '#fff', fontSize: '1.2rem', fontWeight: 'bold', textDecoration: 'none', borderRadius: '8px', boxShadow: '0 0 30px rgba(59, 130, 246, 0.5)' }}>Order Your Card Now</motion.a>
-          <p style={{ color: '#a3e4ff', marginTop: '15px', fontSize: '0.9rem' }}>Free shipping worldwide. Global delivery available.</p>
+          <motion.a whileTap={{ scale: 0.95 }} href="#order" style={{ display: 'inline-block', padding: '18px 40px', backgroundColor: '#3b82f6', color: '#fff', fontSize: '1.1rem', fontWeight: 'bold', textDecoration: 'none', borderRadius: '8px', boxShadow: '0 0 30px rgba(59, 130, 246, 0.5)' }}>Order Your Card Now</motion.a>
+          <p style={{ color: '#a3e4ff', marginTop: '15px', fontSize: '0.85rem' }}>Free shipping worldwide. Global delivery available.</p>
         </motion.div>
         
         <motion.div variants={fadeInUp} style={{ flex: '1 1 400px', textAlign: 'center' }}>
-          {/* 🌟 burstTrigger is passed in */}
           <Card3D 
             imageUrl={cardOptions[selectedCard].img} 
             cardColor={cardOptions[selectedCard].color} 
@@ -161,7 +157,7 @@ export default function NfcProductPage() {
             burstTrigger={burstTrigger}
           />
 
-          <div style={{ marginTop: '20px', display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '12px', maxWidth: '500px', margin: '20px auto 0 auto' }}>
+          <div style={{ marginTop: '20px', display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '10px', maxWidth: '500px', margin: '20px auto 0 auto' }}>
             {cardOptions.map((card, index) => (
               <motion.button
                 key={index}
@@ -169,14 +165,16 @@ export default function NfcProductPage() {
                 onClick={() => handleSelectCard(index)}
                 title={card.name}
                 style={{
-                  width: '35px', height: '35px', borderRadius: '50%', backgroundColor: card.color,
+                  width: 'clamp(28px, 5vw, 35px)',
+                  height: 'clamp(28px, 5vw, 35px)',
+                  borderRadius: '50%', backgroundColor: card.color,
                   border: selectedCard === index ? '3px solid #3b82f6' : '2px solid rgba(255,255,255,0.3)',
                   cursor: 'pointer', boxShadow: selectedCard === index ? '0 0 15px #3b82f6' : 'none', transition: 'all 0.3s ease'
                 }}
               />
             ))}
           </div>
-          <p style={{ color: '#a3e4ff', marginTop: '15px', fontSize: '0.9rem', fontWeight: 'bold' }}>
+          <p style={{ color: '#a3e4ff', marginTop: '15px', fontSize: '0.85rem', fontWeight: 'bold' }}>
             Selected: {cardOptions[selectedCard].name} (Swipe to rotate)
           </p>
         </motion.div>
@@ -184,8 +182,8 @@ export default function NfcProductPage() {
 
       <MarqueeBanner />
 
-      <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }} variants={staggerContainer} style={{ padding: '80px 40px' }}>
-        <motion.h2 variants={fadeInUp} style={{ fontSize: '2.5rem', color: '#3b82f6', textAlign: 'center', marginBottom: '50px' }}>Why Choose Our NFC Cards?</motion.h2>
+      <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }} variants={staggerContainer} style={{ padding: '60px 20px' }}>
+        <motion.h2 variants={fadeInUp} style={{ fontSize: 'clamp(1.8rem, 4vw, 2.5rem)', color: '#3b82f6', textAlign: 'center', marginBottom: '40px' }}>Why Choose Our NFC Cards?</motion.h2>
         <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '15px', marginBottom: '40px', maxWidth: '900px', margin: '0 auto 40px auto' }}>
           {features.map((feature, index) => (
             <motion.button
@@ -193,9 +191,9 @@ export default function NfcProductPage() {
               onClick={() => setActiveFeature(index)}
               whileTap={{ scale: 0.95 }}
               style={{
-                padding: '15px 30px', borderRadius: '30px', border: '1px solid #3b82f6',
+                padding: '12px 24px', borderRadius: '30px', border: '1px solid #3b82f6',
                 background: activeFeature === index ? '#3b82f6' : 'rgba(59, 130, 246, 0.1)',
-                color: activeFeature === index ? '#fff' : '#a3e4ff', fontWeight: 'bold', cursor: 'pointer', transition: 'all 0.3s ease'
+                color: activeFeature === index ? '#fff' : '#a3e4ff', fontWeight: 'bold', cursor: 'pointer', transition: 'all 0.3s ease', fontSize: '0.9rem'
               }}
             >
               {feature.title}
@@ -207,69 +205,69 @@ export default function NfcProductPage() {
             <motion.div
               key={activeFeature}
               initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.3 }}
-              style={{ background: 'rgba(2, 22, 12, 0.6)', border: '1px solid #3b82f6', borderRadius: '20px', padding: '40px', textAlign: 'center', boxShadow: '0 0 30px rgba(59, 130, 246, 0.1)' }}
+              style={{ background: 'rgba(2, 22, 12, 0.6)', border: '1px solid #3b82f6', borderRadius: '20px', padding: '30px', textAlign: 'center', boxShadow: '0 0 30px rgba(59, 130, 246, 0.1)' }}
             >
-              <div style={{ fontSize: '3rem', marginBottom: '20px' }}>{features[activeFeature].icon}</div>
-              <h3 style={{ fontSize: '1.8rem', color: '#ffffff', marginBottom: '15px' }}>{features[activeFeature].title}</h3>
-              <p style={{ color: '#a3e4ff', lineHeight: '1.6', fontSize: '1.1rem', maxWidth: '600px', margin: '0 auto' }}>{features[activeFeature].desc}</p>
+              <div style={{ fontSize: '2.5rem', marginBottom: '15px' }}>{features[activeFeature].icon}</div>
+              <h3 style={{ fontSize: 'clamp(1.3rem, 3vw, 1.8rem)', color: '#ffffff', marginBottom: '15px' }}>{features[activeFeature].title}</h3>
+              <p style={{ color: '#a3e4ff', lineHeight: '1.6', fontSize: '1rem', maxWidth: '600px', margin: '0 auto' }}>{features[activeFeature].desc}</p>
             </motion.div>
           </AnimatePresence>
         </div>
       </motion.div>
 
-      <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }} variants={staggerContainer} style={{ padding: '80px 40px' }}>
-        <motion.h2 variants={fadeInUp} style={{ fontSize: '2.5rem', color: '#3b82f6', textAlign: 'center', marginBottom: '50px' }}>Trusted by Professionals</motion.h2>
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '30px', justifyContent: 'center', maxWidth: '1000px', margin: '0 auto' }}>
-          <motion.div variants={fadeInUp} style={{ padding: '30px', background: 'rgba(59, 130, 246, 0.2)', borderRadius: '12px', border: '1px solid rgba(59, 130, 246, 0.4)', flex: '1 1 300px' }}>
-            <p style={{ color: '#a3e4ff', fontStyle: 'italic', marginBottom: '20px' }}>"This card has completely transformed how I network at conferences. I just tap and my whole portfolio opens up."</p>
-            <p style={{ color: '#ffffff', fontWeight: 'bold' }}>— Sarah L., Tech Consultant</p>
+      <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }} variants={staggerContainer} style={{ padding: '60px 20px' }}>
+        <motion.h2 variants={fadeInUp} style={{ fontSize: 'clamp(1.8rem, 4vw, 2.5rem)', color: '#3b82f6', textAlign: 'center', marginBottom: '40px' }}>Trusted by Professionals</motion.h2>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '20px', justifyContent: 'center', maxWidth: '1000px', margin: '0 auto' }}>
+          <motion.div variants={fadeInUp} style={{ padding: '25px', background: 'rgba(59, 130, 246, 0.2)', borderRadius: '12px', border: '1px solid rgba(59, 130, 246, 0.4)', flex: '1 1 300px' }}>
+            <p style={{ color: '#a3e4ff', fontStyle: 'italic', marginBottom: '20px', fontSize: '0.95rem' }}>"This card has completely transformed how I network at conferences. I just tap and my whole portfolio opens up."</p>
+            <p style={{ color: '#ffffff', fontWeight: 'bold', fontSize: '0.95rem' }}>— Sarah L., Tech Consultant</p>
           </motion.div>
-          <motion.div variants={fadeInUp} style={{ padding: '30px', background: 'rgba(59, 130, 246, 0.2)', borderRadius: '12px', border: '1px solid rgba(59, 130, 246, 0.4)', flex: '1 1 300px' }}>
-            <p style={{ color: '#a3e4ff', fontStyle: 'italic', marginBottom: '20px' }}>"I love that I can update my contact details without ordering a new card. It's the ultimate eco-friendly business tool."</p>
-            <p style={{ color: '#ffffff', fontWeight: 'bold' }}>— Michael R., Startup Founder</p>
+          <motion.div variants={fadeInUp} style={{ padding: '25px', background: 'rgba(59, 130, 246, 0.2)', borderRadius: '12px', border: '1px solid rgba(59, 130, 246, 0.4)', flex: '1 1 300px' }}>
+            <p style={{ color: '#a3e4ff', fontStyle: 'italic', marginBottom: '20px', fontSize: '0.95rem' }}>"I love that I can update my contact details without ordering a new card. It's the ultimate eco-friendly business tool."</p>
+            <p style={{ color: '#ffffff', fontWeight: 'bold', fontSize: '0.95rem' }}>— Michael R., Startup Founder</p>
           </motion.div>
         </div>
       </motion.div>
 
-      <motion.div id="order" initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }} variants={staggerContainer} style={{ padding: '80px 40px', textAlign: 'center' }}>
-        <motion.h2 variants={fadeInUp} style={{ fontSize: '3rem', color: '#3b82f6', marginBottom: '20px' }}>Ready to Upgrade Your Network?</motion.h2>
-        <motion.p variants={fadeInUp} style={{ fontSize: '1.2rem', color: '#a3e4ff', marginBottom: '40px' }}>Get your smart NFC card today.</motion.p>
+      <motion.div id="order" initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }} variants={staggerContainer} style={{ padding: '60px 20px', textAlign: 'center' }}>
+        <motion.h2 variants={fadeInUp} style={{ fontSize: 'clamp(2rem, 4.5vw, 3rem)', color: '#3b82f6', marginBottom: '20px' }}>Ready to Upgrade Your Network?</motion.h2>
+        <motion.p variants={fadeInUp} style={{ fontSize: '1.1rem', color: '#a3e4ff', marginBottom: '40px' }}>Get your smart NFC card today.</motion.p>
         
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '30px', maxWidth: '600px', margin: '0 auto' }}>
           <div style={{ width: '100%', background: 'rgba(59, 130, 246, 0.1)', padding: '25px', borderRadius: '12px', border: '1px solid #3b82f6' }}>
-            <label style={{ color: '#ffffff', marginBottom: '15px', display: 'flex', justifyContent: 'space-between', fontSize: '1.1rem', fontWeight: 'bold' }}>
+            <label style={{ color: '#ffffff', marginBottom: '15px', display: 'flex', justifyContent: 'space-between', fontSize: '1rem', fontWeight: 'bold' }}>
               <span>Number of Cards:</span><span style={{ color: '#3b82f6' }}>{quantity}</span>
             </label>
             <input type="range" min="1" max="50" value={quantity} onChange={(e) => setQuantity(Number(e.target.value))} style={{ width: '100%', accentColor: '#3b82f6', cursor: 'pointer' }} />
             <div style={{ display: 'flex', justifyContent: 'space-between', color: '#a3e4ff', fontSize: '0.8rem', marginTop: '10px' }}><span>1</span><span>25</span><span>50</span></div>
           </div>
-          <motion.div key={quantity} initial={{ scale: 0.95, opacity: 0.8 }} animate={{ scale: 1, opacity: 1 }} transition={{ type: 'spring', stiffness: 300, damping: 20 }} style={{ display: 'inline-block', padding: '50px', background: 'rgba(59, 130, 246, 0.2)', borderRadius: '20px', border: '2px solid #3b82f6', width: '100%', boxShadow: '0 0 40px rgba(59, 130, 246, 0.2)' }}>
-            <h3 style={{ color: '#fff', fontSize: '2rem', marginBottom: '10px' }}>Standard Card</h3>
-            <p style={{ color: '#3b82f6', fontSize: '3rem', fontWeight: 'bold', marginBottom: '20px' }}>${totalPrice}</p>
-            <p style={{ color: '#a3e4ff', marginBottom: '20px', fontSize: '0.9rem' }}>(${basePrice} per card)</p>
-            <ul style={{ listStyle: 'none', padding: 0, color: '#a3e4ff', marginBottom: '30px', textAlign: 'left', display: 'inline-block' }}>
+          <motion.div key={quantity} initial={{ scale: 0.95, opacity: 0.8 }} animate={{ scale: 1, opacity: 1 }} transition={{ type: 'spring', stiffness: 300, damping: 20 }} style={{ display: 'inline-block', padding: '40px 30px', background: 'rgba(59, 130, 246, 0.2)', borderRadius: '20px', border: '2px solid #3b82f6', width: '100%', boxShadow: '0 0 40px rgba(59, 130, 246, 0.2)' }}>
+            <h3 style={{ color: '#fff', fontSize: '1.8rem', marginBottom: '10px' }}>Standard Card</h3>
+            <p style={{ color: '#3b82f6', fontSize: '2.5rem', fontWeight: 'bold', marginBottom: '20px' }}>${totalPrice}</p>
+            <p style={{ color: '#a3e4ff', marginBottom: '20px', fontSize: '0.85rem' }}>(${basePrice} per card)</p>
+            <ul style={{ listStyle: 'none', padding: 0, color: '#a3e4ff', marginBottom: '30px', textAlign: 'left', display: 'inline-block', fontSize: '0.9rem' }}>
               <li style={{ marginBottom: '10px' }}>✔ Custom Digital Profile Setup</li>
               <li style={{ marginBottom: '10px' }}>✔ Premium Matte Finish</li>
               <li style={{ marginBottom: '10px' }}>✔ Unlimited Taps</li>
               <li style={{ marginBottom: '10px' }}>✔ 1-Year Warranty</li>
             </ul>
             <br />
-            <motion.a whileTap={{ scale: 0.95 }} href={`mailto:connect@dataoceanai.io?subject=Order%20NFC%20Card&body=I%20would%20like%20to%20order%20${quantity}%20NFC%20card(s)%20of%20the%20${cardOptions[selectedCard].name}%20variant%20for%20$${totalPrice}.`} style={{ display: 'inline-block', padding: '15px 40px', backgroundColor: '#3b82f6', color: '#fff', fontWeight: 'bold', textDecoration: 'none', borderRadius: '8px', width: '100%' }}>Order via Email</motion.a>
+            <motion.a whileTap={{ scale: 0.95 }} href={`mailto:connect@dataoceanai.io?subject=Order%20NFC%20Card&body=I%20would%20like%20to%20order%20${quantity}%20NFC%20card(s)%20of%20the%20${cardOptions[selectedCard].name}%20variant%20for%20$${totalPrice}.`} style={{ display: 'inline-block', padding: '15px 30px', backgroundColor: '#3b82f6', color: '#fff', fontWeight: 'bold', textDecoration: 'none', borderRadius: '8px', width: '100%' }}>Order via Email</motion.a>
           </motion.div>
         </div>
       </motion.div>
 
-      <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }} variants={staggerContainer} style={{ padding: '80px 40px', maxWidth: '800px', margin: '0 auto' }}>
-        <motion.h2 variants={fadeInUp} style={{ fontSize: '2.5rem', color: '#3b82f6', textAlign: 'center', marginBottom: '40px' }}>Frequently Asked Questions</motion.h2>
+      <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }} variants={staggerContainer} style={{ padding: '60px 20px', maxWidth: '800px', margin: '0 auto' }}>
+        <motion.h2 variants={fadeInUp} style={{ fontSize: 'clamp(1.8rem, 4vw, 2.5rem)', color: '#3b82f6', textAlign: 'center', marginBottom: '40px' }}>Frequently Asked Questions</motion.h2>
         <FaqItem question="Does it work with both iPhone and Android?" answer="Yes! Our NFC cards are universally compatible with all modern smartphones, including iPhones (iOS 14+) and Android devices. No app is required for the person receiving your card." />
         <FaqItem question="Can I reuse the card if I change my phone number?" answer="Absolutely. The card is rewritable. You can update your digital profile (phone number, email, social media links) as many times as you want without needing a new physical card." />
         <FaqItem question="How do I customize my digital profile?" answer="Once you receive your card, we will send you a link to our easy-to-use dashboard where you can upload your photo, logo, and contact information. It takes less than 5 minutes to set up." />
         <FaqItem question="Do you offer custom branding for businesses?" answer="Yes, we offer enterprise packages with custom logo printing and bulk pricing. Please contact us directly at connect@dataoceanai.io for a quote." />
       </motion.div>
 
-      <footer style={{ padding: '40px', textAlign: 'center', background: 'rgba(0,0,0,0.5)' }}>
-        <p style={{ color: '#a3e4ff', marginBottom: '10px' }}>Data Ocean © 2026. All rights reserved.</p>
-        <p style={{ color: '#a3e4ff', fontSize: '0.9rem' }}><a href="mailto:connect@dataoceanai.io" style={{ color: '#3b82f6', textDecoration: 'none' }}>connect@dataoceanai.io</a></p>
+      <footer style={{ padding: '40px 20px', textAlign: 'center', background: 'rgba(0,0,0,0.5)' }}>
+        <p style={{ color: '#a3e4ff', marginBottom: '10px', fontSize: '0.9rem' }}>Data Ocean © 2026. All rights reserved.</p>
+        <p style={{ color: '#a3e4ff', fontSize: '0.85rem' }}><a href="mailto:connect@dataoceanai.io" style={{ color: '#3b82f6', textDecoration: 'none' }}>connect@dataoceanai.io</a></p>
       </footer>
 
     </div>
