@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
-export default function Card3D({ imageUrl }) {
+export default function Card3D({ imageUrl, cardColor }) {
   const mountRef = useRef(null);
   const [loading, setLoading] = useState(true);
 
@@ -32,18 +32,22 @@ export default function Card3D({ imageUrl }) {
     directionalLight.position.set(5, 5, 5);
     scene.add(directionalLight);
 
-    // 3. Geometry: A thin box for the card thickness (0.08 = card-like feel)
-    const geometry = new THREE.BoxGeometry(3.2, 2, 0.08); 
+    // 3. Geometry: Realistic card thickness (0.12) - between paper (0.08) and wall (0.25)
+    const geometry = new THREE.BoxGeometry(3.2, 2, 0.12); 
     
-    // 4. Materials: 
-    // - Front face gets the image texture (we'll assign it after loading)
-    // - Edges and back get a sleek matte dark color (looks like a real printed card)
-    const edgeMaterial = new THREE.MeshStandardMaterial({ 
-      color: 0x111111, // Very dark, almost black
-      metalness: 0.1, 
-      roughness: 0.7 
+    // 4. Materials
+    const safeColor = cardColor || '#ffffff'; 
+
+    // MeshBasicMaterial ignores lighting and shows the pure, exact hex color
+    const edgeMaterial = new THREE.MeshBasicMaterial({ 
+      color: new THREE.Color(safeColor)
     });
     
+    const backMaterial = new THREE.MeshBasicMaterial({ 
+      color: new THREE.Color(safeColor)
+    });
+    
+    // Front face uses standard lit material for the image texture
     const faceMaterial = new THREE.MeshStandardMaterial({ 
       color: 0xffffff, 
       metalness: 0, 
@@ -52,18 +56,18 @@ export default function Card3D({ imageUrl }) {
     
     // BoxGeometry material order: [+X right, -X left, +Y top, -Y bottom, +Z front, -Z back]
     const materials = [
-      edgeMaterial, // right
-      edgeMaterial, // left
-      edgeMaterial, // top
-      edgeMaterial, // bottom
+      edgeMaterial, // right edge
+      edgeMaterial, // left edge
+      edgeMaterial, // top edge
+      edgeMaterial, // bottom edge
       faceMaterial, // front (this gets the image)
-      edgeMaterial  // back
+      backMaterial  // back (this gets the solid color, no logo)
     ];
     
     const card = new THREE.Mesh(geometry, materials);
     scene.add(card);
 
-    // 5. Load Texture with Maximum Sharpness
+    // 5. Load Texture
     const textureLoader = new THREE.TextureLoader();
     textureLoader.load(imageUrl, (texture) => {
       texture.colorSpace = THREE.SRGBColorSpace; 
@@ -71,7 +75,6 @@ export default function Card3D({ imageUrl }) {
       texture.generateMipmaps = false;
       texture.minFilter = THREE.LinearFilter;
       
-      // Apply texture only to the front face
       faceMaterial.map = texture;
       faceMaterial.needsUpdate = true;
       setLoading(false);
@@ -117,7 +120,7 @@ export default function Card3D({ imageUrl }) {
         currentMount.removeChild(renderer.domElement);
       }
     };
-  }, [imageUrl]);
+  }, [imageUrl, cardColor]);
 
   return (
     <div style={{ width: '100%', height: '400px', position: 'relative' }}>
