@@ -71,6 +71,7 @@ export default function NfcProductPage() {
   const [activeFeature, setActiveFeature] = useState(0);
   const [selectedCard, setSelectedCard] = useState(0); 
 
+  // 🌟 "Black White Grey" is COMPLETELY REMOVED here
   const cardOptions = [
     { name: "Ocean Blue", color: "#3b82f6", img: "https://res.cloudinary.com/qcyxxyec/image/upload/c_fill,w_1200,h_760/v1792122909/Ocean_Blue.png" },
     { name: "Super Black", color: "#1a1a1a", img: "https://res.cloudinary.com/qcyxxyec/image/upload/c_fill,w_1200,h_760/v1792122914/Super_black.png" },
@@ -83,7 +84,6 @@ export default function NfcProductPage() {
     { name: "Grassy Green", color: "#22c55e", img: "https://res.cloudinary.com/qcyxxyec/image/upload/c_fill,w_1200,h_760/v1792122907/Grassy_Green_Turquoise.png" },
     { name: "Bright Light Yellow", color: "#fde047", img: "https://res.cloudinary.com/qcyxxyec/image/upload/c_fill,w_1200,h_760/v1792122897/Bright_Light_Yellow.png" },
     { name: "Yellow Orange", color: "#f59e0b", img: "https://res.cloudinary.com/qcyxxyec/image/upload/c_fill,w_1200,h_760/v1792122910/Yellow_Orange_Gradient.png" },
-    { name: "Black White Grey", color: "#6b7280", img: "https://res.cloudinary.com/qcyxxyec/image/upload/c_fill,w_1200,h_760/v1792122908/Black_White_Grey.png" },
     { name: "Aquatic Blue Yellow", color: "#38bdf8", img: "https://res.cloudinary.com/qcyxxyec/image/upload/c_fill,w_1200,h_760/v1792122913/Aquatic_blue_yellow_gradient.png" }
   ];
 
@@ -135,7 +135,6 @@ export default function NfcProductPage() {
         </motion.div>
         
         <motion.div variants={fadeInUp} style={{ flex: '1 1 400px', textAlign: 'center' }}>
-          {/* 🌟 Passes the selected card's color to the 3D component */}
           <Card3D imageUrl={cardOptions[selectedCard].img} cardColor={cardOptions[selectedCard].color} />
 
           <div style={{ marginTop: '20px', display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '12px', maxWidth: '500px', margin: '20px auto 0 auto' }}>
