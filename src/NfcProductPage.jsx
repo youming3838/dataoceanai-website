@@ -75,14 +75,23 @@ export default function NfcProductPage() {
   // 🌟 STATE FOR THE INTERACTIVE COLOR SWITCHER
   const [selectedCard, setSelectedCard] = useState(0); 
 
-  // 🌟 REPLACE THE URLs BELOW WITH YOUR CLOUDINARY URLS
+  // 🌟 ALL 14 COLORS - URLs FROM YOUR CLOUDINARY
   const cardOptions = [
-    { name: "Ocean Blue", color: "#3b82f6", img: "https://res.cloudinary.com/qcyxxyec/image/upload/v1792122907/Ocean_Blue.png" },
-    { name: "Super Black", color: "#1a1a1a", img: "https://res.cloudinary.com/qcyxxyec/image/upload/v1792122905/Super_black.png" },
+    { name: "Ocean Blue", color: "#3b82f6", img: "https://res.cloudinary.com/qcyxxyec/image/upload/v1792122909/Ocean_Blue.png" },
+    { name: "Super Black", color: "#1a1a1a", img: "https://res.cloudinary.com/qcyxxyec/image/upload/v1792122914/Super_black.png" },
     { name: "Pure White", color: "#ffffff", img: "https://res.cloudinary.com/qcyxxyec/image/upload/v1792122906/Pure_white.png" },
-    { name: "Cyan Gradient", color: "#00e5ff", img: "https://res.cloudinary.com/qcyxxyec/image/upload/v1792122907/Cyan_Cobalt_blue_gradient.png" },
-    { name: "Sunset Orange", color: "#f97316", img: "https://res.cloudinary.com/qcyxxyec/image/upload/v1792122906/Gradient_red_orange.png" }
-  ];  
+    { name: "Cyan Cobalt", color: "#00e5ff", img: "https://res.cloudinary.com/qcyxxyec/image/upload/v1792122911/Cyan_Cobalt_blue_gradient.png" },
+    { name: "Gradient Red Orange", color: "#f97316", img: "https://res.cloudinary.com/qcyxxyec/image/upload/v1792122906/Gradient_red_orange.png" },
+    { name: "Classic Red", color: "#dc2626", img: "https://res.cloudinary.com/qcyxxyec/image/upload/v1792122905/Classic_Red.png" },
+    { name: "Turquoise", color: "#06b6d4", img: "https://res.cloudinary.com/qcyxxyec/image/upload/v1792122905/Turquoise.png" },
+    { name: "Lime Green", color: "#84cc16", img: "https://res.cloudinary.com/qcyxxyec/image/upload/v1792122912/Lime_Green.png" },
+    { name: "Grassy Green", color: "#22c55e", img: "https://res.cloudinary.com/qcyxxyec/image/upload/v1792122907/Grassy_Green_Turquoise.png" },
+    { name: "Bright Light Yellow", color: "#fde047", img: "https://res.cloudinary.com/qcyxxyec/image/upload/v1792122897/Bright_Light_Yellow.png" },
+    { name: "Yellow Orange", color: "#f59e0b", img: "https://res.cloudinary.com/qcyxxyec/image/upload/v1792122910/Yellow_Orange_Gradient.png" },
+    { name: "Solid Gray", color: "#9ca3af", img: "https://res.cloudinary.com/qcyxxyec/image/upload/v1792122908/Solid_Gray.png" },
+    { name: "Black White Grey", color: "#6b7280", img: "https://res.cloudinary.com/qcyxxyec/image/upload/v1792122908/Black_White_Grey.png" },
+    { name: "Aquatic Blue Yellow", color: "#38bdf8", img: "https://res.cloudinary.com/qcyxxyec/image/upload/v1792122913/Aquatic_blue_yellow_gradient.png" }
+  ];
 
   const basePrice = 99;
   const totalPrice = quantity * basePrice;
@@ -137,7 +146,6 @@ export default function NfcProductPage() {
         {/* 🌟 INTERACTIVE IMAGE SWITCHER */}
         <motion.div variants={fadeInUp} style={{ flex: '1 1 400px', textAlign: 'center' }}>
           
-          {/* Main Image Container */}
           <div style={{ position: 'relative', width: '100%', maxWidth: '500px', margin: '0 auto', minHeight: '300px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
             <AnimatePresence mode="wait">
               <motion.img 
@@ -161,8 +169,8 @@ export default function NfcProductPage() {
             </AnimatePresence>
           </div>
 
-          {/* Color Swatches */}
-          <div style={{ marginTop: '40px', display: 'flex', justifyContent: 'center', gap: '15px', flexWrap: 'wrap' }}>
+          {/* Color Swatches Grid */}
+          <div style={{ marginTop: '40px', display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '12px', maxWidth: '500px', margin: '40px auto 0 auto' }}>
             {cardOptions.map((card, index) => (
               <motion.button
                 key={index}
@@ -170,8 +178,8 @@ export default function NfcProductPage() {
                 onClick={() => setSelectedCard(index)}
                 title={card.name}
                 style={{
-                  width: '40px',
-                  height: '40px',
+                  width: '35px',
+                  height: '35px',
                   borderRadius: '50%',
                   backgroundColor: card.color,
                   border: selectedCard === index ? '3px solid #3b82f6' : '2px solid rgba(255,255,255,0.3)',
@@ -264,7 +272,7 @@ export default function NfcProductPage() {
               <li style={{ marginBottom: '10px' }}>✔ 1-Year Warranty</li>
             </ul>
             <br />
-            <motion.a whileTap={{ scale: 0.95 }} href={`mailto:connect@dataoceanai.io?subject=Order%20NFC%20Card&body=I%20would%20like%20to%20order%20${quantity}%20NFC%20card(s)%20for%20$${totalPrice}.`} style={{ display: 'inline-block', padding: '15px 40px', backgroundColor: '#3b82f6', color: '#fff', fontWeight: 'bold', textDecoration: 'none', borderRadius: '8px', width: '100%' }}>Order via Email</motion.a>
+            <motion.a whileTap={{ scale: 0.95 }} href={`mailto:connect@dataoceanai.io?subject=Order%20NFC%20Card&body=I%20would%20like%20to%20order%20${quantity}%20NFC%20card(s)%20of%20the%20${cardOptions[selectedCard].name}%20variant%20for%20$${totalPrice}.`} style={{ display: 'inline-block', padding: '15px 40px', backgroundColor: '#3b82f6', color: '#fff', fontWeight: 'bold', textDecoration: 'none', borderRadius: '8px', width: '100%' }}>Order via Email</motion.a>
           </motion.div>
         </div>
       </motion.div>
