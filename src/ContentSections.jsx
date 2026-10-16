@@ -78,35 +78,63 @@ export default function ContentSections() {
             <div style={{ marginBottom: '30px' }}>
               <h4 style={{ color: '#ffffff', marginBottom: '15px' }}>How it works:</h4>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
-                  <span style={{ background: '#3b82f6', color: '#fff', width: '30px', height: '30px', borderRadius: '50%', display: 'flex', justifyContent: 'center', alignItems: 'center', fontWeight: 'bold' }}>1</span>
-                  <span style={{ color: '#a3e4ff' }}>Tap the card on any NFC-enabled smartphone.</span>
+                
+                {/* 🌟 OVAL FIX: minWidth, minHeight, and aspectRatio guarantee a perfect circle */}
+                <div style={{ display: 'flex', alignItems: 'flex-start', gap: '15px' }}>
+                  <span style={{ 
+                    background: '#3b82f6', color: '#fff', 
+                    width: '30px', height: '30px', 
+                    minWidth: '30px', minHeight: '30px',
+                    aspectRatio: '1 / 1',
+                    flexShrink: 0, 
+                    borderRadius: '50%', 
+                    display: 'flex', justifyContent: 'center', alignItems: 'center', 
+                    fontWeight: 'bold', fontSize: '0.95rem'
+                  }}>1</span>
+                  <span style={{ color: '#a3e4ff', lineHeight: '1.5', paddingTop: '5px' }}>Tap the card on any NFC-enabled smartphone.</span>
                 </div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
-                  <span style={{ background: '#3b82f6', color: '#fff', width: '30px', height: '30px', borderRadius: '50%', display: 'flex', justifyContent: 'center', alignItems: 'center', fontWeight: 'bold' }}>2</span>
-                  <span style={{ color: '#a3e4ff' }}>Your digital profile opens instantly in their browser.</span>
+
+                <div style={{ display: 'flex', alignItems: 'flex-start', gap: '15px' }}>
+                  <span style={{ 
+                    background: '#3b82f6', color: '#fff', 
+                    width: '30px', height: '30px', 
+                    minWidth: '30px', minHeight: '30px',
+                    aspectRatio: '1 / 1',
+                    flexShrink: 0, 
+                    borderRadius: '50%', 
+                    display: 'flex', justifyContent: 'center', alignItems: 'center', 
+                    fontWeight: 'bold', fontSize: '0.95rem'
+                  }}>2</span>
+                  <span style={{ color: '#a3e4ff', lineHeight: '1.5', paddingTop: '5px' }}>Your digital profile opens instantly in their browser.</span>
                 </div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
-                  <span style={{ background: '#3b82f6', color: '#fff', width: '30px', height: '30px', borderRadius: '50%', display: 'flex', justifyContent: 'center', alignItems: 'center', fontWeight: 'bold' }}>3</span>
-                  <span style={{ color: '#a3e4ff' }}>They save your contact, visit your LinkedIn, or call you directly.</span>
+
+                <div style={{ display: 'flex', alignItems: 'flex-start', gap: '15px' }}>
+                  <span style={{ 
+                    background: '#3b82f6', color: '#fff', 
+                    width: '30px', height: '30px', 
+                    minWidth: '30px', minHeight: '30px',
+                    aspectRatio: '1 / 1',
+                    flexShrink: 0, 
+                    borderRadius: '50%', 
+                    display: 'flex', justifyContent: 'center', alignItems: 'center', 
+                    fontWeight: 'bold', fontSize: '0.95rem'
+                  }}>3</span>
+                  <span style={{ color: '#a3e4ff', lineHeight: '1.5', paddingTop: '5px' }}>They save your contact, visit your LinkedIn, or call you directly.</span>
                 </div>
+
               </div>
             </div>
 
             <a href="/nfc-product" style={{ display: 'inline-block', padding: '15px 40px', backgroundColor: '#3b82f6', color: '#ffffff', textDecoration: 'none', fontWeight: 'bold', borderRadius: '8px', transition: '0.3s' }}>Order Yours Now</a>
           </div>
 
-          {/* 🌟 FIXED: Classic Red Cloudinary URL replaces the broken image */}
           <div style={{ flex: '1 1 300px', textAlign: 'center' }}>
             <img 
               src="https://res.cloudinary.com/qcyxxyec/image/upload/c_fill,w_1200,h_760/v1792122905/Classic_Red.png" 
               alt="Smart NFC Business Card" 
               style={{ 
-                width: '100%', 
-                maxWidth: '400px', 
-                borderRadius: '16px', 
-                border: '1px solid #3b82f6', 
-                boxShadow: '0 0 30px rgba(59, 130, 246, 0.3)' 
+                width: '100%', maxWidth: '400px', borderRadius: '16px', 
+                border: '1px solid #3b82f6', boxShadow: '0 0 30px rgba(59, 130, 246, 0.3)' 
               }} 
             />
           </div>
