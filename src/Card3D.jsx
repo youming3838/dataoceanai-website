@@ -5,6 +5,7 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 export default function Card3D({ imageUrl, cardColor, scrollProgress = 0, burstTrigger = 0 }) {
   const mountRef = useRef(null);
   const [loading, setLoading] = useState(true);
+  const [showSkeleton, setShowSkeleton] = useState(true);
   
   const edgeMaterialRef = useRef(null);
   const backMaterialRef = useRef(null);
@@ -14,6 +15,14 @@ export default function Card3D({ imageUrl, cardColor, scrollProgress = 0, burstT
   const scrollRef = useRef(scrollProgress);
   scrollRef.current = scrollProgress;
   const burstFnRef = useRef(null);
+
+  // Fade out the skeleton after loading completes
+  useEffect(() => {
+    if (!loading) {
+      const timer = setTimeout(() => setShowSkeleton(false), 400);
+      return () => clearTimeout(timer);
+    }
+  }, [loading]);
 
   useEffect(() => {
     if (burstTrigger > 0 && burstFnRef.current) {
@@ -86,7 +95,6 @@ export default function Card3D({ imageUrl, cardColor, scrollProgress = 0, burstT
       setLoading(false);
     });
 
-    // Particle system
     const PARTICLE_COUNT = 200;
     const particleGeometry = new THREE.BufferGeometry();
     const positions = new Float32Array(PARTICLE_COUNT * 3);
@@ -215,15 +223,87 @@ export default function Card3D({ imageUrl, cardColor, scrollProgress = 0, burstT
     };
   }, []);
 
-  // 🌟 RESPONSIVE HEIGHT - smaller on phones (280px), larger on desktop (400px)
   return (
     <div style={{ width: '100%', height: 'clamp(280px, 45vw, 400px)', position: 'relative' }}>
-      {loading && (
-        <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', color: '#a3e4ff', fontSize: '0.9rem' }}>
-          Loading 3D Card...
+      {/* 🌟 SKELETON LOADER - Shimmer card with pulsing glow */}
+      {showSkeleton && (
+        <div
+          style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            opacity: loading ? 1 : 0,
+            transition: 'opacity 0.4s ease-out',
+            pointerEvents: 'none',
+            zIndex: 5,
+          }}
+        >
+          {/* Skeleton Card */}
+          <div
+            style={{
+              width: '78%',
+              maxWidth: '420px',
+              aspectRatio: '1.58',
+              borderRadius: '16px',
+              background: 'linear-gradient(135deg, rgba(59, 130, 246, 0.15) 0%, rgba(2, 22, 12, 0.6) 50%, rgba(59, 130, 246, 0.15) 100%)',
+              border: '1px solid rgba(59, 130, 246, 0.4)',
+              position: 'relative',
+              overflow: 'hidden',
+              animation: 'skeletonPulse 2s ease-in-out infinite',
+              boxShadow: '0 0 40px rgba(59, 130, 246, 0.15)',
+            }}
+          >
+            {/* Shimmer overlay */}
+            <div
+              style={{
+                position: 'absolute',
+                top: 0,
+                left: '-100%',
+                width: '100%',
+                height: '100%',
+                background: 'linear-gradient(90deg, transparent 0%, rgba(140, 220, 255, 0.15) 50%, transparent 100%)',
+                animation: 'skeletonShimmer 1.8s ease-in-out infinite',
+              }}
+            />
+          </div>
+          {/* Data Ocean label */}
+          <p
+            style={{
+              position: 'absolute',
+              bottom: '-30px',
+              left: '50%',
+              transform: 'translateX(-50%)',
+              color: '#3b82f6',
+              fontSize: '0.75rem',
+              fontWeight: 'bold',
+              letterSpacing: '2px',
+              textTransform: 'uppercase',
+              opacity: 0.7,
+            }}
+          >
+            Loading Data Ocean...
+          </p>
         </div>
       )}
-      <div ref={mountRef} style={{ width: '100%', height: '100%' }} />
+
+      <div ref={mountRef} style={{ width: '100%', height: '100%', opacity: loading ? 0 : 1, transition: 'opacity 0.5s ease-in' }} />
+
+      {/* 🌟 KEYFRAME ANIMATIONS */}
+      <style>{`
+        @keyframes skeletonPulse {
+          0%, 100% { opacity: 0.6; transform: scale(0.98); }
+          50% { opacity: 1; transform: scale(1); }
+        }
+        @keyframes skeletonShimmer {
+          0% { left: -100%; }
+          100% { left: 100%; }
+        }
+      `}</style>
     </div>
   );
 }
