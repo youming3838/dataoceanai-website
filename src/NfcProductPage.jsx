@@ -70,19 +70,25 @@ export default function NfcProductPage() {
   const [quantity, setQuantity] = useState(1);
   const [activeFeature, setActiveFeature] = useState(0);
   const [selectedCard, setSelectedCard] = useState(0); 
-  // 🌟 NEW: Tracks scroll progress through the first screen for cinematic effect
   const [scrollProgress, setScrollProgress] = useState(0);
+  // 🌟 NEW: Triggers the particle burst on color change
+  const [burstTrigger, setBurstTrigger] = useState(0);
 
-  // 🌟 NEW: Scroll listener
+  // Scroll listener for cinematic card effect
   useEffect(() => {
     const handleScroll = () => {
-      // progress goes from 0 (top) to 1 (scrolled one full screen height)
       const progress = Math.min(1, window.scrollY / window.innerHeight);
       setScrollProgress(progress);
     };
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  // 🌟 NEW: Fires the particle burst when a card is selected
+  const handleSelectCard = (index) => {
+    setSelectedCard(index);
+    setBurstTrigger(prev => prev + 1);
+  };
 
   const cardOptions = [
     { name: "Ocean Blue", color: "#3b82f6", img: "https://res.cloudinary.com/qcyxxyec/image/upload/c_fill,w_1200,h_760/v1792122909/Ocean_Blue.png" },
@@ -147,15 +153,20 @@ export default function NfcProductPage() {
         </motion.div>
         
         <motion.div variants={fadeInUp} style={{ flex: '1 1 400px', textAlign: 'center' }}>
-          {/* 🌟 NEW: scrollProgress prop added */}
-          <Card3D imageUrl={cardOptions[selectedCard].img} cardColor={cardOptions[selectedCard].color} scrollProgress={scrollProgress} />
+          {/* 🌟 burstTrigger is passed in */}
+          <Card3D 
+            imageUrl={cardOptions[selectedCard].img} 
+            cardColor={cardOptions[selectedCard].color} 
+            scrollProgress={scrollProgress}
+            burstTrigger={burstTrigger}
+          />
 
           <div style={{ marginTop: '20px', display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '12px', maxWidth: '500px', margin: '20px auto 0 auto' }}>
             {cardOptions.map((card, index) => (
               <motion.button
                 key={index}
                 whileTap={{ scale: 0.9 }}
-                onClick={() => setSelectedCard(index)}
+                onClick={() => handleSelectCard(index)}
                 title={card.name}
                 style={{
                   width: '35px', height: '35px', borderRadius: '50%', backgroundColor: card.color,
