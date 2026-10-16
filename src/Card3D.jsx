@@ -24,28 +24,43 @@ export default function Card3D({ imageUrl }) {
     renderer.setSize(currentMount.clientWidth, currentMount.clientHeight);
     currentMount.appendChild(renderer.domElement);
 
-    // 2. Lighting (🌟 BOOSTED TO MAKE THE CARD POP 🌟)
-    // Increased ambient light to eliminate the gray shadows
+    // 2. Lighting
     const ambientLight = new THREE.AmbientLight(0xffffff, 2.0); 
     scene.add(ambientLight);
 
-    // Increased directional light for a bright, even shine
     const directionalLight = new THREE.DirectionalLight(0xffffff, 1.5);
     directionalLight.position.set(5, 5, 5);
     scene.add(directionalLight);
 
-    // 3. Geometry: Flat Plane (No gray frame)
-    const geometry = new THREE.PlaneGeometry(3.2, 2); 
+    // 3. Geometry: A thin box for the card thickness (0.08 = card-like feel)
+    const geometry = new THREE.BoxGeometry(3.2, 2, 0.08); 
     
-    // 4. Material: Perfectly matte, but bright
-    const material = new THREE.MeshStandardMaterial({ 
-      color: 0xffffff, 
-      metalness: 0, 
-      roughness: 0.9, 
-      side: THREE.DoubleSide 
+    // 4. Materials: 
+    // - Front face gets the image texture (we'll assign it after loading)
+    // - Edges and back get a sleek matte dark color (looks like a real printed card)
+    const edgeMaterial = new THREE.MeshStandardMaterial({ 
+      color: 0x111111, // Very dark, almost black
+      metalness: 0.1, 
+      roughness: 0.7 
     });
     
-    const card = new THREE.Mesh(geometry, material);
+    const faceMaterial = new THREE.MeshStandardMaterial({ 
+      color: 0xffffff, 
+      metalness: 0, 
+      roughness: 0.9 
+    });
+    
+    // BoxGeometry material order: [+X right, -X left, +Y top, -Y bottom, +Z front, -Z back]
+    const materials = [
+      edgeMaterial, // right
+      edgeMaterial, // left
+      edgeMaterial, // top
+      edgeMaterial, // bottom
+      faceMaterial, // front (this gets the image)
+      edgeMaterial  // back
+    ];
+    
+    const card = new THREE.Mesh(geometry, materials);
     scene.add(card);
 
     // 5. Load Texture with Maximum Sharpness
@@ -56,8 +71,9 @@ export default function Card3D({ imageUrl }) {
       texture.generateMipmaps = false;
       texture.minFilter = THREE.LinearFilter;
       
-      material.map = texture;
-      material.needsUpdate = true;
+      // Apply texture only to the front face
+      faceMaterial.map = texture;
+      faceMaterial.needsUpdate = true;
       setLoading(false);
     });
 
@@ -95,7 +111,7 @@ export default function Card3D({ imageUrl }) {
       window.removeEventListener('resize', handleResize);
       controls.dispose();
       geometry.dispose();
-      material.dispose();
+      materials.forEach(m => m.dispose());
       renderer.dispose();
       if (currentMount.contains(renderer.domElement)) {
         currentMount.removeChild(renderer.domElement);
