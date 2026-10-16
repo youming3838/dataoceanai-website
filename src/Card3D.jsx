@@ -6,7 +6,6 @@ export default function Card3D({ imageUrl, cardColor, scrollProgress = 0, burstT
   const mountRef = useRef(null);
   const [loading, setLoading] = useState(true);
   
-  // Refs to materials so we can update them without rebuilding the scene
   const edgeMaterialRef = useRef(null);
   const backMaterialRef = useRef(null);
   const faceMaterialRef = useRef(null);
@@ -16,14 +15,12 @@ export default function Card3D({ imageUrl, cardColor, scrollProgress = 0, burstT
   scrollRef.current = scrollProgress;
   const burstFnRef = useRef(null);
 
-  // Trigger burst when burstTrigger changes
   useEffect(() => {
     if (burstTrigger > 0 && burstFnRef.current) {
       burstFnRef.current();
     }
   }, [burstTrigger]);
 
-  // Update color WITHOUT rebuilding the scene
   useEffect(() => {
     if (edgeMaterialRef.current && backMaterialRef.current) {
       const safeColor = cardColor || '#ffffff';
@@ -33,7 +30,6 @@ export default function Card3D({ imageUrl, cardColor, scrollProgress = 0, burstT
     }
   }, [cardColor]);
 
-  // Update texture WITHOUT rebuilding the scene
   useEffect(() => {
     if (!textureLoaderRef.current || !faceMaterialRef.current) return;
     textureLoaderRef.current.load(imageUrl, (texture) => {
@@ -46,7 +42,6 @@ export default function Card3D({ imageUrl, cardColor, scrollProgress = 0, burstT
     });
   }, [imageUrl]);
 
-  // 🌟 MAIN SCENE — builds ONLY ONCE
   useEffect(() => {
     const currentMount = mountRef.current;
     if (!currentMount) return;
@@ -60,13 +55,11 @@ export default function Card3D({ imageUrl, cardColor, scrollProgress = 0, burstT
     renderer.setSize(currentMount.clientWidth, currentMount.clientHeight);
     currentMount.appendChild(renderer.domElement);
 
-    // Lighting
     scene.add(new THREE.AmbientLight(0xffffff, 2.0));
     const dirLight = new THREE.DirectionalLight(0xffffff, 1.5);
     dirLight.position.set(5, 5, 5);
     scene.add(dirLight);
 
-    // Card
     const geometry = new THREE.BoxGeometry(3.2, 2, 0.12);
     const edgeMaterial = new THREE.MeshBasicMaterial({ color: new THREE.Color(cardColor || '#ffffff') });
     const backMaterial = new THREE.MeshBasicMaterial({ color: new THREE.Color(cardColor || '#ffffff') });
@@ -81,7 +74,6 @@ export default function Card3D({ imageUrl, cardColor, scrollProgress = 0, burstT
     const card = new THREE.Mesh(geometry, materials);
     scene.add(card);
 
-    // Initial texture load
     const textureLoader = new THREE.TextureLoader();
     textureLoaderRef.current = textureLoader;
     textureLoader.load(imageUrl, (texture) => {
@@ -94,7 +86,7 @@ export default function Card3D({ imageUrl, cardColor, scrollProgress = 0, burstT
       setLoading(false);
     });
 
-    // 🌟 PARTICLE SYSTEM
+    // Particle system
     const PARTICLE_COUNT = 200;
     const particleGeometry = new THREE.BufferGeometry();
     const positions = new Float32Array(PARTICLE_COUNT * 3);
@@ -155,7 +147,6 @@ export default function Card3D({ imageUrl, cardColor, scrollProgress = 0, burstT
       particleGeometry.attributes.position.needsUpdate = true;
     };
 
-    // Controls
     const controls = new OrbitControls(camera, renderer.domElement);
     controls.enableZoom = false;
     controls.enablePan = false;
@@ -164,7 +155,6 @@ export default function Card3D({ imageUrl, cardColor, scrollProgress = 0, burstT
     controls.enableDamping = true;
     controls.dampingFactor = 0.05;
 
-    // Animation loop
     let animationFrameId;
     const animate = () => {
       animationFrameId = requestAnimationFrame(animate);
@@ -178,7 +168,6 @@ export default function Card3D({ imageUrl, cardColor, scrollProgress = 0, burstT
       const newScale = THREE.MathUtils.lerp(card.scale.x, scale, 0.08);
       card.scale.set(newScale, newScale, newScale);
 
-      // Particle burst animation
       const timeSinceBurst = (performance.now() / 1000) - burstTime;
       if (timeSinceBurst < BURST_DURATION) {
         particleMaterial.opacity = 1 - Math.pow(timeSinceBurst / BURST_DURATION, 1.5);
@@ -224,12 +213,13 @@ export default function Card3D({ imageUrl, cardColor, scrollProgress = 0, burstT
         currentMount.removeChild(renderer.domElement);
       }
     };
-  }, []); // 🌟 EMPTY — scene builds only ONCE
+  }, []);
 
+  // 🌟 RESPONSIVE HEIGHT - smaller on phones (280px), larger on desktop (400px)
   return (
-    <div style={{ width: '100%', height: '400px', position: 'relative' }}>
+    <div style={{ width: '100%', height: 'clamp(280px, 45vw, 400px)', position: 'relative' }}>
       {loading && (
-        <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', color: '#a3e4ff' }}>
+        <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', color: '#a3e4ff', fontSize: '0.9rem' }}>
           Loading 3D Card...
         </div>
       )}
