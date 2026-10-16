@@ -73,6 +73,30 @@ export default function NfcProductPage() {
   const [scrollProgress, setScrollProgress] = useState(0);
   const [burstTrigger, setBurstTrigger] = useState(0);
 
+  // 🌟 NEW: Swipe hint state
+  const [showSwipeHint, setShowSwipeHint] = useState(false);
+
+  // 🌟 NEW: On mount, check if user has seen the hint before
+  useEffect(() => {
+    const hasSeenHint = localStorage.getItem('do_card_swipe_hint_seen');
+    if (!hasSeenHint) {
+      // Small delay so it doesn't pop up instantly
+      const timer = setTimeout(() => setShowSwipeHint(true), 1500);
+      // Auto-hide after 8 seconds even if not interacted
+      const autoHide = setTimeout(() => {
+        setShowSwipeHint(false);
+        localStorage.setItem('do_card_swipe_hint_seen', 'true');
+      }, 9500);
+      return () => { clearTimeout(timer); clearTimeout(autoHide); };
+    }
+  }, []);
+
+  // 🌟 NEW: Called when user first interacts with the 3D card
+  const handleCardInteraction = () => {
+    setShowSwipeHint(false);
+    localStorage.setItem('do_card_swipe_hint_seen', 'true');
+  };
+
   useEffect(() => {
     const handleScroll = () => {
       const progress = Math.min(1, window.scrollY / window.innerHeight);
@@ -150,12 +174,64 @@ export default function NfcProductPage() {
         </motion.div>
         
         <motion.div variants={fadeInUp} style={{ flex: '1 1 400px', textAlign: 'center' }}>
-          <Card3D 
-            imageUrl={cardOptions[selectedCard].img} 
-            cardColor={cardOptions[selectedCard].color} 
-            scrollProgress={scrollProgress}
-            burstTrigger={burstTrigger}
-          />
+          {/* 🌟 Wrapper with swipe hint overlay */}
+          <div style={{ position: 'relative' }}>
+            <Card3D 
+              imageUrl={cardOptions[selectedCard].img} 
+              cardColor={cardOptions[selectedCard].color} 
+              scrollProgress={scrollProgress}
+              burstTrigger={burstTrigger}
+              onFirstInteraction={handleCardInteraction}
+            />
+
+            {/* 🌟 SWIPE HINT OVERLAY */}
+            <AnimatePresence>
+              {showSwipeHint && (
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 10 }}
+                  transition={{ duration: 0.5 }}
+                  style={{
+                    position: 'absolute',
+                    bottom: 'calc(50% - 15px)',
+                    left: '50%',
+                    transform: 'translateX(-50%)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '10px',
+                    padding: '8px 18px',
+                    borderRadius: '30px',
+                    background: 'rgba(2, 22, 12, 0.85)',
+                    border: '1px solid rgba(59, 130, 246, 0.5)',
+                    backdropFilter: 'blur(8px)',
+                    boxShadow: '0 0 20px rgba(59, 130, 246, 0.3)',
+                    pointerEvents: 'none',
+                    zIndex: 20,
+                    whiteSpace: 'nowrap',
+                  }}
+                >
+                  <motion.span
+                    animate={{ x: [0, -4, 0] }}
+                    transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
+                    style={{ color: '#3b82f6', fontSize: '1rem', fontWeight: 'bold' }}
+                  >
+                    ←
+                  </motion.span>
+                  <span style={{ color: '#ffffff', fontSize: '0.8rem', fontWeight: '600', letterSpacing: '1px', textTransform: 'uppercase' }}>
+                    Swipe to rotate
+                  </span>
+                  <motion.span
+                    animate={{ x: [0, 4, 0] }}
+                    transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
+                    style={{ color: '#3b82f6', fontSize: '1rem', fontWeight: 'bold' }}
+                  >
+                    →
+                  </motion.span>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
 
           <div style={{ marginTop: '20px', display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '10px', maxWidth: '500px', margin: '20px auto 0 auto' }}>
             {cardOptions.map((card, index) => (
@@ -175,7 +251,7 @@ export default function NfcProductPage() {
             ))}
           </div>
           <p style={{ color: '#a3e4ff', marginTop: '15px', fontSize: '0.85rem', fontWeight: 'bold' }}>
-            Selected: {cardOptions[selectedCard].name} (Swipe to rotate)
+            Selected: {cardOptions[selectedCard].name}
           </p>
         </motion.div>
       </motion.div>
