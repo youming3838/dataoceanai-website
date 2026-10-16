@@ -1,7 +1,6 @@
 import React, { Suspense } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { useTexture, OrbitControls, Float, Environment, ContactShadows } from '@react-three/drei';
-import * as THREE from 'three';
 
 // The 3D Card Mesh Component
 function CardMesh({ imageUrl }) {
@@ -25,7 +24,7 @@ export default function Card3D({ imageUrl }) {
         <Canvas 
           camera={{ position: [0, 0, 6], fov: 45 }} 
           shadows 
-          dpr={[1, 1.5]} // Limit resolution on mobile for performance
+          dpr={[1, 1.5]} 
         >
           {/* Soft, cinematic lighting */}
           <ambientLight intensity={0.5} />
