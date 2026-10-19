@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Footer from './Footer';
 
 export default function ContentSections() {
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
@@ -16,7 +17,6 @@ export default function ContentSections() {
   return (
     <div style={{ position: 'relative', zIndex: 10, background: 'linear-gradient(to bottom, rgba(2, 22, 12, 0.4) 0%, rgba(2, 22, 12, 0.85) 100%)', color: '#f2f2f2', backdropFilter: 'blur(5px)' }}>
       
-      {/* SAP Services Section */}
       <section id="services" style={{ padding: '100px 40px' }}>
         <h2 style={{ fontSize: '3rem', color: '#3b82f6', marginBottom: '20px' }}>SAP Services</h2>
         <p style={{ fontSize: '1.2rem', color: '#a3e4ff', marginBottom: '60px', maxWidth: '800px', lineHeight: '1.6' }}>
@@ -60,7 +60,6 @@ export default function ContentSections() {
         </div>
       </section>
 
-      {/* Digital Tech Products Section */}
       <section id="nfc" style={{ padding: '100px 40px' }}>
         <h2 style={{ fontSize: '3rem', color: '#3b82f6', marginBottom: '20px' }}>Digital Tech Products</h2>
         <p style={{ fontSize: '1.2rem', color: '#a3e4ff', marginBottom: '60px', maxWidth: '800px' }}>
@@ -78,71 +77,34 @@ export default function ContentSections() {
             <div style={{ marginBottom: '30px' }}>
               <h4 style={{ color: '#ffffff', marginBottom: '15px' }}>How it works:</h4>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
-                
-                {/* 🌟 OVAL FIX: minWidth, minHeight, and aspectRatio guarantee a perfect circle */}
                 <div style={{ display: 'flex', alignItems: 'flex-start', gap: '15px' }}>
-                  <span style={{ 
-                    background: '#3b82f6', color: '#fff', 
-                    width: '30px', height: '30px', 
-                    minWidth: '30px', minHeight: '30px',
-                    aspectRatio: '1 / 1',
-                    flexShrink: 0, 
-                    borderRadius: '50%', 
-                    display: 'flex', justifyContent: 'center', alignItems: 'center', 
-                    fontWeight: 'bold', fontSize: '0.95rem'
-                  }}>1</span>
+                  <span style={{ background: '#3b82f6', color: '#fff', width: '30px', height: '30px', minWidth: '30px', minHeight: '30px', aspectRatio: '1 / 1', flexShrink: 0, borderRadius: '50%', display: 'flex', justifyContent: 'center', alignItems: 'center', fontWeight: 'bold', fontSize: '0.95rem' }}>1</span>
                   <span style={{ color: '#a3e4ff', lineHeight: '1.5', paddingTop: '5px' }}>Tap the card on any NFC-enabled smartphone.</span>
                 </div>
-
                 <div style={{ display: 'flex', alignItems: 'flex-start', gap: '15px' }}>
-                  <span style={{ 
-                    background: '#3b82f6', color: '#fff', 
-                    width: '30px', height: '30px', 
-                    minWidth: '30px', minHeight: '30px',
-                    aspectRatio: '1 / 1',
-                    flexShrink: 0, 
-                    borderRadius: '50%', 
-                    display: 'flex', justifyContent: 'center', alignItems: 'center', 
-                    fontWeight: 'bold', fontSize: '0.95rem'
-                  }}>2</span>
+                  <span style={{ background: '#3b82f6', color: '#fff', width: '30px', height: '30px', minWidth: '30px', minHeight: '30px', aspectRatio: '1 / 1', flexShrink: 0, borderRadius: '50%', display: 'flex', justifyContent: 'center', alignItems: 'center', fontWeight: 'bold', fontSize: '0.95rem' }}>2</span>
                   <span style={{ color: '#a3e4ff', lineHeight: '1.5', paddingTop: '5px' }}>Your digital profile opens instantly in their browser.</span>
                 </div>
-
                 <div style={{ display: 'flex', alignItems: 'flex-start', gap: '15px' }}>
-                  <span style={{ 
-                    background: '#3b82f6', color: '#fff', 
-                    width: '30px', height: '30px', 
-                    minWidth: '30px', minHeight: '30px',
-                    aspectRatio: '1 / 1',
-                    flexShrink: 0, 
-                    borderRadius: '50%', 
-                    display: 'flex', justifyContent: 'center', alignItems: 'center', 
-                    fontWeight: 'bold', fontSize: '0.95rem'
-                  }}>3</span>
+                  <span style={{ background: '#3b82f6', color: '#fff', width: '30px', height: '30px', minWidth: '30px', minHeight: '30px', aspectRatio: '1 / 1', flexShrink: 0, borderRadius: '50%', display: 'flex', justifyContent: 'center', alignItems: 'center', fontWeight: 'bold', fontSize: '0.95rem' }}>3</span>
                   <span style={{ color: '#a3e4ff', lineHeight: '1.5', paddingTop: '5px' }}>They save your contact, visit your LinkedIn, or call you directly.</span>
                 </div>
-
               </div>
             </div>
 
-            <a href="/nfc-product" style={{ display: 'inline-block', padding: '15px 40px', backgroundColor: '#3b82f6', color: '#ffffff', textDecoration: 'none', fontWeight: 'bold', borderRadius: '8px', transition: '0.3s' }}>Order Yours Now</a>
+            <a href="/nfc-product" style={{ display: 'inline-block', padding: '15px 40px', backgroundColor: '#3b82f6', color: '#ffffff', textDecoration: 'none', fontWeight: 'bold', borderRadius: '8px' }}>Order Yours Now</a>
           </div>
 
           <div style={{ flex: '1 1 300px', textAlign: 'center' }}>
             <img 
               src="https://res.cloudinary.com/qcyxxyec/image/upload/c_fill,w_1200,h_760/v1792122905/Classic_Red.png" 
               alt="Smart NFC Business Card" 
-              style={{ 
-                width: '100%', maxWidth: '400px', borderRadius: '16px', 
-                border: '1px solid #3b82f6', boxShadow: '0 0 30px rgba(59, 130, 246, 0.3)' 
-              }} 
+              style={{ width: '100%', maxWidth: '400px', borderRadius: '16px', border: '1px solid #3b82f6', boxShadow: '0 0 30px rgba(59, 130, 246, 0.3)' }} 
             />
           </div>
-
         </div>
       </section>
 
-      {/* AI Governance Section */}
       <section id="ai" style={{ padding: '100px 40px' }}>
         <h2 style={{ fontSize: '3rem', color: '#3b82f6', marginBottom: '20px' }}>AI Governance</h2>
         <p style={{ fontSize: '1.2rem', color: '#a3e4ff', maxWidth: '800px', lineHeight: '1.6' }}>
@@ -153,7 +115,6 @@ export default function ContentSections() {
         </p>
       </section>
 
-      {/* Contact Section */}
       <section id="contact" style={{ padding: '100px 40px' }}>
         <h2 style={{ fontSize: '3rem', color: '#3b82f6', marginBottom: '20px' }}>Contact Data Ocean</h2>
         <p style={{ color: '#a3e4ff', marginBottom: '40px', fontSize: '1.1rem' }}>
@@ -184,13 +145,7 @@ export default function ContentSections() {
         )}
       </section>
 
-      {/* Footer */}
-      <footer style={{ padding: '40px', textAlign: 'center', background: 'rgba(0,0,0,0.5)' }}>
-        <p style={{ color: '#a3e4ff', marginBottom: '10px' }}>Data Ocean © 2026. All rights reserved.</p>
-        <p style={{ color: '#a3e4ff', fontSize: '0.9rem' }}>
-          <a href="mailto:connect@dataoceanai.io" style={{ color: '#3b82f6', textDecoration: 'none' }}>connect@dataoceanai.io</a>
-        </p>
-      </footer>
+      <Footer />
 
     </div>
   );
